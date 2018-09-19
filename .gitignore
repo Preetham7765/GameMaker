@@ -1,0 +1,8 @@
+*.class
+*.classpath
+.project
+*.ser
+*.txt
+/.idea
+/target/
+/logs/
