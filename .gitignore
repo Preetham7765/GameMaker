@@ -7,4 +7,4 @@
 /target/
 /logs/
 /bin/
-
+*.prefs
