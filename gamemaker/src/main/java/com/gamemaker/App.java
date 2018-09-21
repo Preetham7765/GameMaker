@@ -10,8 +10,7 @@ import com.infrastructure.Constants;
 import com.view.FormPanel;
 import com.view.GamePanel;
 import com.view.MainPanel;
-import com.view.Window1;
-import com.view.Window2;
+import com.view.WindowFrame;
 
 /**
  * Hello world!
@@ -21,7 +20,7 @@ public class App
 {
 	
 	public static void makeGame() {
-		Window1 window1 = new Window1();
+		WindowFrame window1 = new WindowFrame();
 
 		MainPanel mainPanel = new MainPanel();
 		System.out.println("MainPanel is created");
@@ -36,10 +35,9 @@ public class App
 		GamePanel gamePanel = new GamePanel();
 		mainPanel.addComponent(gamePanel);
 		
-		GameMakerController controller = new GameMakerController();
+		GameMakerController controller = new GameMakerController(window1);
 		System.out.println("Game maker controller created");
 		
-//		window1.getContentPane().setVisible(false);
 		window1.setVisible(true);
 		window1.pack();
 	}
