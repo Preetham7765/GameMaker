@@ -4,7 +4,9 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.io.Serializable;
 
-public class Ball implements IComponent, Serializable {
+import com.infrastructure.IComposite;
+
+public class Ball implements IComposite, Serializable {
 	
 	private static final long serialVersionUID = 6L;
 	private int x;
@@ -14,14 +16,11 @@ public class Ball implements IComponent, Serializable {
 	private int radius;
 	
 	public Ball(int x, int y, int velX, int velY, int radius) {
-		
 		this.x = x;
 		this.y = y;
 		this.velX = velX;
 		this.velY = velY;
 		this.radius = radius;
-		
-		
 	}
 	
 	public int getVelX() {
@@ -90,15 +89,17 @@ public class Ball implements IComponent, Serializable {
 	}
 
 
-	public void drawGraphic(Graphics g) {
-		// TODO Auto-generated method stub
-		
+	public void draw(Graphics g) {
 		g.fillOval(this.getX(), this.getY(), radius, radius);
 	}
 
 	public Rectangle getBounds() {
-		// TODO Auto-generated method stub
 		return new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 	}
 
+	public void removeComponent(IComposite composite) {
+	}
+
+	public void addComponent(IComposite composite) {
+	}
 }
