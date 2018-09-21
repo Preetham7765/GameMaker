@@ -101,8 +101,4 @@ public class Ball implements IComponent, Serializable {
 		return new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 	}
 
-	
-	
-	
-
 }
