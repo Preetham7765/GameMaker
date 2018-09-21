@@ -1,9 +1,11 @@
 package com.view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,12 +19,12 @@ public class FormPanel extends JPanel implements IComposite {
 	
 	private GameMakerController controller;
 	public FormPanel() {
-		
+		super();
+		setBorder( BorderFactory.createLineBorder(Color.black));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setMaximumSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
 		setMinimumSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
 		setPreferredSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
-		setVisible(true);
 		JLabel select_object = new JLabel("Select any object to add to GamePanel");
 		this.add(select_object);
 	}

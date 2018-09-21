@@ -1,10 +1,12 @@
 package com.view;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 import com.infrastructure.IComposite;
@@ -15,9 +17,10 @@ public class MainPanel extends JPanel implements IComposite {
 	private ArrayList<IComposite> compositeList;
 	
 	public MainPanel() {
+		super();
+		setBorder( BorderFactory.createLineBorder(Color.red));
 		this.compositeList = new ArrayList<IComposite>();
 		setLayout(new FlowLayout());
-		setVisible(true);
 		setFocusable(true);
 		requestFocusInWindow();
 	}
