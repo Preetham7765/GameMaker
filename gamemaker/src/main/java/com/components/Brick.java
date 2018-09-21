@@ -5,9 +5,10 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.io.Serializable;
 
-import com.constants.Constants;
+import com.infrastructure.Constants;
+import com.infrastructure.IComposite;
 
-public class Brick implements IComponent, Serializable {
+public class Brick implements IComposite, Serializable {
 	
 	private static final long serialVersionUID = 7L;
 	private int x;
@@ -88,7 +89,7 @@ public class Brick implements IComponent, Serializable {
 	}
 
 
-	public void drawGraphic(Graphics g) {
+	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
 		g.setColor(Color.red);
 		g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
@@ -98,6 +99,18 @@ public class Brick implements IComponent, Serializable {
 	public Rectangle getBounds() {
 		// TODO Auto-generated method stub
 		return new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+	}
+
+
+	public void addComponent(IComposite composite) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void removeComponent(IComposite composite) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

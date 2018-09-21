@@ -9,9 +9,10 @@ import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
-import com.constants.Constants;
+import com.infrastructure.Constants;
+import com.infrastructure.IComposite;
 
-public class Fire implements IComponent, Serializable {
+public class Fire implements IComposite, Serializable {
 
 	private static final long serialVersionUID = 12L;
 	private int x;
@@ -97,7 +98,7 @@ public class Fire implements IComponent, Serializable {
 		this.height = height;
 	}
 
-	public void drawGraphic(Graphics g) {
+	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
 		g.drawImage(this.getImage(), this.getX(), this.getY(), this.getWidth(), this.getHeight(), null);
 		
@@ -106,6 +107,16 @@ public class Fire implements IComponent, Serializable {
 	public Rectangle getBounds() {
 		// TODO Auto-generated method stub
 		return new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+	}
+
+	public void addComponent(IComposite composite) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void removeComponent(IComposite composite) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

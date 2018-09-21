@@ -4,9 +4,10 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.io.Serializable;
 
-import com.constants.Constants;
+import com.infrastructure.Constants;
+import com.infrastructure.IComposite;
 
-public class Paddle implements IComponent, Serializable {
+public class Paddle implements IComposite, Serializable {
 	
 	private static final long serialVersionUID = 11L;
 	private int x;
@@ -84,7 +85,7 @@ public class Paddle implements IComponent, Serializable {
 	}
 
 
-	public void drawGraphic(Graphics g) {
+	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
 		
 		g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
@@ -94,6 +95,18 @@ public class Paddle implements IComponent, Serializable {
 	public Rectangle getBounds() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	public void addComponent(IComposite composite) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void removeComponent(IComposite composite) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

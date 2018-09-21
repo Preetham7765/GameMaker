@@ -1,4 +1,4 @@
-package com.constants;
+package com.infrastructure;
 
 public interface Constants {
 
@@ -11,6 +11,11 @@ public interface Constants {
 	//---------------------------/components/Fire.java-------------------------
 	
 	public static final String fireImagePath = "./icons/fire";
-	
-	
+
+	public final static int FRAME_WIDTH = 1800;
+	public final static int  FRAME_HEIGHT = 900;
+	public final static int  FORM_PANEL_HEIGHT = 900;
+	public final static int  FORM_PANEL_WIDTH = 900;
+	public final static int  GAME_PANEL_HEIGHT = 900;
+	public final static int  GAME_PANEL_WIDTH = 900;
 }
