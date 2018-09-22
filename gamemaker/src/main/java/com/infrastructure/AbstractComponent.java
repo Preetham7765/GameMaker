@@ -6,9 +6,21 @@ import java.io.Serializable;
 
 public abstract class AbstractComponent implements IComposite, Serializable {
 	
-	IActionBehavior ib;
-	ObjectProperties objectProperties;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private IActionBehavior ib;
+	private ObjectProperties objectProperties;
 	
+	public ObjectProperties getObjectProperties() {
+		return objectProperties;
+	}
+
+	public void setObjectProperties(ObjectProperties objectProperties) {
+		this.objectProperties = objectProperties;
+	}
+
 	public void setActionBehavior(IActionBehavior ib) {
 		this.ib = ib;
 	}
