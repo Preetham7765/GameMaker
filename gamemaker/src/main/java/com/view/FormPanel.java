@@ -117,46 +117,5 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 	public void removeComponent(IComposite composite) {
 		return;
 	}
-	
-//	public static ObjectProperties savePopUp() {
-//		ObjectProperties objProp = new ObjectProperties();
-//		 JTextField xField = new JTextField(Integer.toString(objProp.getX()) ,5);
-//	     JTextField yField = new JTextField(Integer.toString(objProp.getY()) ,5);
-//	     JTextField vXField = new JTextField(Integer.toString(objProp.getVelX()) ,5);
-//		 JTextField vYField = new JTextField(Integer.toString(objProp.getVelY()) ,5);
-//	     JTextField width = new JTextField(Integer.toString(objProp.getWidth()), 5);
-//		 JTextField height = new JTextField(Integer.toString(objProp.getHeight()) ,5);
-//
-//	      JPanel myPanel = new JPanel();
-//	      myPanel.add(new JLabel("x: "));
-//	      myPanel.add(xField);
-//	      myPanel.add(Box.createVerticalStrut(15)); // a spacer
-//	      myPanel.add(new JLabel("y: "));
-//	      myPanel.add(yField);
-//	      myPanel.add(Box.createVerticalStrut(15)); // a spacer
-//	      myPanel.add(new JLabel("Velocity X: "));
-//	      myPanel.add(vXField);
-//	      myPanel.add(Box.createVerticalStrut(15)); // a spacer
-//	      myPanel.add(new JLabel("Velocity Y: "));
-//	      myPanel.add(vYField);
-//	      myPanel.add(Box.createVerticalStrut(15)); // a spacer
-//	      myPanel.add(new JLabel("Width: "));
-//	      myPanel.add(width);
-//	      myPanel.add(Box.createVerticalStrut(15)); // a spacer
-//	      myPanel.add(new JLabel("Height: "));
-//	      myPanel.add(height);
-//	      
-//	      int result = JOptionPane.showConfirmDialog(null, myPanel, 
-//	               "Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
-//	      if (result == JOptionPane.OK_OPTION) {
-//	    	  objProp.setX(Integer.parseInt(xField.getText()));
-//	    	  objProp.setY(Integer.parseInt(yField.getText()));
-//	    	  objProp.setVelX(Integer.parseInt(vXField.getText()));
-//	    	  objProp.setVelY(Integer.parseInt(vYField.getText()));
-//	    	  objProp.setWidth(Integer.parseInt(width.getText()));
-//	    	  objProp.setHeight(Integer.parseInt(height.getText()));
-//	    }
-//	      return(objProp);
-//	}
 
 }

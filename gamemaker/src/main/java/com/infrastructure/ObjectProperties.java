@@ -8,6 +8,8 @@ public class ObjectProperties {
 	private int velY;
 	private int width;
 	private int height;
+	private String type;
+	private boolean canCollect;
 	
 	public String getType() {
 		return type;
@@ -16,8 +18,6 @@ public class ObjectProperties {
 	public void setType(String type) {
 		this.type = type;
 	}
-
-	private String type;
 
 	public int getX() {
 		return x;
@@ -67,6 +67,14 @@ public class ObjectProperties {
 		this.height = height;
 	}
 	
+	public boolean getCanCollect() {
+		return canCollect;
+	}
+
+	public void setCanCollect(boolean canCollect) {
+		this.canCollect = canCollect;
+	}
+	
 	public ObjectProperties() {
 		this.x = 5;
 		this.y = 5;
@@ -75,9 +83,10 @@ public class ObjectProperties {
 		this.width = 10;
 		this.height = 10;
 		this.type = "";
+		this.canCollect = false;
 	}
 	
-	public ObjectProperties(int x, int y, int velX, int velY, int width, int height, String type) {
+	public ObjectProperties(int x, int y, int velX, int velY, int width, int height, String type, boolean canCollect) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -86,6 +95,6 @@ public class ObjectProperties {
 		this.width = width;
 		this.height = height;
 		this.type = type;
+		this.canCollect = canCollect;
 	}
-	
 }

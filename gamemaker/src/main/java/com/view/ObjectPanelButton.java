@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -30,12 +31,14 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 	JTextField vYField;
 	JTextField widthField;
 	JTextField heightField;
+	JCheckBox canCollectField;
 	
 	
 	public ObjectPanelButton(String name, Color yellow, WindowFrame windowFrame) {
 		this.name = name;
 		setText(name);
 		selected.setType(name);
+		selected.setCanCollect(false);
 		setActionCommand(name);
 		addActionListener(this);
 		setVisible(true);
@@ -47,6 +50,7 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 		vYField = new JTextField(Integer.toString(selected.getVelY()) ,5);
 	    widthField = new JTextField(Integer.toString(selected.getWidth()), 5);
 		heightField = new JTextField(Integer.toString(selected.getHeight()) ,5);
+		canCollectField = new JCheckBox("Can collect the collectibles");
 	}
 	
 	@Override
@@ -71,6 +75,7 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 			myPanel.add(Box.createVerticalStrut(15)); // a spacer
 			myPanel.add(new JLabel("Height: "));
 			myPanel.add(heightField);
+			myPanel.add(canCollectField);
 	     
 			int result1 = JOptionPane.showConfirmDialog(null, myPanel, 
 	               "Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
@@ -80,6 +85,7 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 				selected.setVelY(Integer.parseInt(vYField.getText()));
 				selected.setWidth(Integer.parseInt(widthField.getText()));
 				selected.setHeight(Integer.parseInt(heightField.getText()));
+				selected.setCanCollect(canCollectField.isSelected());
 				windowFrame.getFormPanel().setSelected(selected);
 	      	}
 		}

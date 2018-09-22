@@ -77,6 +77,14 @@ public abstract class AbstractComponent implements IComposite, Serializable {
 	}
 
 
+	public void getCanCollect(boolean canCollect) {
+		this.objectProperties.getCanCollect();
+	}
+	
+	public void setcanCollect(boolean canCollect) {
+		this.objectProperties.setCanCollect(canCollect);
+	}
+	
 	public void setHeight(int height) {
 		this.objectProperties.setHeight(height);
 	}
