@@ -26,26 +26,22 @@ public class GameMakerController implements ActionListener, MouseListener {
 	public GameMakerController(WindowFrame windowFrame)
 	{	
 		this.windowFrame = windowFrame;
-
 	}
 
 	public void displayButtons() {
 		this.windowFrame.getFormPanel().createButtons(this);
 	}
 
-	public void createObject(String objName, int x, int y, int velX, int velY, int width, int height)
-	{
-		if(objName.equals("Ball"))
-		{
-			Ball ball = new Ball(x, y, velX, velY, width/2);
-			windowFrame.getGamePanel().addComponent(ball);
-			
-		}
-	}
+//	public void createObject(String objName, int x, int y, int velX, int velY, int width, int height)
+//	{
+//		if(objName.equals("Ball"))
+//		{
+//			Ball ball = new Ball(new ObjectProperties(x, y, velX, velY, width, height, "Ball"));
+//			windowFrame.getGamePanel().addComponent(ball);	
+//		}
+//	}
 
-	public void actionPerformed(ActionEvent e) {
-		
-	}
+	public void actionPerformed(ActionEvent e) {}
 	
 //	public void setBackground()
 //	{
@@ -55,54 +51,51 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		System.out.println("Mouse clicked");
-		HashMap<String, Object> selected = windowFrame.getFormPanel().getSelected();
-		//windowFrame.getGamePanel().addMouseListener(this);
+//		System.out.println("Mouse clicked");
+		ObjectProperties selected = new ObjectProperties();
+//		selected.setX;
+		ObjectProperties formPanelSelected = windowFrame.getFormPanel().getSelected();
 		
-		
-		
-		if (selected != null) {
+		if (formPanelSelected != null) {
+			
             int x = arg0.getX(); 
             int y = arg0.getY(); 
-           
-        	String type = (String) selected.get("Type");
-        	Color color = (Color) selected.get("Color");
-        	Integer width = (Integer) selected.get("Width");
-        	Integer height =  (Integer) selected.get("Height");
-            Integer velX = (Integer) selected.get("velX");
-            Integer velY = (Integer) selected.get("velY");
-            System.out.println("Type:" +type);
+            selected.setX(x);
+            selected.setY(y);
+            String type = formPanelSelected.getType();
         	IComposite composite = null;
+        	selected.setType(formPanelSelected.getType());
+        	selected.setHeight(formPanelSelected.getHeight());
+        	selected.setWidth(formPanelSelected.getWidth());
+        	selected.setVelX(formPanelSelected.getVelX());
+        	selected.setVelY(formPanelSelected.getVelY());
+//        	selected.set
+//        	selected.set
         	switch(type) {
         		case "Ball":
         		{
-        			composite = new Ball(x, y, velX, velY, width/2);
-        			break;
-        			
+        			composite = new Ball(selected);
+        			break;	
         		}
         		case "Brick":
         		{
-        			composite = new Brick(x, y, velX, velY, width, height);
+        			composite = new Brick(selected);
         			break;
         		}
         		case "Paddle":
         		{
-        			composite = new Paddle(x, y, velX, velY, width, height);
+        			composite = new Paddle(selected);
         			break;
         		}
         		case "Fire":
         		{
-        			composite = new Fire(x, y, velX, velY, width, height);
+        			composite = new Fire(selected);
         			break;
-        		}
-        		
+        		}        		
         	}
+        	
         	windowFrame.getGamePanel().addComponent(composite);
         	windowFrame.draw(null);
-        	
-
-            
 		}	
 	}
 

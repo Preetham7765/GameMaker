@@ -40,9 +40,9 @@ public class App
 		GameMakerController controller = new GameMakerController(windowFrame);
 		System.out.println("Game maker controller created");
 		
-		formPanel.createButtons(controller);
 		windowFrame.setFormPanel(formPanel);
 		windowFrame.setGamePanel(gamePanel);
+		formPanel.createButtons(controller);
 		gamePanel.addControllerListener(controller);
 
 		windowFrame.setVisible(true);

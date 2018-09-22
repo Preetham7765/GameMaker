@@ -10,9 +10,10 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 import com.infrastructure.IComposite;
+import com.infrastructure.IPanel;
 
 @SuppressWarnings("serial")
-public class MainPanel extends JPanel implements IComposite {
+public class MainPanel extends JPanel implements IComposite, IPanel {
 
 	private ArrayList<IComposite> compositeList;
 	

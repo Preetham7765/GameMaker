@@ -8,7 +8,7 @@ import java.io.Serializable;
 import com.infrastructure.AbstractComponent;
 import com.infrastructure.Constants;
 import com.infrastructure.IComposite;
-import com.view.ObjectProperties;
+import com.infrastructure.ObjectProperties;
 
 public class Brick extends AbstractComponent {
 	

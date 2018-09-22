@@ -7,107 +7,15 @@ import java.io.Serializable;
 import com.infrastructure.AbstractComponent;
 import com.infrastructure.Constants;
 import com.infrastructure.IComposite;
+import com.infrastructure.ObjectProperties;
 
-public class Paddle extends AbstractComponent implements IComposite, Serializable {
+public class Paddle extends AbstractComponent {
 	
-	private static final long serialVersionUID = 11L;
-	private int x;
-	private int y;
-	private int velX;
-	private int velY;
-	private int width;
-	private int height;
-	
-	public Paddle(int x, int y, int velX, int velY, int width, int height)
-	{
-		this.x = x;
-		this.y = y;
-		this.velX = velX;
-		this.velY = velY;
-		this.width = width;
-		this.height = height;
+	public Paddle(ObjectProperties objectProperties) {
+		super(objectProperties);
 	}
-	
-	
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	public int getVelX() {
-		return velX;
-	}
-
-	public void setVelX(int velX) {
-		this.velX = velX;
-	}
-
-	public int getVelY() {
-		return velY;
-	}
-
-	public void setVelY(int velY) {
-		this.velY = velY;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
-	public void setHeight(int height) {
-		this.height = height;
-	}
-	
-	public int getBottomYCoordinates() {
-		return this.getY() + this.getHeight();
-	}
-
-	public int getRightXCoordinates() {
-		return this.getX() + this.getWidth();
-	}
-
 
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-		
 		g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
-		
 	}
-
-	public Rectangle getBounds() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	public void addComponent(IComposite composite) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	public void removeComponent(IComposite composite) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

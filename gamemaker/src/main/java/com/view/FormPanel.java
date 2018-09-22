@@ -19,19 +19,19 @@ import javax.swing.JTextField;
 import com.controller.GameMakerController;
 import com.infrastructure.Constants;
 import com.infrastructure.IComposite;
+import com.infrastructure.IPanel;
 import com.infrastructure.ObjectProperties;
 
 @SuppressWarnings("serial")
-public class FormPanel extends JPanel implements IComposite {
+public class FormPanel extends JPanel implements IComposite, IPanel {
 	
-	public HashMap<String, Object> selected = new HashMap<String, Object>();
-	
-	
-	public HashMap<String, Object> getSelected() {
+	public ObjectProperties selected = new ObjectProperties();
+		
+	public ObjectProperties getSelected() {
 		return selected;
 	}
 
-	public void setSelected(HashMap<String, Object> selected) {
+	public void setSelected(ObjectProperties selected) {
 		this.selected = selected;
 	}
 
@@ -39,17 +39,13 @@ public class FormPanel extends JPanel implements IComposite {
 	private WindowFrame windowFrame;
 	
 	public FormPanel(WindowFrame window) {
-		
 		super();
 		this.windowFrame = window;
 		setBorder( BorderFactory.createLineBorder(Color.black));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setMaximumSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
 		setMinimumSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
-		setPreferredSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
-		
-		
-		
+		setPreferredSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));	
 	}
 	
 	public String fileExplorer()
@@ -122,45 +118,45 @@ public class FormPanel extends JPanel implements IComposite {
 		return;
 	}
 	
-	public static ObjectProperties savePopUp() {
-		ObjectProperties objProp = new ObjectProperties();
-		 JTextField xField = new JTextField(Integer.toString(objProp.x) ,5);
-	     JTextField yField = new JTextField(Integer.toString(objProp.y) ,5);
-	     JTextField vXField = new JTextField(Integer.toString(objProp.velX) ,5);
-		 JTextField vYField = new JTextField(Integer.toString(objProp.velY) ,5);
-	     JTextField width = new JTextField(Integer.toString(objProp.width), 5);
-		 JTextField height = new JTextField(Integer.toString(objProp.height) ,5);
-
-	      JPanel myPanel = new JPanel();
-	      myPanel.add(new JLabel("x: "));
-	      myPanel.add(xField);
-	      myPanel.add(Box.createVerticalStrut(15)); // a spacer
-	      myPanel.add(new JLabel("y: "));
-	      myPanel.add(yField);
-	      myPanel.add(Box.createVerticalStrut(15)); // a spacer
-	      myPanel.add(new JLabel("Velocity X: "));
-	      myPanel.add(vXField);
-	      myPanel.add(Box.createVerticalStrut(15)); // a spacer
-	      myPanel.add(new JLabel("Velocity Y: "));
-	      myPanel.add(vYField);
-	      myPanel.add(Box.createVerticalStrut(15)); // a spacer
-	      myPanel.add(new JLabel("Width: "));
-	      myPanel.add(width);
-	      myPanel.add(Box.createVerticalStrut(15)); // a spacer
-	      myPanel.add(new JLabel("Height: "));
-	      myPanel.add(height);
-	      
-	      int result = JOptionPane.showConfirmDialog(null, myPanel, 
-	               "Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
-	      if (result == JOptionPane.OK_OPTION) {
-	    	  objProp.x = Integer.parseInt(xField.getText());
-	    	  objProp.y = Integer.parseInt(yField.getText());
-	    	  objProp.velX = Integer.parseInt(vXField.getText());
-	    	  objProp.velY = Integer.parseInt(vYField.getText());
-	    	  objProp.width = Integer.parseInt(width.getText());
-	    	  objProp.height = Integer.parseInt(height.getText());
-	    }
-	      return(objProp);
-	}
+//	public static ObjectProperties savePopUp() {
+//		ObjectProperties objProp = new ObjectProperties();
+//		 JTextField xField = new JTextField(Integer.toString(objProp.getX()) ,5);
+//	     JTextField yField = new JTextField(Integer.toString(objProp.getY()) ,5);
+//	     JTextField vXField = new JTextField(Integer.toString(objProp.getVelX()) ,5);
+//		 JTextField vYField = new JTextField(Integer.toString(objProp.getVelY()) ,5);
+//	     JTextField width = new JTextField(Integer.toString(objProp.getWidth()), 5);
+//		 JTextField height = new JTextField(Integer.toString(objProp.getHeight()) ,5);
+//
+//	      JPanel myPanel = new JPanel();
+//	      myPanel.add(new JLabel("x: "));
+//	      myPanel.add(xField);
+//	      myPanel.add(Box.createVerticalStrut(15)); // a spacer
+//	      myPanel.add(new JLabel("y: "));
+//	      myPanel.add(yField);
+//	      myPanel.add(Box.createVerticalStrut(15)); // a spacer
+//	      myPanel.add(new JLabel("Velocity X: "));
+//	      myPanel.add(vXField);
+//	      myPanel.add(Box.createVerticalStrut(15)); // a spacer
+//	      myPanel.add(new JLabel("Velocity Y: "));
+//	      myPanel.add(vYField);
+//	      myPanel.add(Box.createVerticalStrut(15)); // a spacer
+//	      myPanel.add(new JLabel("Width: "));
+//	      myPanel.add(width);
+//	      myPanel.add(Box.createVerticalStrut(15)); // a spacer
+//	      myPanel.add(new JLabel("Height: "));
+//	      myPanel.add(height);
+//	      
+//	      int result = JOptionPane.showConfirmDialog(null, myPanel, 
+//	               "Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
+//	      if (result == JOptionPane.OK_OPTION) {
+//	    	  objProp.setX(Integer.parseInt(xField.getText()));
+//	    	  objProp.setY(Integer.parseInt(yField.getText()));
+//	    	  objProp.setVelX(Integer.parseInt(vXField.getText()));
+//	    	  objProp.setVelY(Integer.parseInt(vYField.getText()));
+//	    	  objProp.setWidth(Integer.parseInt(width.getText()));
+//	    	  objProp.setHeight(Integer.parseInt(height.getText()));
+//	    }
+//	      return(objProp);
+//	}
 
 }

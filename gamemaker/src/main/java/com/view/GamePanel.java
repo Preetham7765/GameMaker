@@ -19,9 +19,10 @@ import javax.swing.JPanel;
 import com.controller.GameMakerController;
 import com.infrastructure.Constants;
 import com.infrastructure.IComposite;
+import com.infrastructure.IPanel;
 
 @SuppressWarnings("serial")
-public class GamePanel extends JPanel implements IComposite {
+public class GamePanel extends JPanel implements IComposite, IPanel	 {
 
 	private ArrayList<IComposite> compositeList;
 	private BufferedImage image;
@@ -33,7 +34,6 @@ public class GamePanel extends JPanel implements IComposite {
 		setMaximumSize(new Dimension(Constants.GAME_PANEL_WIDTH, Constants.GAME_PANEL_HEIGHT));
 		setMinimumSize(new Dimension(Constants.GAME_PANEL_WIDTH, Constants.GAME_PANEL_HEIGHT));
 		setPreferredSize(new Dimension(Constants.GAME_PANEL_WIDTH, Constants.GAME_PANEL_HEIGHT));	
-		
 	}
 	
 	public void addControllerListener(GameMakerController controller) {
@@ -47,7 +47,9 @@ public class GamePanel extends JPanel implements IComposite {
 		{
 			g.drawImage(image, 0, 0, this);
 		}
+		System.out.println("Length of composite list: " + compositeList.size());
 		for(IComposite composite : compositeList) {
+			System.out.println(composite);
 			composite.draw(g);
 		}		
 	}
@@ -57,7 +59,6 @@ public class GamePanel extends JPanel implements IComposite {
 	}
 
 	public void addComponent(IComposite composite) {
-		// TODO Auto-generated method stub
 		compositeList.add(composite);
 	}
 
@@ -73,7 +74,6 @@ public class GamePanel extends JPanel implements IComposite {
 			draw(null);
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -87,7 +87,6 @@ public class GamePanel extends JPanel implements IComposite {
 		g2d.dispose();
 		
 		return resized;
-		
 	}
 	
 //	@Override

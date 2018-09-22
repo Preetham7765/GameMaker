@@ -15,6 +15,8 @@ public interface Constants {
 	public final static int FRAME_WIDTH = 1300;
 	public final static int  FRAME_HEIGHT = 900;
 	public final static int  FORM_PANEL_HEIGHT = 900;
-	public final static int  FORM_PANEL_WIDTH = 500;
+	public final static int  FORM_PANEL_WIDTH = 400;
 	public final static int  GAME_PANEL_WIDTH = 900;
+	public final static int  GAME_PANEL_HEIGHT = 900;
+
 }
