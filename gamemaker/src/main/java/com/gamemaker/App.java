@@ -20,13 +20,14 @@ public class App
 {
 	
 	public static void makeGame() {
-		WindowFrame window1 = new WindowFrame();
+		WindowFrame windowFrame = new WindowFrame();
 
 		MainPanel mainPanel = new MainPanel();
 		System.out.println("MainPanel is created");
-		window1.addComponent(mainPanel);
+		windowFrame.addComponent(mainPanel);
 		
-		FormPanel formPanel = new FormPanel();
+		FormPanel formPanel = new FormPanel(windowFrame);
+//		windowFrame.setFormPanel(formPanel);
 		System.out.println("FormPanel is created");
 		mainPanel.addComponent(formPanel);
 
@@ -34,17 +35,20 @@ public class App
 		
 		GamePanel gamePanel = new GamePanel();
 		mainPanel.addComponent(gamePanel);
+		windowFrame.setGamePanel(gamePanel);
 		
-		GameMakerController controller = new GameMakerController(window1);
+		GameMakerController controller = new GameMakerController(windowFrame);
 		System.out.println("Game maker controller created");
 		
 		formPanel.createButtons(controller);
-		window1.setFormPanel(formPanel);
-		window1.setGamePanel(gamePanel);
+		windowFrame.setFormPanel(formPanel);
+		windowFrame.setGamePanel(gamePanel);
 		gamePanel.addControllerListener(controller);
 
-		window1.setVisible(true);
-		window1.pack();
+		windowFrame.setVisible(true);
+		windowFrame.pack();
+//		formPanel.createButt?ons(controller);
+
 	}
     
 	public static void main( String[] args )
