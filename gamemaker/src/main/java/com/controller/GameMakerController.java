@@ -17,7 +17,7 @@ public class GameMakerController implements ActionListener {
 
 	public GameMakerController(WindowFrame window)
 	{
-		this.windowFrame = windowFrame;
+		this.windowFrame = window;
 	}
 
 	public void displayButtons() {
@@ -38,8 +38,13 @@ public class GameMakerController implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		String objName = e.getActionCommand();
-		ObjectProperties objProps = windowFrame.getFormPanel().savePopUp();
-		createObject(objName, objProps.x, objProps.y, objProps.velX, objProps.velY, objProps.width, objProps.height);
+//		ObjectProperties objProps = windowFrame.getFormPanel().savePopUp();
+//		createObject(objName, objProps.x, objProps.y, objProps.velX, objProps.velY, objProps.width, objProps.height);
+	
+		if(objName.equals("Background"))
+		{
+			setBackground();
+		}
 		
 //		if(objName.equals("Ball"))
 //		{

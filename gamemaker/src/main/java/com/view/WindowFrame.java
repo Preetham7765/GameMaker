@@ -57,6 +57,7 @@ public class WindowFrame extends JFrame implements IComposite {
 	}
 	
 	public FormPanel getFormPanel() {
+		System.out.println("In getform panel");
 		return formPanel;
 	}
 

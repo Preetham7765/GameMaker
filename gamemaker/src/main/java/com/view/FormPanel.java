@@ -52,8 +52,10 @@ public class FormPanel extends JPanel implements IComposite {
 		if(returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = chooser.getSelectedFile();
 			String path = file.getAbsolutePath();
+			System.out.println("path = " + path);
 			return path;
 		}
+		System.out.println("Return NULL");
 		return null;
 		
 	}
@@ -62,6 +64,7 @@ public class FormPanel extends JPanel implements IComposite {
 
 	public void createButtons(GameMakerController controller) {
 		this.controller = controller;
+		createSetBackgroundButton();
 		createBallButton();
 		createBrickButton();
 		createPaddleButton();
@@ -69,7 +72,7 @@ public class FormPanel extends JPanel implements IComposite {
 	}
 	
 	private void createSetBackgroundButton() {
-		ObjectPanelButton setBackgroundButton = new ObjectPanelButton("Choose background", controller);
+		ObjectPanelButton setBackgroundButton = new ObjectPanelButton("Background", controller);
 		this.add(setBackgroundButton);
 	}
 
