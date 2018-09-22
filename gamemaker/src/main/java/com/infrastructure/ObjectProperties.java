@@ -9,7 +9,26 @@ public class ObjectProperties {
 	private int width;
 	private int height;
 	private String type;
-	private boolean canCollect;
+	private boolean canCollect = false;
+	private boolean event = false;
+	private boolean collectible = false;
+	
+	public boolean isCollectible() {
+		return collectible;
+	}
+
+	public void setCollectible(boolean collectible) {
+		this.collectible = collectible;
+	}
+
+	public boolean isEvent() {
+		return event;
+	}
+
+	public void setEvent(boolean event) {
+		this.event = event;
+	}
+
 	
 	public String getType() {
 		return type;
@@ -84,9 +103,11 @@ public class ObjectProperties {
 		this.height = 10;
 		this.type = "";
 		this.canCollect = false;
+		this.collectible = false;
+		this.event = false;
 	}
 	
-	public ObjectProperties(int x, int y, int velX, int velY, int width, int height, String type, boolean canCollect) {
+	public ObjectProperties(int x, int y, int velX, int velY, int width, int height, String type, boolean canCollect, boolean event, boolean collectible) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -96,5 +117,7 @@ public class ObjectProperties {
 		this.height = height;
 		this.type = type;
 		this.canCollect = canCollect;
+		this.collectible = collectible;
+		this.event = event;
 	}
 }
