@@ -68,22 +68,20 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 	      
 	      int result1 = JOptionPane.showConfirmDialog(null, myPanel, 
 	               "Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
+	      
 	      if (result1 == JOptionPane.OK_OPTION) {
-	    	  objProp.velX = Integer.parseInt(vXField.getText());
-	    	  objProp.velY = Integer.parseInt(vYField.getText());
-	    	  objProp.width = Integer.parseInt(widthField.getText());
-	    	  objProp.height = Integer.parseInt(heightField.getText());
-		
-		selected = new HashMap<String, Object>();
-    	selected.put("Type", name);
-    	selected.put("Color", color);
-    	selected.put("Width", objProp.width);
-    	selected.put("Height", objProp.height);
-    	selected.put("velX", objProp.velX);
-    	selected.put("velY", objProp.velY);
-    	
-		formPanel.setSelected(selected);
-		
-	}
+			  objProp.velX = Integer.parseInt(vXField.getText());
+			  objProp.velY = Integer.parseInt(vYField.getText());
+			  objProp.width = Integer.parseInt(widthField.getText());
+			  objProp.height = Integer.parseInt(heightField.getText());
+			  selected = new HashMap<String, Object>();
+			selected.put("Type", name);
+			selected.put("Color", color);
+			selected.put("Width", objProp.width);
+			selected.put("Height", objProp.height);
+			selected.put("velX", objProp.velX);
+			selected.put("velY", objProp.velY);	    	
+			formPanel.setSelected(selected);
+	      }
 	}
 }

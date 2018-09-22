@@ -76,7 +76,7 @@ public class GameMakerController implements ActionListener, MouseListener {
         	windowFrame.getGamePanel().addComponent(composite);
         	windowFrame.draw(null);
         	
-//            rightPanel.add(selected);
+
             
 		}	
 	}

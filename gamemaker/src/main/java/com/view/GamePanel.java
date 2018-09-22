@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import com.controller.GameMakerController;
@@ -31,15 +32,17 @@ public class GamePanel extends JPanel implements IComposite {
 	public void addControllerListener(GameMakerController controller) {
 		addMouseListener(controller);
 	}
+	
 	@Override
-	public void paint(Graphics g) {
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		for(IComposite composite : compositeList) {
 			composite.draw(g);
 		}		
 	}
+	
 	public void draw(Graphics g) {
         repaint();
-			
 	}
 
 	public void addComponent(IComposite composite) {
@@ -48,7 +51,6 @@ public class GamePanel extends JPanel implements IComposite {
 	}
 
 	public void removeComponent(IComposite composite) {
-		// TODO Auto-generated method stub
 		compositeList.remove(composite);
 	}
 
