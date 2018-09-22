@@ -88,15 +88,5 @@ public class GamePanel extends JPanel implements IComposite, IPanel	 {
 		
 		return resized;
 	}
-	
-//	@Override
-//	public void paint(Graphics g)
-//	{
-//		super.paint(g);
-//		if(image != null)
-//		{
-//			g.drawImage(image, 0, 0, this);
-//		}
-//	}
 
 }
