@@ -90,7 +90,9 @@ public class Ball implements IComposite, Serializable {
 
 
 	public void draw(Graphics g) {
+		System.out.println("Ball is drawn");
 		g.fillOval(this.getX(), this.getY(), radius, radius);
+		
 	}
 
 	public Rectangle getBounds() {

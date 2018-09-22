@@ -38,6 +38,11 @@ public class App
 		GameMakerController controller = new GameMakerController(window1);
 		System.out.println("Game maker controller created");
 		
+		formPanel.createButtons(controller);
+		window1.setFormPanel(formPanel);
+		window1.setGamePanel(gamePanel);
+		gamePanel.addControllerListener(controller);
+
 		window1.setVisible(true);
 		window1.pack();
 	}

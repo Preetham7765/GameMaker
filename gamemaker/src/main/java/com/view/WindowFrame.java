@@ -15,7 +15,25 @@ import com.infrastructure.IComposite;
 @SuppressWarnings("serial")
 public class WindowFrame extends JFrame implements IComposite {
 	private ArrayList<IComposite> compositeList;
+	FormPanel formPanel;
+	GamePanel gamePanel;
 	
+	public GamePanel getGamePanel() {
+		return gamePanel;
+	}
+
+	public void setGamePanel(GamePanel gamePanel) {
+		this.gamePanel = gamePanel;
+	}
+
+	public FormPanel getFormPanel() {
+		return formPanel;
+	}
+
+	public void setFormPanel(FormPanel formPanel) {
+		this.formPanel = formPanel;
+	}
+
 	public WindowFrame() {
 		super();
 		this.compositeList = new ArrayList<IComposite>();
