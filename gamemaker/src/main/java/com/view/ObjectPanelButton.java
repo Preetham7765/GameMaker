@@ -20,7 +20,7 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 	private Color color;
 	String name;
 	ObjectProperties objProp = new ObjectProperties();
-	private FormPanel formPanel;
+	private WindowFrame windowFrame;
 	public HashMap<String, Object> selected = new HashMap<String, Object>();
 	
 	JTextField vXField;
@@ -29,17 +29,17 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 	JTextField heightField;
 	
 	
-	public ObjectPanelButton(String name, Color yellow, FormPanel formPanel) {
+	public ObjectPanelButton(String name, Color yellow, WindowFrame windowFrame) {
 		this.name=name;
-		this.width=width;
-		this.height=height;
+//		this.width=width;
+//		this.height=height;
 		setText(name);
 		setActionCommand(name);
 		addActionListener(this);
 		setVisible(true);
 		setAlignmentX(CENTER_ALIGNMENT);
 		setAlignmentY(CENTER_ALIGNMENT);
-		this.formPanel = formPanel;
+		this.windowFrame = windowFrame;
 		   vXField = new JTextField(Integer.toString(objProp.velX) ,5);
 			  vYField = new JTextField(Integer.toString(objProp.velY) ,5);
 		      widthField = new JTextField(Integer.toString(objProp.width), 5);
@@ -49,8 +49,13 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 
-	   
-
+		
+		if(name == "Background")
+		{
+			setBackground();
+		}
+		else
+		{
 		
 		 JPanel myPanel = new JPanel();
 	      myPanel.add(Box.createVerticalStrut(15)); // a spacer
@@ -81,7 +86,14 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 			selected.put("Height", objProp.height);
 			selected.put("velX", objProp.velX);
 			selected.put("velY", objProp.velY);	    	
-			formPanel.setSelected(selected);
+			windowFrame.getFormPanel().setSelected(selected);
 	      }
+		}
+	}
+	
+	public void setBackground()
+	{
+		String imagePath = windowFrame.getFormPanel().fileExplorer();
+		windowFrame.getGamePanel().setImage(imagePath);
 	}
 }

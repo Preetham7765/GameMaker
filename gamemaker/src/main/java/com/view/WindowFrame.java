@@ -15,24 +15,10 @@ import com.infrastructure.IComposite;
 @SuppressWarnings("serial")
 public class WindowFrame extends JFrame implements IComposite {
 	private ArrayList<IComposite> compositeList;
-	FormPanel formPanel;
-	GamePanel gamePanel;
-	
-	public GamePanel getGamePanel() {
-		return gamePanel;
-	}
 
-	public void setGamePanel(GamePanel gamePanel) {
-		this.gamePanel = gamePanel;
-	}
+	private FormPanel formPanel;
+	private GamePanel gamePanel;
 
-	public FormPanel getFormPanel() {
-		return formPanel;
-	}
-
-	public void setFormPanel(FormPanel formPanel) {
-		this.formPanel = formPanel;
-	}
 
 	public WindowFrame() {
 		super();
@@ -70,5 +56,22 @@ public class WindowFrame extends JFrame implements IComposite {
 	public void removeComponent(IComposite composite) {
 		// TODO Auto-generated method stub
 		compositeList.remove(composite);
+	}
+	
+	public FormPanel getFormPanel() {
+		System.out.println("In getform panel");
+		return formPanel;
+	}
+
+	public void setFormPanel(FormPanel formPanel) {
+		this.formPanel = formPanel;
+	}
+
+	public GamePanel getGamePanel() {
+		return gamePanel;
+	}
+
+	public void setGamePanel(GamePanel gamePanel) {
+		this.gamePanel = gamePanel;
 	}
 }
