@@ -9,10 +9,11 @@ import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
+import com.infrastructure.AbstractComponent;
 import com.infrastructure.Constants;
 import com.infrastructure.IComposite;
 
-public class Fire implements IComposite, Serializable {
+public class Fire extends AbstractComponent implements IComposite, Serializable {
 
 	private static final long serialVersionUID = 12L;
 	private int x;

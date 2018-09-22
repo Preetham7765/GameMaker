@@ -4,9 +4,10 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.io.Serializable;
 
+import com.infrastructure.AbstractComponent;
 import com.infrastructure.IComposite;
 
-public class Ball implements IComposite, Serializable {
+public class Ball extends AbstractComponent implements IComposite, Serializable {
 	
 	private static final long serialVersionUID = 6L;
 	private int x;

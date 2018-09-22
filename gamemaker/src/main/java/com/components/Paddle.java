@@ -4,10 +4,11 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.io.Serializable;
 
+import com.infrastructure.AbstractComponent;
 import com.infrastructure.Constants;
 import com.infrastructure.IComposite;
 
-public class Paddle implements IComposite, Serializable {
+public class Paddle extends AbstractComponent implements IComposite, Serializable {
 	
 	private static final long serialVersionUID = 11L;
 	private int x;
