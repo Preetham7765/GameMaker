@@ -135,7 +135,7 @@ public class GamePlayController implements Observer, KeyListener {
 			}
 		}
 		
-//		Collision of gameCharacter with collectable list
+//		Collision of gameCharacter with collectible list
 		
 		for(AbstractComponent collectibleComponent : collectibleList)
 		{
