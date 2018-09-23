@@ -1,6 +1,5 @@
 package com.infrastructure;
 
-import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.io.Serializable;
 
@@ -10,7 +9,7 @@ public abstract class AbstractComponent implements IComposite, Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private IActionBehavior ib;
+	private ActionBehavior actionBehavior;
 	private ObjectProperties objectProperties;
 	
 	public ObjectProperties getObjectProperties() {
@@ -21,12 +20,12 @@ public abstract class AbstractComponent implements IComposite, Serializable {
 		this.objectProperties = objectProperties;
 	}
 
-	public void setActionBehavior(IActionBehavior ib) {
-		this.ib = ib;
+	public void setActionBehavior(ActionBehavior actionBehavior) {
+		this.actionBehavior = actionBehavior;
 	}
 	
 	public void performAction() {
-		ib.action();
+		actionBehavior.performAction();
 	}
 	
 	
@@ -122,9 +121,5 @@ public abstract class AbstractComponent implements IComposite, Serializable {
 	public int getRightCoordinates() {
 		return getX() + getWidth();
 	}
-	
-	
-//	public void draw(Graphics g) {}
 
-	// public void serializable
 }

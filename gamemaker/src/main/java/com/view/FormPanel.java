@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.controller.GameMakerController;
+import com.infrastructure.ComponentType;
 import com.infrastructure.Constants;
 import com.infrastructure.IComposite;
 import com.infrastructure.IPanel;
@@ -83,27 +84,27 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 	}
 	
 	private void createSetBackgroundButton() {
-		ObjectPanelButton setBackgroundButton = new ObjectPanelButton("Background", null, windowFrame);
+		ObjectPanelButton setBackgroundButton = new ObjectPanelButton(ComponentType.BACKGROUND, null, windowFrame);
 		this.add(setBackgroundButton);
 	}
 
 	private void createFireButton() {
-		ObjectPanelButton fireButton = new ObjectPanelButton("Fire", Color.YELLOW, windowFrame);
+		ObjectPanelButton fireButton = new ObjectPanelButton(ComponentType.FIRE, Color.YELLOW, windowFrame);
 		this.add(fireButton);
 	}
 
 	private void createPaddleButton() {
-		ObjectPanelButton paddleButton = new ObjectPanelButton("Paddle", Color.red, windowFrame );
+		ObjectPanelButton paddleButton = new ObjectPanelButton(ComponentType.PADDLE, Color.red, windowFrame );
 		this.add(paddleButton);
 	}
 
 	private void createBrickButton() {
-		ObjectPanelButton brickButton = new ObjectPanelButton("Brick", Color.blue, windowFrame);
+		ObjectPanelButton brickButton = new ObjectPanelButton(ComponentType.BRICK, Color.blue, windowFrame);
 		this.add(brickButton);		
 	}
 
 	private void createBallButton() {
-		ObjectPanelButton ballButton = new ObjectPanelButton("Ball", Color.BLACK, windowFrame);
+		ObjectPanelButton ballButton = new ObjectPanelButton(ComponentType.BALL, Color.BLACK, windowFrame);
 		this.add(ballButton);				
 	}
 

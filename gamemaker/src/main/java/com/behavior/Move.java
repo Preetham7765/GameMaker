@@ -1,22 +1,22 @@
 package com.behavior;
 
-import com.infrastructure.AbstractComponent;
 import com.infrastructure.ActionBehavior;
+import com.infrastructure.ObjectProperties;
 
 public class Move implements ActionBehavior {
 	
-	private AbstractComponent abstractComponent;
+	private ObjectProperties objectProperties;
 	
-	public Move(AbstractComponent absComponent)
+	public Move(ObjectProperties objectProperties)
 	{
-		this.abstractComponent = absComponent;
+		this.objectProperties = objectProperties;
 	}
 
 	@Override
 	public void performAction() {
 		// TODO Auto-generated method stub
-		abstractComponent.setX(abstractComponent.getX() + abstractComponent.getVelX());
-		abstractComponent.setY(abstractComponent.getY() + abstractComponent.getVelY());
+		objectProperties.setX(objectProperties.getX() + objectProperties.getVelX());
+		objectProperties.setY(objectProperties.getY() + objectProperties.getVelY());
 		
 	}
 

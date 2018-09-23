@@ -4,12 +4,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
+import com.behavior.Move;
+import com.behavior.Visibility;
 import com.components.Ball;
 import com.components.Brick;
 import com.components.Fire;
 import com.components.Paddle;
 import com.infrastructure.AbstractComponent;
-import com.infrastructure.IComposite;
+import com.infrastructure.ComponentType;
+import com.infrastructure.ObjectListType;
 import com.infrastructure.ObjectProperties;
 import com.view.WindowFrame;
 
@@ -40,30 +44,30 @@ public class GameMakerController implements ActionListener, MouseListener {
             int y = arg0.getY(); 
             selected.setX(x);
             selected.setY(y);
-            String type = formPanelSelected.getType();
+            ComponentType componentType = formPanelSelected.getComponentType();
         	AbstractComponent composite = null;
-        	selected.setType(formPanelSelected.getType());
+        	selected.setComponentType(formPanelSelected.getComponentType());
         	selected.setHeight(formPanelSelected.getHeight());
         	selected.setWidth(formPanelSelected.getWidth());
         	selected.setVelX(formPanelSelected.getVelX());
         	selected.setVelY(formPanelSelected.getVelY());
-        	switch(type) {
-        		case "Ball":
+        	switch(componentType) {
+        		case BALL:
         		{
         			composite = new Ball(selected);
         			break;	
         		}
-        		case "Brick":
+        		case BRICK:
         		{
         			composite = new Brick(selected);
         			break;
         		}
-        		case "Paddle":
+        		case PADDLE:
         		{
         			composite = new Paddle(selected);
         			break;
         		}
-        		case "Fire":
+        		case FIRE:
         		{
         			composite = new Fire(selected);
         			break;
@@ -71,12 +75,18 @@ public class GameMakerController implements ActionListener, MouseListener {
         	}
         	
         	windowFrame.getGamePanel().addComponent(composite);
-        	if(composite.getObjectProperties().isCollectible()) {
+        	if(composite.getObjectProperties().getObjectListType() == ObjectListType.COLLECTIBLE) {
         		// set behavior to the object to visibility
+        		Visibility visibility = new Visibility(selected);
+        		composite.setActionBehavior(visibility);
         	}
-//        	if(!composite.getObjectProperties().isEvent()) {
-//        		// set behavior to move
-//        	}
+        	
+        	if(composite.getObjectProperties().getObjectListType() == ObjectListType.EVENT ||
+        			 composite.getObjectProperties().getObjectListType() == ObjectListType.ACTION) {
+        		// set behavior to move
+        		Move move = new Move(selected);
+        		composite.setActionBehavior(move);
+        	}
         	
         	windowFrame.draw(null);
 		}	

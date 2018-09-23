@@ -2,21 +2,22 @@ package com.behavior;
 
 import com.infrastructure.AbstractComponent;
 import com.infrastructure.ActionBehavior;
+import com.infrastructure.ObjectProperties;
 
 public class Visibility implements ActionBehavior {
 	
-	private AbstractComponent abstractComponent;
+	private ObjectProperties objectProperties;
 	
-	public Visibility(AbstractComponent abstractComponent)
+	public Visibility(ObjectProperties objectProperties)
 	{
-		this.abstractComponent = abstractComponent;
+		this.objectProperties = objectProperties;
 	}
 
 	@Override
 	public void performAction() {
 		// TODO Auto-generated method stub
 		
-		abstractComponent.setVisbility(false);
+		objectProperties.setVisibility(false);
 	}
 	
 	

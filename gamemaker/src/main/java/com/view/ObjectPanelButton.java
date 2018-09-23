@@ -3,7 +3,9 @@ package com.view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Enumeration;
 
+import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -14,6 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import com.infrastructure.ComponentType;
+import com.infrastructure.ObjectListType;
 import com.infrastructure.ObjectProperties;
 
 @SuppressWarnings("serial")
@@ -31,14 +35,16 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 	JCheckBox canCollectField;
 
 	
-	JCheckBox collectible;
+	JRadioButton collectible;
 	JRadioButton event;
+	JRadioButton action;
 	ButtonGroup group;
 	
-	public ObjectPanelButton(String name, Color yellow, WindowFrame windowFrame) {
-		this.name = name;
+	public ObjectPanelButton(ComponentType componentType, Color yellow, WindowFrame windowFrame) {
+//		this.name = name;
 		setText(name);
-		selected.setType(name);
+//		selected.setType(name);
+		selected.setComponentType(componentType);
 		setActionCommand(name);
 		addActionListener(this);
 		setVisible(true);
@@ -53,9 +59,13 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 		canCollectField = new JCheckBox("Can collect the collectibles");
 		
 		
-		collectible=new JCheckBox("Collectible");
+		collectible=new JRadioButton("Collectible");
 		event=new JRadioButton("Player object");
+		action = new JRadioButton("Game Object");
 		group=new ButtonGroup();
+		group.add(collectible);
+		group.add(event);
+		group.add(action);
 		
 	}
 	
@@ -100,9 +110,25 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 				selected.setWidth(Integer.parseInt(widthField.getText()));
 				selected.setHeight(Integer.parseInt(heightField.getText()));
 				selected.setCanCollect(canCollectField.isSelected());
-				selected.setCollectible(collectible.isSelected());
-				selected.setEvent(event.isSelected());
-				
+				int n = 1;
+				for (Enumeration<AbstractButton> buttons = group.getElements(); buttons.hasMoreElements(); n++)
+	            {
+	                AbstractButton button = buttons.nextElement();
+	                if (button.isSelected())
+	                {
+	                	String text = button.getText();
+	                	if(text.equals("Collectible")) {
+	                		selected.setObjectListType(ObjectListType.COLLECTIBLE);
+	                		
+	                	}else if(text.equals("Player object")) {
+	                		selected.setObjectListType(ObjectListType.EVENT);
+	                		
+	                	}else if(text.equals("Game Object")) {
+	                		selected.setObjectListType(ObjectListType.ACTION);
+	                		
+	                	}
+	                }
+	            }				
 				windowFrame.getFormPanel().setSelected(selected);
 	      	}
 		}
