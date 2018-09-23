@@ -6,7 +6,9 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import com.infrastructure.AbstractComponent;
+import com.infrastructure.ComponentType;
 import com.infrastructure.IComposite;
+import com.infrastructure.ObjectListType;
 import com.view.WindowFrame;
 
 public class GamePlayController implements IComposite, KeyListener{
@@ -29,7 +31,16 @@ public class GamePlayController implements IComposite, KeyListener{
 		
 		compositeList = windowFrame.getGamePanel().getComponentList();
 		for(AbstractComponent abstractComponent : compositeList) {
+			ObjectListType objectListType = abstractComponent.getObjectProperties().getObjectListType();
 			
+			if(objectListType == ObjectListType.ACTION) {
+				actionList.add(abstractComponent);
+			} else if(objectListType == ObjectListType.EVENT) {
+				eventList.add(abstractComponent);
+			}else if(objectListType == ObjectListType.COLLECTIBLE) {
+				collectibleList.add(abstractComponent);
+			}
+					
 		}
 		
 		
