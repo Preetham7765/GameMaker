@@ -86,9 +86,8 @@ public class ObjectProperties {
 		this.y = 5;
 		this.velX = 1;
 		this.velY = 1;
-		this.width = 10;
-		this.height = 10;
-//		this.type = "";
+		this.width = 50;
+		this.height = 50;
 		this.canCollect = false;
 //		this.collectible = false;
 //		this.event = false;

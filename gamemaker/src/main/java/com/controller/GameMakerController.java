@@ -27,7 +27,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 	}
 
 	public void displayButtons() {
-		this.windowFrame.getFormPanel().createButtons(this);
+		this.windowFrame.getFormPanel().createButtons();
 	}
 
 	public void actionPerformed(ActionEvent e) {}

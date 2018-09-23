@@ -18,6 +18,7 @@ public class WindowFrame extends JFrame implements IComposite {
 
 	private FormPanel formPanel;
 	private GamePanel gamePanel;
+	private StaticPanel staticPanel;
 
 
 	public WindowFrame() {
@@ -73,5 +74,15 @@ public class WindowFrame extends JFrame implements IComposite {
 
 	public void setGamePanel(GamePanel gamePanel) {
 		this.gamePanel = gamePanel;
+	}
+	
+	public StaticPanel getStaticPanel() {
+		System.out.println("In getform panel");
+		
+		return staticPanel;
+	}
+
+	public void setStaticPanel(StaticPanel staticPanel) {
+		this.staticPanel = staticPanel;
 	}
 }

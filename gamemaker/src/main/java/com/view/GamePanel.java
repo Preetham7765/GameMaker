@@ -1,7 +1,9 @@
 package com.view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -14,6 +16,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 
 import com.controller.GameMakerController;
 import com.infrastructure.AbstractComponent;
@@ -92,6 +95,7 @@ public class GamePanel extends JPanel implements IComposite, IPanel	 {
 		
 		return resized;
 	}
+	
 
 	@Override
 	public void addComponent(IComposite composite) throws Exception {

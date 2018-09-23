@@ -63,18 +63,26 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 		
 		selected.setComponentType(componentType);
 
+	}
 		
 		// TODO????
 		//		setActionCommand(name);
 		
 		
 		
+	public ObjectPanelButton(String name, Color color, WindowFrame windowFrame) {
+		setText(name);
+		setActionCommand(name);
 		addActionListener(this);
 		setVisible(true);
 		setAlignmentX(CENTER_ALIGNMENT);
 		setAlignmentY(CENTER_ALIGNMENT);
 		this.windowFrame = windowFrame;
+		
+		
 		this.windowFrame.getFormPanel().selected = selected;
+		
+		
 		vXField = new JTextField(Integer.toString(selected.getVelX()) ,5);
 		vYField = new JTextField(Integer.toString(selected.getVelY()) ,5);
 	    widthField = new JTextField(Integer.toString(selected.getWidth()), 5);
