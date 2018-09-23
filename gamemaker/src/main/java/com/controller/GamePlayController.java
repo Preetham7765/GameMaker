@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Deque;
 
 import com.commands.ClockTickCommand;
@@ -68,6 +69,64 @@ public class GamePlayController implements Observer, KeyListener {
 
 	
 	private void checkCollisionDetection() {
+		
+		for (AbstractComponent actionComponent: actionList)
+		{
+			for (AbstractComponent actionComponent2: actionList)
+			{
+//				Collision with other action component
+				if(actionComponent.getBounds().intersects(actionComponent2.getBounds()))
+				{
+					actionComponent.setVelX(-actionComponent.getVelX());
+					actionComponent.setVelY(-actionComponent.getVelY());
+					actionComponent2.setVelX(-actionComponent2.getVelX());
+					actionComponent2.setVelY(-actionComponent2.getVelY());
+				}
+			}
+			for (AbstractComponent collectibleComponent: collectibleList)
+			{
+//				Collision with collectible component
+				if(actionComponent.getBounds().intersects(collectibleComponent.getBounds()))
+				{	
+					if(actionComponent.getCanCollect()) {
+						collectibleComponent.performAction();
+					}
+					actionComponent.setVelX(-actionComponent.getVelX());
+					actionComponent.setVelY(-actionComponent.getVelY());
+					}
+			}
+//			Collision with game character
+			if(actionComponent.getBounds().intersects(gameCharacter.getBounds())) {
+				actionComponent.setVelX(-actionComponent.getVelX());
+				actionComponent.setVelY(-actionComponent.getVelY());
+			}
+			
+//			Collision action component with right wall
+			if(actionComponent.getRightCoordinates() >= Constants.GAME_PANEL_WIDTH)
+			{
+				actionComponent.setVelX(-actionComponent.getVelX());
+			}
+			
+//			Collision action component with left wall
+			if(actionComponent.getRightCoordinates() - actionComponent.getWidth() <= 0)
+			{
+				actionComponent.setVelX(-actionComponent.getVelX());
+			}
+			
+//			Collision action component with up wall
+			
+			if(actionComponent.getBottomCoordinates() - actionComponent.getHeight() <= 0)
+			{
+				actionComponent.setVelX(-actionComponent.getVelY());
+			}
+			
+//			Collision action component with bottom wall
+			
+			if(actionComponent.getBottomCoordinates() >= Constants.GAME_PANEL_HEIGHT)
+			{
+				actionComponent.setVelX(-actionComponent.getVelY());
+			}
+		}
 		
 	}
 

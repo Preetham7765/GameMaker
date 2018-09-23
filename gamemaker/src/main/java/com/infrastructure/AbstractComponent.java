@@ -87,8 +87,8 @@ public abstract class AbstractComponent implements IComposite, Serializable, Act
 	}
 
 
-	public void getCanCollect(boolean canCollect) {
-		this.objectProperties.getCanCollect();
+	public boolean getCanCollect() {
+		return this.objectProperties.getCanCollect();
 	}
 	
 	public void setcanCollect(boolean canCollect) {
