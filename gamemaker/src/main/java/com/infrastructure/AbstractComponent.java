@@ -1,6 +1,9 @@
 package com.infrastructure;
 
 import java.awt.Rectangle;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public abstract class AbstractComponent implements IComposite, Serializable, ActionBehavior {
@@ -120,5 +123,21 @@ public abstract class AbstractComponent implements IComposite, Serializable, Act
 	public int getRightCoordinates() {
 		return getX() + getWidth();
 	}
+
+	@Override
+	public void save(ObjectOutputStream op) {
+		try {
+			op.writeObject(this);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void load(ObjectInputStream ip) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 
 }

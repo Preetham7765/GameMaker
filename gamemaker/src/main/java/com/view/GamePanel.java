@@ -10,6 +10,8 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -105,6 +107,19 @@ public class GamePanel extends JPanel implements IComposite, IPanel	 {
 	@Override
 	public void removeComponent(IComposite composite) throws Exception {
 		throw new Exception();	
+	}
+
+	@Override
+	public void save(ObjectOutputStream op) {
+		for (AbstractComponent abstractComponent: compositeList) {
+			abstractComponent.save(op);
+		}		
+	}
+
+	@Override
+	public void load(ObjectInputStream ip) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

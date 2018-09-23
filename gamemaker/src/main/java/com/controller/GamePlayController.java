@@ -3,6 +3,11 @@ package com.controller;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Deque;
@@ -56,6 +61,25 @@ public class GamePlayController implements Observer, KeyListener {
 		}
 
 	}
+
+	public void save() {
+//		pause();
+		try {
+			String fileName = windowFrame.showSaveDialog();
+			if(!fileName.isEmpty()) {
+			FileOutputStream fileOut = new FileOutputStream(fileName);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			
+			windowFrame.save(out);
+//			out.writeObject(commandQueue);
+			out.close();
+			fileOut.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	
+	}
 	
 	public void update() {
 		commandQueue.addFirst(new ClockTickCommand(this.clock));
@@ -67,8 +91,33 @@ public class GamePlayController implements Observer, KeyListener {
 		checkCollisionDetection();
 		this.windowFrame.draw(null);
 	}
-
 	
+	
+	public void load() {
+//		pause();
+//		commandQueue.clear();
+		try {
+			int brickNum = 0;
+			String fileName = windowFrame.showOpenDialog();
+			if(!fileName.isEmpty()) {
+			FileInputStream fileIn = new FileInputStream(fileName);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			
+			windowFrame.load(in);
+			
+//			commandQueue.clear();
+//			Deque<Command> loadCmdQueue = (Deque<Command>) in.readObject();
+//			commandQueue.addAll(loadCmdQueue);
+//			initCommands();
+			in.close();
+			fileIn.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		windowFrame.draw(null);
+	}
+
 	private void checkCollisionDetection() {
 		
 //		Collision with action objects
@@ -152,7 +201,6 @@ public class GamePlayController implements Observer, KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		
 		int curX = Math.abs(this.gameCharacter.getVelX());
 		int curY = Math.abs(this.gameCharacter.getVelY());
 		
@@ -167,8 +215,6 @@ public class GamePlayController implements Observer, KeyListener {
 		
 		else if (e.getKeyCode() == KeyEvent.VK_DOWN) //  && canMoveRight(this, Constants.getPaddleRightOffset())
 			commandQueue.addFirst(new MoveCommand(this.gameCharacter, 0, -curY));
-
-//		commandQueue.collisionResponse(e);			
 	}
 
 	@Override
@@ -177,3 +223,4 @@ public class GamePlayController implements Observer, KeyListener {
 	@Override
 	public void keyTyped(KeyEvent arg0) {}
 }
+

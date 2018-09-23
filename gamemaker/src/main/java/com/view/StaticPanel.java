@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -124,7 +126,6 @@ public class StaticPanel extends JPanel implements IComposite, IPanel{
 		
 	}
 	
-	
 	@Override
 	public void paintComponent(Graphics g)
 	{
@@ -134,4 +135,15 @@ public class StaticPanel extends JPanel implements IComposite, IPanel{
 		}	
 	}
 
+	@Override
+	public void save(ObjectOutputStream op) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void load(ObjectInputStream ip) {
+		// TODO Auto-generated method stub
+		
+	}
 }

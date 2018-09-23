@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.util.HashMap;
 import java.io.File;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -174,6 +176,14 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 	@Override
 	public void removeComponent(AbstractComponent asbtractComponent) throws Exception {
 		throw new Exception();		
+	}
+
+	@Override
+	public void save(ObjectOutputStream op) {
+	}
+
+	@Override
+	public void load(ObjectInputStream ip) {
 	}
 
 }
