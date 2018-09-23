@@ -11,7 +11,6 @@ public class ObjectProperties {
 	private int velY;
 	private int width;
 	private int height;
-//	private String type;
 	private boolean canCollect = false;
 //	private boolean event = false;
 //	private boolean collectible = false;
@@ -86,8 +85,9 @@ public class ObjectProperties {
 		this.y = 5;
 		this.velX = 1;
 		this.velY = 1;
-		this.width = 50;
-		this.height = 50;
+		this.width = 10;
+		this.height = 10;
+//		this.type = "";
 		this.canCollect = false;
 //		this.collectible = false;
 //		this.event = false;

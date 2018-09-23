@@ -10,6 +10,25 @@ public class MoveCommand implements Command {
 	private int oldPositionVelY;
 	private AbstractComponent abstractComponent;
 	
+	public int getxOffset() {
+		return xOffset;
+	}
+
+	public void setxOffset(int xOffset) {
+		this.xOffset = xOffset;
+	}
+
+	public int getyOffset() {
+		return yOffset;
+	}
+
+	public void setyOffset(int yOffset) {
+		this.yOffset = yOffset;
+	}
+
+	private int xOffset;
+	private int yOffset;
+	
 	public AbstractComponent getComposite() {
 		return abstractComponent;
 	}
@@ -53,7 +72,7 @@ public class MoveCommand implements Command {
 	/**
 	 * Store the current state then update
 	 */
-	public MoveCommand(AbstractComponent abstractComponent) {
+	public MoveCommand(AbstractComponent abstractComponent, int xOffset, int yOffset) {
 		super();
 		this.setComposite(abstractComponent);
 		this.setOldPositionX(abstractComponent.getX());
@@ -67,8 +86,21 @@ public class MoveCommand implements Command {
 	 * This command was created when the timer ticked, so we advanced the ball accordingly
 	 */
 	public void execute() {
-//		this.abstractComponent.setPosition(oldPositionX,oldPositionY);
-		this.abstractComponent.performAction();
+		if (getxOffset() != 0 && getyOffset() != 0) {
+			this.abstractComponent.performAction();
+		}
+		else if (getxOffset() != 0) {
+			this.abstractComponent.setVelY(0);
+			this.abstractComponent.setVelX(xOffset);
+			this.abstractComponent.performAction();
+			this.abstractComponent.setVelY(this.abstractComponent.getVelY());
+		}
+		else {
+			this.abstractComponent.setVelX(0);
+			this.abstractComponent.setVelY(yOffset);
+			this.abstractComponent.performAction();
+			this.abstractComponent.setVelX(this.abstractComponent.getVelX());
+		}
 	}
 
 	/**

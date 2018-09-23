@@ -146,8 +146,13 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 			myPanel.add(event);
 			myPanel.add(Box.createHorizontalStrut(15));
 			
+			myPanel.add(action);
+	     
+			myPanel.add(Box.createHorizontalStrut(15));
+			
 			myPanel.add(collectible);
 	     
+			
 			int result1 = JOptionPane.showConfirmDialog(null, myPanel, 
 	               "Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
 	      
