@@ -6,7 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import com.controller.GameMakerController;
+import com.controller.GamePlayController;
 import com.infrastructure.Constants;
+import com.observable.GameTimer;
 import com.view.FormPanel;
 import com.view.GamePanel;
 import com.view.MainPanel;
@@ -20,6 +22,8 @@ public class App
 {
 	
 	public static void makeGame() {
+		GameTimer gameTimer = new GameTimer();
+		
 		WindowFrame windowFrame = new WindowFrame();
 
 		MainPanel mainPanel = new MainPanel();
@@ -37,13 +41,16 @@ public class App
 		mainPanel.addComponent(gamePanel);
 		windowFrame.setGamePanel(gamePanel);
 		
-		GameMakerController controller = new GameMakerController(windowFrame);
+		GameMakerController gmController = new GameMakerController(windowFrame);
+		System.out.println("Game maker controller created");
+		
+		GamePlayController gpController = new GamePlayController(windowFrame);
 		System.out.println("Game maker controller created");
 		
 		windowFrame.setFormPanel(formPanel);
 		windowFrame.setGamePanel(gamePanel);
-		formPanel.createButtons(controller);
-		gamePanel.addControllerListener(controller);
+		formPanel.createButtons(gmController);
+		gamePanel.addControllerListener(gmController);
 
 		windowFrame.setVisible(true);
 		windowFrame.pack();

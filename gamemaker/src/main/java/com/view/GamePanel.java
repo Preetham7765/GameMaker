@@ -37,6 +37,10 @@ public class GamePanel extends JPanel implements IComposite, IPanel	 {
 		setPreferredSize(new Dimension(Constants.GAME_PANEL_WIDTH, Constants.GAME_PANEL_HEIGHT));	
 	}
 	
+	public ArrayList<IComposite> getComponentList(){
+		return(this.compositeList);
+	}
+	
 	public void addControllerListener(GameMakerController controller) {
 		addMouseListener(controller);
 	}
