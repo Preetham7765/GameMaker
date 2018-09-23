@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import com.controller.GameMakerController;
@@ -37,7 +36,7 @@ public class GamePanel extends JPanel implements IComposite, IPanel	 {
 		setPreferredSize(new Dimension(Constants.GAME_PANEL_WIDTH, Constants.GAME_PANEL_HEIGHT));	
 	}
 	
-	public ArrayList<IComposite> getComponentList(){
+	public ArrayList<AbstractComponent> getComponentList(){
 		return(this.compositeList);
 	}
 	
