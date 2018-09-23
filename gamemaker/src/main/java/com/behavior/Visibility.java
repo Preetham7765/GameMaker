@@ -16,7 +16,7 @@ public class Visibility implements ActionBehavior {
 	public void performAction() {
 		// TODO Auto-generated method stub
 		
-		
+		abstractComponent.setVisbility(false);
 	}
 	
 	

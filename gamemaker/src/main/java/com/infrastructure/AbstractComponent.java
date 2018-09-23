@@ -101,6 +101,16 @@ public abstract class AbstractComponent implements IComposite, Serializable {
 		this.objectProperties.setHeight(height);
 	}
 	
+	public boolean getVisibility()
+	{
+		return this.objectProperties.isVisibility();
+	}
+	
+	public void setVisbility(boolean visibility)
+	{
+		this.objectProperties.setVisibility(visibility);
+	}
+	
 	public Rectangle getBounds() {
 		return new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 	}	
@@ -112,6 +122,7 @@ public abstract class AbstractComponent implements IComposite, Serializable {
 	public int getRightCoordinates() {
 		return getX() + getWidth();
 	}
+	
 	
 //	public void draw(Graphics g) {}
 

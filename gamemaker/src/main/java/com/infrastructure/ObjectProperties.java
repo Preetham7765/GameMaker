@@ -12,6 +12,7 @@ public class ObjectProperties {
 	private boolean canCollect = false;
 	private boolean event = false;
 	private boolean collectible = false;
+	private boolean visibility = true;
 	
 	public boolean isCollectible() {
 		return collectible;
@@ -105,9 +106,11 @@ public class ObjectProperties {
 		this.canCollect = false;
 		this.collectible = false;
 		this.event = false;
+		this.visibility = true;
 	}
 	
-	public ObjectProperties(int x, int y, int velX, int velY, int width, int height, String type, boolean canCollect, boolean event, boolean collectible) {
+	public ObjectProperties(int x, int y, int velX, int velY, int width, int height, String type, boolean canCollect, 
+							boolean event, boolean collectible, boolean visibility) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -119,5 +122,13 @@ public class ObjectProperties {
 		this.canCollect = canCollect;
 		this.collectible = collectible;
 		this.event = event;
+	}
+
+	public boolean isVisibility() {
+		return visibility;
+	}
+
+	public void setVisibility(boolean visibility) {
+		this.visibility = visibility;
 	}
 }
