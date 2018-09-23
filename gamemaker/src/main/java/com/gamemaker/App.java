@@ -2,18 +2,15 @@ package com.gamemaker;
 
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import javax.swing.WindowConstants;
 
+import com.components.Clock;
 import com.controller.GameMakerController;
-
 import com.controller.GamePlayController;
-import com.infrastructure.Constants;
+import com.infrastructure.ObjectProperties;
 import com.observable.GameTimer;
-
 import com.view.FormPanel;
 import com.view.GamePanel;
 import com.view.MainPanel;
@@ -84,12 +81,23 @@ public class App
 
 	}
 		else if( selectType=="Game Play" && result==JOptionPane.OK_OPTION) {
+			ObjectProperties objectProperties=new ObjectProperties();
+			objectProperties.setX(20);
+			objectProperties.setY(50);
+			
 			WindowFrame windowFrame = new WindowFrame();
 			
 			MainPanel mainPanel = new MainPanel();
 			windowFrame.addComponent(mainPanel);
 			
 			StaticPanel staticPanel = new StaticPanel(windowFrame);
+			Clock clock=new Clock(objectProperties);
+			try {
+				staticPanel.addComponent(clock);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 			System.out.println("Static Panel"+ staticPanel);
 			mainPanel.addComponent(staticPanel);
 			
