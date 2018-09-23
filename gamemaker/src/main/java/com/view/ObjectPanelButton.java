@@ -23,18 +23,17 @@ import com.infrastructure.ObjectProperties;
 
 @SuppressWarnings("serial")
 public class ObjectPanelButton extends JButton implements ActionListener {
-	String name;
+	
+//	private String name;
 	private WindowFrame windowFrame;
 	private ObjectProperties selected = new ObjectProperties();
-//	public HashMap<String, Object> selected = new HashMap<String, Object>();
-//	public ObjectProperties selected = null;
+	private ComponentType componentType;
 	
 	JTextField vXField;
 	JTextField vYField;
 	JTextField widthField;
 	JTextField heightField;
 	JCheckBox canCollectField;
-
 	
 	JRadioButton collectible;
 	JRadioButton event;
@@ -42,11 +41,34 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 	ButtonGroup group;
 	
 	public ObjectPanelButton(ComponentType componentType, Color yellow, WindowFrame windowFrame) {
-//		this.name = name;
-		setText(name);
-//		selected.setType(name);
+
+		this.componentType = componentType;
+		if(componentType == ComponentType.BALL)
+			setText("Ball");
+		
+		if(componentType == ComponentType.BRICK)
+			setText("Brick");
+		
+		if(componentType == ComponentType.PADDLE)
+			setText("Paddle");
+		
+		if(componentType == ComponentType.CLOCK)
+			setText("Clock");
+		
+		if(componentType == ComponentType.FIRE)
+			setText("Fire");
+		
+		if(componentType == ComponentType.BACKGROUND)
+			setText("Background");
+		
 		selected.setComponentType(componentType);
-		setActionCommand(name);
+
+		
+		// TODO????
+		//		setActionCommand(name);
+		
+		
+		
 		addActionListener(this);
 		setVisible(true);
 		setAlignmentX(CENTER_ALIGNMENT);
@@ -73,7 +95,7 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		if(name == "Background")
+		if(componentType.equals(ComponentType.BACKGROUND))
 		{
 			setBackground();
 		}

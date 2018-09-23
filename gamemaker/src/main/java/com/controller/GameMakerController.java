@@ -73,7 +73,11 @@ public class GameMakerController implements ActionListener, MouseListener {
         		{
         			abstractComponent = new Fire(selected);
         			break;
-        		}        		
+        		}      
+        		case BACKGROUND:
+        		{
+        			windowFrame.getFormPanel().createSetBackgroundButton();
+        		}
         	}
         	
         	windowFrame.getGamePanel().addComponent(abstractComponent);

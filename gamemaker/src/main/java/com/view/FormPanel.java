@@ -87,7 +87,7 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 		createFireButton();
 	}
 	
-	private void createSetBackgroundButton() {
+	public void createSetBackgroundButton() {
 		ObjectPanelButton setBackgroundButton = new ObjectPanelButton(ComponentType.BACKGROUND, null, windowFrame);
 		this.add(setBackgroundButton);
 	}
