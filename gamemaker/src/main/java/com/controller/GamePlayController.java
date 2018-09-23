@@ -29,8 +29,8 @@ public class GamePlayController implements Observer, KeyListener {
 	
 	public GamePlayController(WindowFrame windowFrame) {
 		
-		loadComponentList();
 		this.windowFrame = windowFrame;
+		loadComponentList();
 		
 	}
 	
