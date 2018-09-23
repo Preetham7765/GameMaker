@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
+import com.infrastructure.AbstractComponent;
 import com.infrastructure.IComposite;
 import com.infrastructure.IPanel;
 
@@ -49,4 +50,13 @@ public class MainPanel extends JPanel implements IComposite, IPanel {
 		compositeList.remove(composite);
 	}
 
+	@Override
+	public void addComponent(AbstractComponent asbtractComponent) throws Exception {
+		throw new Exception();
+	}
+
+	@Override
+	public void removeComponent(AbstractComponent asbtractComponent) throws Exception {
+		throw new Exception();
+	}
 }

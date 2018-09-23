@@ -44,9 +44,11 @@ public class GameMakerController implements ActionListener, MouseListener {
             int y = arg0.getY(); 
             selected.setX(x);
             selected.setY(y);
+
             ComponentType componentType = formPanelSelected.getComponentType();
-        	AbstractComponent composite = null;
+        	AbstractComponent abstractComponent = null;
         	selected.setComponentType(formPanelSelected.getComponentType());
+
         	selected.setHeight(formPanelSelected.getHeight());
         	selected.setWidth(formPanelSelected.getWidth());
         	selected.setVelX(formPanelSelected.getVelX());
@@ -54,38 +56,39 @@ public class GameMakerController implements ActionListener, MouseListener {
         	switch(componentType) {
         		case BALL:
         		{
-        			composite = new Ball(selected);
+        			abstractComponent = new Ball(selected);
         			break;	
         		}
         		case BRICK:
         		{
-        			composite = new Brick(selected);
+        			abstractComponent = new Brick(selected);
         			break;
         		}
         		case PADDLE:
         		{
-        			composite = new Paddle(selected);
+        			abstractComponent = new Paddle(selected);
         			break;
         		}
         		case FIRE:
         		{
-        			composite = new Fire(selected);
+        			abstractComponent = new Fire(selected);
         			break;
         		}        		
         	}
         	
-        	windowFrame.getGamePanel().addComponent(composite);
-        	if(composite.getObjectProperties().getObjectListType() == ObjectListType.COLLECTIBLE) {
+        	windowFrame.getGamePanel().addComponent(abstractComponent);
+        	if(abstractComponent.getObjectProperties().getObjectListType() == ObjectListType.COLLECTIBLE) {
+
         		// set behavior to the object to visibility
         		Visibility visibility = new Visibility(selected);
-        		composite.setActionBehavior(visibility);
+        		abstractComponent.setActionBehavior(visibility);
         	}
         	
-        	if(composite.getObjectProperties().getObjectListType() == ObjectListType.EVENT ||
-        			 composite.getObjectProperties().getObjectListType() == ObjectListType.ACTION) {
+        	if(abstractComponent.getObjectProperties().getObjectListType() == ObjectListType.EVENT ||
+        			 abstractComponent.getObjectProperties().getObjectListType() == ObjectListType.ACTION) {
         		// set behavior to move
         		Move move = new Move(selected);
-        		composite.setActionBehavior(move);
+        		abstractComponent.setActionBehavior(move);
         	}
         	
         	windowFrame.draw(null);

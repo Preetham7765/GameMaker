@@ -26,7 +26,6 @@ public class Fire extends AbstractComponent  {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 	
 	public BufferedImage getImage() {

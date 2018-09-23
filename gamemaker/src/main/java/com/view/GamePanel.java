@@ -17,6 +17,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import com.controller.GameMakerController;
+import com.infrastructure.AbstractComponent;
 import com.infrastructure.Constants;
 import com.infrastructure.IComposite;
 import com.infrastructure.IPanel;
@@ -24,7 +25,7 @@ import com.infrastructure.IPanel;
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements IComposite, IPanel	 {
 
-	private ArrayList<IComposite> compositeList;
+	private ArrayList<AbstractComponent> compositeList;
 	private BufferedImage image;
 
 	public GamePanel() {
@@ -58,12 +59,12 @@ public class GamePanel extends JPanel implements IComposite, IPanel	 {
         repaint();
 	}
 
-	public void addComponent(IComposite composite) {
-		compositeList.add(composite);
+	public void addComponent(AbstractComponent abstractComponent) {
+		compositeList.add(abstractComponent);
 	}
 
-	public void removeComponent(IComposite composite) {
-		compositeList.remove(composite);
+	public void removeComponent(AbstractComponent abstractComponent) {
+		compositeList.remove(abstractComponent);
 	}
 	
 	public void setImage(String path)
@@ -87,6 +88,16 @@ public class GamePanel extends JPanel implements IComposite, IPanel	 {
 		g2d.dispose();
 		
 		return resized;
+	}
+
+	@Override
+	public void addComponent(IComposite composite) throws Exception {
+		throw new Exception();
+	}
+
+	@Override
+	public void removeComponent(IComposite composite) throws Exception {
+		throw new Exception();	
 	}
 
 }
