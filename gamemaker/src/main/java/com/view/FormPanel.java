@@ -3,6 +3,7 @@ package com.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.HashMap;
 import java.io.File;
@@ -17,6 +18,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.controller.GameMakerController;
+
+import com.infrastructure.ComponentType;
+
+import com.infrastructure.AbstractComponent;
+
 import com.infrastructure.Constants;
 import com.infrastructure.IComposite;
 import com.infrastructure.IPanel;
@@ -41,11 +47,12 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 	public FormPanel(WindowFrame window) {
 		super();
 		this.windowFrame = window;
-		setBorder( BorderFactory.createLineBorder(Color.black));
+		setBorder( BorderFactory.createLineBorder(Color.red));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setMaximumSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
 		setMinimumSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
 		setPreferredSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));	
+		setBackground(Color.BLACK);
 	}
 	
 	public String fileExplorer()
@@ -67,14 +74,19 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 	
 
 
-	public void createButtons(GameMakerController controller) {
-//		this.controller = controller;
-		
+	public void createButtons() {
+
 		JLabel backgroundText = new JLabel("Choose your background");
+		backgroundText.setForeground(Color.red);
+		backgroundText.setFont(new Font("Helvetica", Font.BOLD, 20));
+		this.add(Box.createRigidArea(new Dimension(10, 50)));
 		this.add(backgroundText);
 		createSetBackgroundButton();
 
 		JLabel select_object = new JLabel("Select any object to add to GamePanel");
+		select_object.setForeground(Color.red);
+		select_object.setFont(new Font("Helvetica", Font.BOLD, 15));
+		this.add(Box.createRigidArea(new Dimension(10, 50)));
 		this.add(select_object);
 		createBallButton();
 		createBrickButton();
@@ -82,81 +94,59 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 		createFireButton();
 	}
 	
-	private void createSetBackgroundButton() {
-		ObjectPanelButton setBackgroundButton = new ObjectPanelButton("Background", null, windowFrame);
+	public void createSetBackgroundButton() {
+		ObjectPanelButton setBackgroundButton = new ObjectPanelButton(ComponentType.BACKGROUND, null, windowFrame);
+		this.add(Box.createRigidArea(new Dimension(30, 30)));
 		this.add(setBackgroundButton);
 	}
 
 	private void createFireButton() {
-		ObjectPanelButton fireButton = new ObjectPanelButton("Fire", Color.YELLOW, windowFrame);
+		ObjectPanelButton fireButton = new ObjectPanelButton(ComponentType.FIRE, Color.YELLOW, windowFrame);
+		fireButton.setBackground(Color.yellow);
+		this.add(Box.createRigidArea(new Dimension(30, 30)));
 		this.add(fireButton);
 	}
 
 	private void createPaddleButton() {
-		ObjectPanelButton paddleButton = new ObjectPanelButton("Paddle", Color.red, windowFrame );
+		ObjectPanelButton paddleButton = new ObjectPanelButton(ComponentType.PADDLE, Color.red, windowFrame );
+		paddleButton.setBackground(Color.red);
+		this.add(Box.createRigidArea(new Dimension(30, 30)));
 		this.add(paddleButton);
 	}
 
 	private void createBrickButton() {
-		ObjectPanelButton brickButton = new ObjectPanelButton("Brick", Color.blue, windowFrame);
+		ObjectPanelButton brickButton = new ObjectPanelButton(ComponentType.BRICK, Color.blue, windowFrame);
+		brickButton.setBackground(Color.blue);
+		this.add(Box.createRigidArea(new Dimension(30, 30)));
 		this.add(brickButton);		
 	}
 
 	private void createBallButton() {
-		ObjectPanelButton ballButton = new ObjectPanelButton("Ball", Color.BLACK, windowFrame);
+		ObjectPanelButton ballButton = new ObjectPanelButton(ComponentType.BALL, Color.BLACK, windowFrame);
+		ballButton.setBackground(Color.green);
+		this.add(Box.createRigidArea(new Dimension(30, 30)));
 		this.add(ballButton);				
 	}
 
 	public void draw(Graphics g) {
 	}
 
-	public void addComponent(IComposite composite) {
-		return;
+	public void addComponent(IComposite composite) throws Exception {
+		throw new Exception();
 	}
 
-	public void removeComponent(IComposite composite) {
-		return;
+	public void removeComponent(IComposite composite) throws Exception {
+		throw new Exception();
 	}
-	
-//	public static ObjectProperties savePopUp() {
-//		ObjectProperties objProp = new ObjectProperties();
-//		 JTextField xField = new JTextField(Integer.toString(objProp.getX()) ,5);
-//	     JTextField yField = new JTextField(Integer.toString(objProp.getY()) ,5);
-//	     JTextField vXField = new JTextField(Integer.toString(objProp.getVelX()) ,5);
-//		 JTextField vYField = new JTextField(Integer.toString(objProp.getVelY()) ,5);
-//	     JTextField width = new JTextField(Integer.toString(objProp.getWidth()), 5);
-//		 JTextField height = new JTextField(Integer.toString(objProp.getHeight()) ,5);
-//
-//	      JPanel myPanel = new JPanel();
-//	      myPanel.add(new JLabel("x: "));
-//	      myPanel.add(xField);
-//	      myPanel.add(Box.createVerticalStrut(15)); // a spacer
-//	      myPanel.add(new JLabel("y: "));
-//	      myPanel.add(yField);
-//	      myPanel.add(Box.createVerticalStrut(15)); // a spacer
-//	      myPanel.add(new JLabel("Velocity X: "));
-//	      myPanel.add(vXField);
-//	      myPanel.add(Box.createVerticalStrut(15)); // a spacer
-//	      myPanel.add(new JLabel("Velocity Y: "));
-//	      myPanel.add(vYField);
-//	      myPanel.add(Box.createVerticalStrut(15)); // a spacer
-//	      myPanel.add(new JLabel("Width: "));
-//	      myPanel.add(width);
-//	      myPanel.add(Box.createVerticalStrut(15)); // a spacer
-//	      myPanel.add(new JLabel("Height: "));
-//	      myPanel.add(height);
-//	      
-//	      int result = JOptionPane.showConfirmDialog(null, myPanel, 
-//	               "Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
-//	      if (result == JOptionPane.OK_OPTION) {
-//	    	  objProp.setX(Integer.parseInt(xField.getText()));
-//	    	  objProp.setY(Integer.parseInt(yField.getText()));
-//	    	  objProp.setVelX(Integer.parseInt(vXField.getText()));
-//	    	  objProp.setVelY(Integer.parseInt(vYField.getText()));
-//	    	  objProp.setWidth(Integer.parseInt(width.getText()));
-//	    	  objProp.setHeight(Integer.parseInt(height.getText()));
-//	    }
-//	      return(objProp);
-//	}
+
+	@Override
+	public void addComponent(AbstractComponent asbtractComponent) throws Exception {
+		throw new Exception();		
+	}
+
+	@Override
+	public void removeComponent(AbstractComponent asbtractComponent) throws Exception {
+		throw new Exception();		
+	}
 
 }

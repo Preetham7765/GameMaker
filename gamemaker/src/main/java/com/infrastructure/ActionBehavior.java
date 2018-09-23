@@ -1,5 +1,7 @@
 package com.infrastructure;
 
-public interface IActionBehavior {
+public interface ActionBehavior {
+	
 	public void performAction();
+	
 }

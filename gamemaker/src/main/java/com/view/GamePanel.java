@@ -1,7 +1,9 @@
 package com.view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -13,10 +15,11 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 
 import com.controller.GameMakerController;
+import com.infrastructure.AbstractComponent;
 import com.infrastructure.Constants;
 import com.infrastructure.IComposite;
 import com.infrastructure.IPanel;
@@ -24,7 +27,7 @@ import com.infrastructure.IPanel;
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements IComposite, IPanel	 {
 
-	private ArrayList<IComposite> compositeList;
+	private ArrayList<AbstractComponent> compositeList;
 	private BufferedImage image;
 
 	public GamePanel() {
@@ -34,6 +37,10 @@ public class GamePanel extends JPanel implements IComposite, IPanel	 {
 		setMaximumSize(new Dimension(Constants.GAME_PANEL_WIDTH, Constants.GAME_PANEL_HEIGHT));
 		setMinimumSize(new Dimension(Constants.GAME_PANEL_WIDTH, Constants.GAME_PANEL_HEIGHT));
 		setPreferredSize(new Dimension(Constants.GAME_PANEL_WIDTH, Constants.GAME_PANEL_HEIGHT));	
+	}
+	
+	public ArrayList<AbstractComponent> getComponentList(){
+		return(this.compositeList);
 	}
 	
 	public void addControllerListener(GameMakerController controller) {
@@ -58,12 +65,12 @@ public class GamePanel extends JPanel implements IComposite, IPanel	 {
         repaint();
 	}
 
-	public void addComponent(IComposite composite) {
-		compositeList.add(composite);
+	public void addComponent(AbstractComponent abstractComponent) {
+		compositeList.add(abstractComponent);
 	}
 
-	public void removeComponent(IComposite composite) {
-		compositeList.remove(composite);
+	public void removeComponent(AbstractComponent abstractComponent) {
+		compositeList.remove(abstractComponent);
 	}
 	
 	public void setImage(String path)
@@ -89,14 +96,15 @@ public class GamePanel extends JPanel implements IComposite, IPanel	 {
 		return resized;
 	}
 	
-//	@Override
-//	public void paint(Graphics g)
-//	{
-//		super.paint(g);
-//		if(image != null)
-//		{
-//			g.drawImage(image, 0, 0, this);
-//		}
-//	}
+
+	@Override
+	public void addComponent(IComposite composite) throws Exception {
+		throw new Exception();
+	}
+
+	@Override
+	public void removeComponent(IComposite composite) throws Exception {
+		throw new Exception();	
+	}
 
 }

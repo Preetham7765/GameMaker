@@ -1,20 +1,31 @@
 package com.infrastructure;
 
-import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.io.Serializable;
 
-public abstract class AbstractComponent implements IComposite, Serializable {
+public abstract class AbstractComponent implements IComposite, Serializable, ActionBehavior {
 	
-	IActionBehavior ib;
-	ObjectProperties objectProperties;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private ActionBehavior actionBehavior;
+	private ObjectProperties objectProperties;
 	
-	public void setActionBehavior(IActionBehavior ib) {
-		this.ib = ib;
+	public ObjectProperties getObjectProperties() {
+		return objectProperties;
+	}
+
+	public void setObjectProperties(ObjectProperties objectProperties) {
+		this.objectProperties = objectProperties;
+	}
+
+	public void setActionBehavior(ActionBehavior actionBehavior) {
+		this.actionBehavior = actionBehavior;
 	}
 	
 	public void performAction() {
-		ib.action();
+		actionBehavior.performAction();
 	}
 	
 	
@@ -32,8 +43,7 @@ public abstract class AbstractComponent implements IComposite, Serializable {
 	public void setX(int x) {
 		this.objectProperties.setX(x);
 	}
-
-
+	
 	public int getY() {
 		return this.objectProperties.getY();
 	}
@@ -77,8 +87,26 @@ public abstract class AbstractComponent implements IComposite, Serializable {
 	}
 
 
+	public void getCanCollect(boolean canCollect) {
+		this.objectProperties.getCanCollect();
+	}
+	
+	public void setcanCollect(boolean canCollect) {
+		this.objectProperties.setCanCollect(canCollect);
+	}
+	
 	public void setHeight(int height) {
 		this.objectProperties.setHeight(height);
+	}
+	
+	public boolean getVisibility()
+	{
+		return this.objectProperties.isVisibility();
+	}
+	
+	public void setVisbility(boolean visibility)
+	{
+		this.objectProperties.setVisibility(visibility);
 	}
 	
 	public Rectangle getBounds() {
@@ -92,8 +120,5 @@ public abstract class AbstractComponent implements IComposite, Serializable {
 	public int getRightCoordinates() {
 		return getX() + getWidth();
 	}
-	
-//	public void draw(Graphics g) {}
 
-	// public void serializable
 }

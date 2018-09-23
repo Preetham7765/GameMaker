@@ -1,16 +1,21 @@
 package com.components;
 
+import java.awt.Graphics;
 import java.io.Serializable;
 
-public class Clock implements Serializable {
+import com.infrastructure.AbstractComponent;
+import com.infrastructure.ObjectProperties;
+
+public class Clock extends AbstractComponent implements Serializable {
 
 	private static final long serialVersionUID = 8L;
 	
 	public long milisecondsElapsed;
-	public final int DELTA;
+//	public final int DELTA;
 
-	public Clock(int delta) {
-		this.DELTA = delta;
+	public Clock(ObjectProperties objectProperties) {
+		super(objectProperties);
+//		this.DELTA = delta;
 		milisecondsElapsed = 0;
 	}
 
@@ -34,11 +39,16 @@ public class Clock implements Serializable {
 		this.milisecondsElapsed = ms;
 	}
 
-	private int getMinutes() {
+	public int getMinutes() {
 		return (int) (milisecondsElapsed / 60000);
 	}
 
-	private int getSeconds() {
+	public int getSeconds() {
 		return (int) ((milisecondsElapsed / 1000) % 60);
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		// TODO Auto-generated method stub
 	}
 }

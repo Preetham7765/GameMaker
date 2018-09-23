@@ -1,26 +1,24 @@
 package com.controller;
 
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.HashMap;
+
+import com.behavior.Move;
+import com.behavior.Visibility;
 import com.components.Ball;
 import com.components.Brick;
 import com.components.Fire;
 import com.components.Paddle;
-import com.infrastructure.IComposite;
-import java.io.File;
-import javax.swing.JFileChooser;
-import com.components.Ball;
+import com.infrastructure.AbstractComponent;
+import com.infrastructure.ComponentType;
+import com.infrastructure.ObjectListType;
 import com.infrastructure.ObjectProperties;
 import com.view.WindowFrame;
 
 public class GameMakerController implements ActionListener, MouseListener {
 	
-	private String prevObjName = null;
 	private WindowFrame windowFrame;
 
 	public GameMakerController(WindowFrame windowFrame)
@@ -29,32 +27,16 @@ public class GameMakerController implements ActionListener, MouseListener {
 	}
 
 	public void displayButtons() {
-		this.windowFrame.getFormPanel().createButtons(this);
+		this.windowFrame.getFormPanel().createButtons();
 	}
 
-//	public void createObject(String objName, int x, int y, int velX, int velY, int width, int height)
-//	{
-//		if(objName.equals("Ball"))
-//		{
-//			Ball ball = new Ball(new ObjectProperties(x, y, velX, velY, width, height, "Ball"));
-//			windowFrame.getGamePanel().addComponent(ball);	
-//		}
-//	}
-
 	public void actionPerformed(ActionEvent e) {}
-	
-//	public void setBackground()
-//	{
-//		String imagePath = windowFrame.getFormPanel().fileExplorer();
-//		windowFrame.getGamePanel().setImage(imagePath);
-//	}
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-//		System.out.println("Mouse clicked");
 		ObjectProperties selected = new ObjectProperties();
-//		selected.setX;
 		ObjectProperties formPanelSelected = windowFrame.getFormPanel().getSelected();
+		
 		
 		if (formPanelSelected != null) {
 			
@@ -62,39 +44,57 @@ public class GameMakerController implements ActionListener, MouseListener {
             int y = arg0.getY(); 
             selected.setX(x);
             selected.setY(y);
-            String type = formPanelSelected.getType();
-        	IComposite composite = null;
-        	selected.setType(formPanelSelected.getType());
+
+            ComponentType componentType = formPanelSelected.getComponentType();
+        	AbstractComponent abstractComponent = null;
+        	selected.setComponentType(formPanelSelected.getComponentType());
+
         	selected.setHeight(formPanelSelected.getHeight());
         	selected.setWidth(formPanelSelected.getWidth());
         	selected.setVelX(formPanelSelected.getVelX());
         	selected.setVelY(formPanelSelected.getVelY());
-//        	selected.set
-//        	selected.set
-        	switch(type) {
-        		case "Ball":
+        	switch(componentType) {
+        		case BALL:
         		{
-        			composite = new Ball(selected);
+        			abstractComponent = new Ball(selected);
         			break;	
         		}
-        		case "Brick":
+        		case BRICK:
         		{
-        			composite = new Brick(selected);
+        			abstractComponent = new Brick(selected);
         			break;
         		}
-        		case "Paddle":
+        		case PADDLE:
         		{
-        			composite = new Paddle(selected);
+        			abstractComponent = new Paddle(selected);
         			break;
         		}
-        		case "Fire":
+        		case FIRE:
         		{
-        			composite = new Fire(selected);
+        			abstractComponent = new Fire(selected);
         			break;
-        		}        		
+        		}      
+        		case BACKGROUND:
+        		{
+        			windowFrame.getFormPanel().createSetBackgroundButton();
+        		}
         	}
         	
-        	windowFrame.getGamePanel().addComponent(composite);
+        	windowFrame.getGamePanel().addComponent(abstractComponent);
+        	if(abstractComponent.getObjectProperties().getObjectListType() == ObjectListType.COLLECTIBLE) {
+
+        		// set behavior to the object to visibility
+        		Visibility visibility = new Visibility(selected);
+        		abstractComponent.setActionBehavior(visibility);
+        	}
+        	
+        	if(abstractComponent.getObjectProperties().getObjectListType() == ObjectListType.EVENT ||
+        			 abstractComponent.getObjectProperties().getObjectListType() == ObjectListType.ACTION) {
+        		// set behavior to move
+        		Move move = new Move(selected);
+        		abstractComponent.setActionBehavior(move);
+        	}
+        	
         	windowFrame.draw(null);
 		}	
 	}

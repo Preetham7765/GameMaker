@@ -1,25 +1,51 @@
 package com.gamemaker;
 
-import java.awt.FlowLayout;
-
-import javax.swing.JFrame;
+import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
 
 import com.controller.GameMakerController;
+
+import com.controller.GamePlayController;
 import com.infrastructure.Constants;
+import com.observable.GameTimer;
+
 import com.view.FormPanel;
 import com.view.GamePanel;
 import com.view.MainPanel;
+import com.view.StaticPanel;
 import com.view.WindowFrame;
 
-/**
- * Hello world!
- *
- */
+
 public class App 
 {
 	
 	public static void makeGame() {
+
+		GameTimer gameTimer = new GameTimer();
+
+		
+		String[] gameChoice = {"Game Maker", "Game Play"};
+		
+		JPanel game=new JPanel();
+		game.setLayout(new BoxLayout(game, BoxLayout.Y_AXIS));
+		JComboBox<String> typeList = new JComboBox<>(gameChoice);
+		game.add(typeList);
+		
+		int result=JOptionPane.showConfirmDialog(null, game,"Choose Now:", JOptionPane.OK_CANCEL_OPTION);
+		
+		
+		// get the selected item:
+		String selectType = (String) typeList.getSelectedItem();
+		
+		if(selectType=="Game Maker" && result==JOptionPane.OK_OPTION)
+		{
+
+		
 		WindowFrame windowFrame = new WindowFrame();
 
 		MainPanel mainPanel = new MainPanel();
@@ -37,18 +63,47 @@ public class App
 		mainPanel.addComponent(gamePanel);
 		windowFrame.setGamePanel(gamePanel);
 		
-		GameMakerController controller = new GameMakerController(windowFrame);
+		GameMakerController gmController = new GameMakerController(windowFrame);
+		System.out.println("Game maker controller created");
+		
+		GamePlayController gpController = new GamePlayController(windowFrame);
 		System.out.println("Game maker controller created");
 		
 		windowFrame.setFormPanel(formPanel);
 		windowFrame.setGamePanel(gamePanel);
-		formPanel.createButtons(controller);
-		gamePanel.addControllerListener(controller);
+
+		
+		gamePanel.addControllerListener(gmController);
+
+		formPanel.createButtons();
+		gamePanel.addControllerListener(gmController);
+		
 
 		windowFrame.setVisible(true);
 		windowFrame.pack();
-//		formPanel.createButt?ons(controller);
 
+	}
+		else if( selectType=="Game Play" && result==JOptionPane.OK_OPTION) {
+			WindowFrame windowFrame = new WindowFrame();
+			
+			MainPanel mainPanel = new MainPanel();
+			windowFrame.addComponent(mainPanel);
+			
+			StaticPanel staticPanel = new StaticPanel(windowFrame);
+			System.out.println("Static Panel"+ staticPanel);
+			mainPanel.addComponent(staticPanel);
+			
+			GamePanel gamePanel = new GamePanel();
+			mainPanel.add(gamePanel);
+			windowFrame.setGamePanel(gamePanel);
+			windowFrame.setStaticPanel(staticPanel);
+			staticPanel.createButtons();
+			
+			windowFrame.setVisible(true);
+			windowFrame.pack();
+			
+		}
+		
 	}
     
 	public static void main( String[] args )
@@ -57,9 +112,7 @@ public class App
 
 			public void run() {
 				makeGame();
-//				JFrame jf = new JFrame();
-//				jf.setVisible(true);
-//				new Window1();
+//				
 			}
 		});
     }
