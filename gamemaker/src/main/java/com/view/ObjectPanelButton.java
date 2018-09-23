@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -71,6 +72,7 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 			
 	        
 			JPanel myPanel = new JPanel();
+			myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
 			myPanel.add(Box.createVerticalStrut(15)); // a spacer
 			myPanel.add(new JLabel("Velocity X: "));
 			myPanel.add(vXField);
