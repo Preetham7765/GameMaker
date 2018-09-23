@@ -94,7 +94,8 @@ public class App
 			mainPanel.addComponent(staticPanel);
 			
 			GamePanel gamePanel = new GamePanel();
-			mainPanel.add(gamePanel);
+			mainPanel.addComponent(gamePanel);
+			mainPanel.addComponent(staticPanel);
 			windowFrame.setGamePanel(gamePanel);
 			windowFrame.setStaticPanel(staticPanel);
 			staticPanel.createButtons();

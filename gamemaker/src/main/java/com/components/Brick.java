@@ -17,7 +17,7 @@ public class Brick extends AbstractComponent {
 	}
 	
 	public void draw(Graphics g) {
-		g.setColor(Color.red);
+		g.setColor(Color.blue);
 		g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 	}
 

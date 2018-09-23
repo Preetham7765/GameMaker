@@ -92,6 +92,15 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 		createBrickButton();
 		createPaddleButton();
 		createFireButton();
+		
+		JLabel gameFunc = new JLabel("Game Options:");
+		gameFunc.setForeground(Color.red);
+		gameFunc.setFont(new Font("Helvetica", Font.BOLD, 15));
+		this.add(Box.createRigidArea(new Dimension(10, 50)));
+		this.add(gameFunc);
+		createLoadButton();
+		createSaveButton();
+		createPlayButton();
 	}
 	
 	public void createSetBackgroundButton() {
@@ -122,10 +131,28 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 	}
 
 	private void createBallButton() {
-		ObjectPanelButton ballButton = new ObjectPanelButton(ComponentType.BALL, Color.BLACK, windowFrame);
+		ObjectPanelButton ballButton = new ObjectPanelButton(ComponentType.BALL, Color.green, windowFrame);
 		ballButton.setBackground(Color.green);
 		this.add(Box.createRigidArea(new Dimension(30, 30)));
 		this.add(ballButton);				
+	}
+	
+	private void createLoadButton() {
+		ObjectPanelButton LoadButton = new ObjectPanelButton(ComponentType.LOAD, Color.CYAN, windowFrame);
+		this.add(Box.createRigidArea(new Dimension(30, 30)));
+		this.add(LoadButton);				
+	}
+	
+	private void createSaveButton() {
+		ObjectPanelButton saveButton = new ObjectPanelButton(ComponentType.SAVE, Color.BLUE, windowFrame);
+		this.add(Box.createRigidArea(new Dimension(30, 30)));
+		this.add(saveButton);				
+	}
+	
+	private void createPlayButton() {
+		ObjectPanelButton playButton = new ObjectPanelButton(ComponentType.PLAY, Color.GREEN, windowFrame);
+		this.add(Box.createRigidArea(new Dimension(30, 30)));
+		this.add(playButton);				
 	}
 
 	public void draw(Graphics g) {

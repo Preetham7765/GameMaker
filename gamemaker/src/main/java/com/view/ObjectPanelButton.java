@@ -70,6 +70,15 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 		if(componentType == ComponentType.BACKGROUND)
 			setText("Background");
 		
+		if(componentType == ComponentType.SAVE)
+			setText("Save");
+		
+		if(componentType == ComponentType.LOAD)
+			setText("Load");
+		
+		if(componentType == ComponentType.PLAY)
+			setText("Play");
+		
 		selected.setComponentType(componentType);
 
 	}
@@ -82,6 +91,22 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 		{
 			setBackground();
 		}
+		
+		else if(componentType.equals(ComponentType.PLAY))
+		{
+			//TODO
+		}
+		
+		else if(componentType.equals(ComponentType.SAVE))
+		{
+			//TODO
+		}
+		
+		else if(componentType.equals(ComponentType.LOAD))
+		{
+			//TODO
+		}
+		
 		else
 		{
 			

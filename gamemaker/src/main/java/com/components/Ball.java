@@ -1,11 +1,9 @@
 package com.components;
 
+import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.io.Serializable;
 
 import com.infrastructure.AbstractComponent;
-import com.infrastructure.IComposite;
 import com.infrastructure.ObjectProperties;
 
 public class Ball extends AbstractComponent {
@@ -24,6 +22,7 @@ public class Ball extends AbstractComponent {
 
 	public void draw(Graphics g) {
 		System.out.println("Ball is drawn");
+		g.setColor(Color.green);
 		g.fillOval(this.getX(), this.getY(), this.getWidth()/2, this.getWidth()/2);
 	}
 }
