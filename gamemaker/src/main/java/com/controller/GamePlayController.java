@@ -27,6 +27,7 @@ public class GamePlayController implements Observer, KeyListener {
 	private WindowFrame windowFrame;
 	private Deque<Command> commandQueue;
 	private Clock clock;
+	private int collectiblesCollected = 0;
 	
 	public GamePlayController(WindowFrame windowFrame) {
 		
@@ -70,6 +71,7 @@ public class GamePlayController implements Observer, KeyListener {
 	
 	private void checkCollisionDetection() {
 		
+//		Collision with action objects
 		for (AbstractComponent actionComponent: actionList)
 		{
 			for (AbstractComponent actionComponent2: actionList)
@@ -90,6 +92,11 @@ public class GamePlayController implements Observer, KeyListener {
 				{	
 					if(actionComponent.getCanCollect()) {
 						collectibleComponent.performAction();
+						if(collectiblesCollected == collectibleList.size()-1)
+						{}
+//							Game Ends
+						else
+							collectiblesCollected++;
 					}
 					actionComponent.setVelX(-actionComponent.getVelX());
 					actionComponent.setVelY(-actionComponent.getVelY());
@@ -126,6 +133,19 @@ public class GamePlayController implements Observer, KeyListener {
 			{
 				actionComponent.setVelX(-actionComponent.getVelY());
 			}
+		}
+		
+//		Collision of gameCharacter with collectable list
+		
+		for(AbstractComponent collectibleComponent : collectibleList)
+		{
+			if(collectibleComponent.getBounds().intersects(gameCharacter.getBounds()))
+				collectibleComponent.performAction();
+			if(collectiblesCollected == collectibleList.size()-1)
+			{}
+//				Game Ends
+			else
+				collectiblesCollected++;
 		}
 		
 	}
