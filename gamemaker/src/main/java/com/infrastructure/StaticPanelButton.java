@@ -39,7 +39,7 @@ public class StaticPanelButton extends JButton implements ActionListener {
 	public StaticPanelButton(String name, Color yellow, WindowFrame windowFrame) {
 		this.name = name;
 		setText(name);
-		selected.setType(name);
+//		selected.setType(name);
 		setActionCommand(name);
 		addActionListener(this);
 		setVisible(true);

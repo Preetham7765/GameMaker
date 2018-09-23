@@ -42,6 +42,15 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 	
 	public ObjectPanelButton(ComponentType componentType, Color yellow, WindowFrame windowFrame) {
 
+		addActionListener(this);
+		setVisible(true);
+		setAlignmentX(CENTER_ALIGNMENT);
+		setAlignmentY(CENTER_ALIGNMENT);
+		this.windowFrame = windowFrame;
+		
+		
+		this.windowFrame.getFormPanel().selected = selected;
+		
 		this.componentType = componentType;
 		if(componentType == ComponentType.BALL)
 			setText("Ball");
@@ -65,40 +74,6 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 
 	}
 		
-		// TODO????
-		//		setActionCommand(name);
-		
-		
-		
-	public ObjectPanelButton(String name, Color color, WindowFrame windowFrame) {
-		setText(name);
-		setActionCommand(name);
-		addActionListener(this);
-		setVisible(true);
-		setAlignmentX(CENTER_ALIGNMENT);
-		setAlignmentY(CENTER_ALIGNMENT);
-		this.windowFrame = windowFrame;
-		
-		
-		this.windowFrame.getFormPanel().selected = selected;
-		
-		
-		vXField = new JTextField(Integer.toString(selected.getVelX()) ,5);
-		vYField = new JTextField(Integer.toString(selected.getVelY()) ,5);
-	    widthField = new JTextField(Integer.toString(selected.getWidth()), 5);
-		heightField = new JTextField(Integer.toString(selected.getHeight()) ,5);
-		canCollectField = new JCheckBox("Can collect the collectibles");
-		
-		
-		collectible=new JRadioButton("Collectible");
-		event=new JRadioButton("Player object");
-		action = new JRadioButton("Game Object");
-		group=new ButtonGroup();
-		group.add(collectible);
-		group.add(event);
-		group.add(action);
-		
-	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -110,7 +85,22 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 		else
 		{
 			
-	        
+			
+			vXField = new JTextField(Integer.toString(selected.getVelX()) ,5);
+			vYField = new JTextField(Integer.toString(selected.getVelY()) ,5);
+		    widthField = new JTextField(Integer.toString(selected.getWidth()), 5);
+			heightField = new JTextField(Integer.toString(selected.getHeight()) ,5);
+			canCollectField = new JCheckBox("Can collect the collectibles");
+			
+			
+			collectible=new JRadioButton("Collectible");
+			event=new JRadioButton("Player object");
+			action = new JRadioButton("Game Object");
+			group=new ButtonGroup();
+			group.add(collectible);
+			group.add(event);
+			group.add(action);
+			
 			JPanel myPanel = new JPanel();
 			myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
 			myPanel.add(Box.createVerticalStrut(15)); // a spacer
