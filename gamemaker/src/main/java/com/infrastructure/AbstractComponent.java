@@ -1,16 +1,15 @@
 package com.infrastructure;
 
-import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.io.Serializable;
 
-public abstract class AbstractComponent implements IComposite, Serializable, IActionBehavior {
+public abstract class AbstractComponent implements IComposite, Serializable, ActionBehavior {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private IActionBehavior ib;
+	private ActionBehavior actionBehavior;
 	private ObjectProperties objectProperties;
 	
 	public ObjectProperties getObjectProperties() {
@@ -21,12 +20,12 @@ public abstract class AbstractComponent implements IComposite, Serializable, IAc
 		this.objectProperties = objectProperties;
 	}
 
-	public void setActionBehavior(IActionBehavior ib) {
-		this.ib = ib;
+	public void setActionBehavior(ActionBehavior actionBehavior) {
+		this.actionBehavior = actionBehavior;
 	}
 	
 	public void performAction() {
-		ib.action();
+		actionBehavior.performAction();
 	}
 	
 	
@@ -101,6 +100,16 @@ public abstract class AbstractComponent implements IComposite, Serializable, IAc
 		this.objectProperties.setHeight(height);
 	}
 	
+	public boolean getVisibility()
+	{
+		return this.objectProperties.isVisibility();
+	}
+	
+	public void setVisbility(boolean visibility)
+	{
+		this.objectProperties.setVisibility(visibility);
+	}
+	
 	public Rectangle getBounds() {
 		return new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 	}	
@@ -112,8 +121,5 @@ public abstract class AbstractComponent implements IComposite, Serializable, IAc
 	public int getRightCoordinates() {
 		return getX() + getWidth();
 	}
-	
-//	public void draw(Graphics g) {}
 
-	// public void serializable
 }

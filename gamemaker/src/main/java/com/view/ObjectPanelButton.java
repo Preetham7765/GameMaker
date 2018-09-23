@@ -3,7 +3,9 @@ package com.view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Enumeration;
 
+import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -15,32 +17,58 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import com.infrastructure.ComponentType;
+import com.infrastructure.ObjectListType;
 import com.infrastructure.ObjectProperties;
 
 @SuppressWarnings("serial")
 public class ObjectPanelButton extends JButton implements ActionListener {
-	String name;
+	
+//	private String name;
 	private WindowFrame windowFrame;
 	private ObjectProperties selected = new ObjectProperties();
-//	public HashMap<String, Object> selected = new HashMap<String, Object>();
-//	public ObjectProperties selected = null;
+	private ComponentType componentType;
 	
 	JTextField vXField;
 	JTextField vYField;
 	JTextField widthField;
 	JTextField heightField;
 	JCheckBox canCollectField;
-
 	
-	JCheckBox collectible;
+	JRadioButton collectible;
 	JRadioButton event;
+	JRadioButton action;
 	ButtonGroup group;
 	
-	public ObjectPanelButton(String name, Color yellow, WindowFrame windowFrame) {
-		this.name = name;
-		setText(name);
-		selected.setType(name);
-		setActionCommand(name);
+	public ObjectPanelButton(ComponentType componentType, Color yellow, WindowFrame windowFrame) {
+
+		this.componentType = componentType;
+		if(componentType == ComponentType.BALL)
+			setText("Ball");
+		
+		if(componentType == ComponentType.BRICK)
+			setText("Brick");
+		
+		if(componentType == ComponentType.PADDLE)
+			setText("Paddle");
+		
+		if(componentType == ComponentType.CLOCK)
+			setText("Clock");
+		
+		if(componentType == ComponentType.FIRE)
+			setText("Fire");
+		
+		if(componentType == ComponentType.BACKGROUND)
+			setText("Background");
+		
+		selected.setComponentType(componentType);
+
+		
+		// TODO????
+		//		setActionCommand(name);
+		
+		
+		
 		addActionListener(this);
 		setVisible(true);
 		setAlignmentX(CENTER_ALIGNMENT);
@@ -54,16 +82,20 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 		canCollectField = new JCheckBox("Can collect the collectibles");
 		
 		
-		collectible=new JCheckBox("Collectible");
+		collectible=new JRadioButton("Collectible");
 		event=new JRadioButton("Player object");
+		action = new JRadioButton("Game Object");
 		group=new ButtonGroup();
+		group.add(collectible);
+		group.add(event);
+		group.add(action);
 		
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		if(name == "Background")
+		if(componentType.equals(ComponentType.BACKGROUND))
 		{
 			setBackground();
 		}
@@ -102,9 +134,25 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 				selected.setWidth(Integer.parseInt(widthField.getText()));
 				selected.setHeight(Integer.parseInt(heightField.getText()));
 				selected.setCanCollect(canCollectField.isSelected());
-				selected.setCollectible(collectible.isSelected());
-				selected.setEvent(event.isSelected());
-				
+				int n = 1;
+				for (Enumeration<AbstractButton> buttons = group.getElements(); buttons.hasMoreElements(); n++)
+	            {
+	                AbstractButton button = buttons.nextElement();
+	                if (button.isSelected())
+	                {
+	                	String text = button.getText();
+	                	if(text.equals("Collectible")) {
+	                		selected.setObjectListType(ObjectListType.COLLECTIBLE);
+	                		
+	                	}else if(text.equals("Player object")) {
+	                		selected.setObjectListType(ObjectListType.EVENT);
+	                		
+	                	}else if(text.equals("Game Object")) {
+	                		selected.setObjectListType(ObjectListType.ACTION);
+	                		
+	                	}
+	                }
+	            }				
 				windowFrame.getFormPanel().setSelected(selected);
 	      	}
 		}

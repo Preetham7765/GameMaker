@@ -40,10 +40,4 @@ public class Fire extends AbstractComponent  {
 		g.drawImage(this.getImage(), this.getX(), this.getY(), this.getWidth(), this.getHeight(), null);		
 	}
 
-	@Override
-	public void action() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

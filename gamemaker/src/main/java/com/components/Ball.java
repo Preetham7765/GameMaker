@@ -26,11 +26,4 @@ public class Ball extends AbstractComponent {
 		System.out.println("Ball is drawn");
 		g.fillOval(this.getX(), this.getY(), this.getWidth()/2, this.getWidth()/2);
 	}
-
-	@Override
-	public void action() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
