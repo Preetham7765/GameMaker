@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.controller.GameMakerController;
+import com.infrastructure.AbstractComponent;
 import com.infrastructure.Constants;
 import com.infrastructure.IComposite;
 import com.infrastructure.IPanel;
@@ -110,12 +111,22 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 	public void draw(Graphics g) {
 	}
 
-	public void addComponent(IComposite composite) {
-		return;
+	public void addComponent(IComposite composite) throws Exception {
+		throw new Exception();
 	}
 
-	public void removeComponent(IComposite composite) {
-		return;
+	public void removeComponent(IComposite composite) throws Exception {
+		throw new Exception();
+	}
+
+	@Override
+	public void addComponent(AbstractComponent asbtractComponent) throws Exception {
+		throw new Exception();		
+	}
+
+	@Override
+	public void removeComponent(AbstractComponent asbtractComponent) throws Exception {
+		throw new Exception();		
 	}
 
 }

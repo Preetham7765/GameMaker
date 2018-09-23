@@ -41,7 +41,7 @@ public class GameMakerController implements ActionListener, MouseListener {
             selected.setX(x);
             selected.setY(y);
             String type = formPanelSelected.getType();
-        	AbstractComponent composite = null;
+        	AbstractComponent abstractComponent = null;
         	selected.setType(formPanelSelected.getType());
         	selected.setHeight(formPanelSelected.getHeight());
         	selected.setWidth(formPanelSelected.getWidth());
@@ -50,28 +50,28 @@ public class GameMakerController implements ActionListener, MouseListener {
         	switch(type) {
         		case "Ball":
         		{
-        			composite = new Ball(selected);
+        			abstractComponent = new Ball(selected);
         			break;	
         		}
         		case "Brick":
         		{
-        			composite = new Brick(selected);
+        			abstractComponent = new Brick(selected);
         			break;
         		}
         		case "Paddle":
         		{
-        			composite = new Paddle(selected);
+        			abstractComponent = new Paddle(selected);
         			break;
         		}
         		case "Fire":
         		{
-        			composite = new Fire(selected);
+        			abstractComponent = new Fire(selected);
         			break;
         		}        		
         	}
         	
-        	windowFrame.getGamePanel().addComponent(composite);
-        	if(composite.getObjectProperties().isCollectible()) {
+        	windowFrame.getGamePanel().addComponent(abstractComponent);
+        	if(abstractComponent.getObjectProperties().isCollectible()) {
         		// set behavior to the object to visibility
         	}
 //        	if(!composite.getObjectProperties().isEvent()) {
