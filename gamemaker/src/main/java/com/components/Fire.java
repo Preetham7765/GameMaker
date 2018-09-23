@@ -26,7 +26,6 @@ public class Fire extends AbstractComponent  {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 	
 	public BufferedImage getImage() {
@@ -39,6 +38,12 @@ public class Fire extends AbstractComponent  {
 
 	public void draw(Graphics g) {
 		g.drawImage(this.getImage(), this.getX(), this.getY(), this.getWidth(), this.getHeight(), null);		
+	}
+
+	@Override
+	public void action() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

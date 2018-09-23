@@ -21,4 +21,10 @@ public class Brick extends AbstractComponent {
 		g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 	}
 
+	@Override
+	public void action() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

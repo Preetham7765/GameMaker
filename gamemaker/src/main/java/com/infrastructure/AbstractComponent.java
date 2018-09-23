@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.io.Serializable;
 
-public abstract class AbstractComponent implements IComposite, Serializable {
+public abstract class AbstractComponent implements IComposite, Serializable, IActionBehavior {
 	
 	/**
 	 * 
