@@ -11,11 +11,11 @@ import com.view.WindowFrame;
 
 public class GamePlayController implements IComposite, KeyListener{
 	
-	private ArrayList<IComposite> actionList;
-	private ArrayList<IComposite> eventList;
-	private ArrayList<IComposite> collectibleList;
+	private ArrayList<AbstractComponent> actionList;
+	private ArrayList<AbstractComponent> eventList;
+	private ArrayList<AbstractComponent> collectibleList;
 	
-	private ArrayList<IComposite> compositeList;
+	private ArrayList<AbstractComponent> compositeList;
 	
 	WindowFrame windowFrame;
 	
@@ -27,8 +27,8 @@ public class GamePlayController implements IComposite, KeyListener{
 		eventList = new ArrayList<>();
 		collectibleList = new ArrayList<>();
 		
-		compositeList = windowFrame.getGamePanel().getCompositeList();
-		for(IComposite component : compositeList) {
+		compositeList = windowFrame.getGamePanel().getComponentList();
+		for(AbstractComponent abstractComponent : compositeList) {
 			
 		}
 		
