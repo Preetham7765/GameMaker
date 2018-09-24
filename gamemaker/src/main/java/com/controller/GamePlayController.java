@@ -139,18 +139,18 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 		System.out.println("Size of actionList list = " + actionList.size());
 		for (AbstractComponent actionComponent: actionList)
 		{
-//			for (AbstractComponent actionComponent2: actionList)
-//			{
-//				// TODO IF THEY ARESAME COMPONENT
-////				Collision with other action component
-//				if(actionComponent.getBounds().intersects(actionComponent2.getBounds()))
-//				{
-//					actionComponent.setVelX(-actionComponent.getVelX());
-//					actionComponent.setVelY(-actionComponent.getVelY());
-//					actionComponent2.setVelX(-actionComponent2.getVelX());
-//					actionComponent2.setVelY(-actionComponent2.getVelY());
-//				}
-//			}
+			for (AbstractComponent actionComponent2: actionList)
+			{
+				// TODO IF THEY ARESAME COMPONENT
+//				Collision with other action component
+				if(actionComponent.getBounds().intersects(actionComponent2.getBounds()))
+				{
+					actionComponent.setVelX(-actionComponent.getVelX());
+					actionComponent.setVelY(-actionComponent.getVelY());
+					actionComponent2.setVelX(-actionComponent2.getVelX());
+					actionComponent2.setVelY(-actionComponent2.getVelY());
+				}
+			}
 			System.out.println("Action component can collect = " + actionComponent.getCanCollect());
 			if(actionComponent.getCanCollect()) {
 				for (AbstractComponent collectibleComponent: collectibleList)
@@ -167,7 +167,7 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 						else
 							collectiblesCollected++;
 						actionComponent.setVelX(-actionComponent.getVelX());
-						actionComponent.setVelY(-actionComponent.getVelY());
+//						actionComponent.setVelY(-actionComponent.getVelY());
 					}
 				}
 			}
@@ -175,7 +175,7 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 			System.out.println("actionComponent: " + actionComponent + " gameCharacter: " + gameCharacter);
 			if(actionComponent.getBounds().intersects(gameCharacter.getBounds())) {
 				actionComponent.setVelX(-actionComponent.getVelX());
-				actionComponent.setVelY(-actionComponent.getVelY());
+//				actionComponent.setVelY(-actionComponent.getVelY());
 			}
 			
 //			Collision action component with right wall
