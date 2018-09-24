@@ -13,6 +13,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import com.components.Clock;
+import com.controller.GamePlayController;
 import com.infrastructure.AbstractComponent;
 import com.infrastructure.Constants;
 import com.infrastructure.IComposite;
@@ -25,6 +26,7 @@ public class StaticPanel extends JPanel implements IComposite, IPanel{
 	private WindowFrame windowFrame;
 	public ObjectProperties selected = new ObjectProperties();
 	private ArrayList<AbstractComponent> compositeList;
+	private GamePlayController gamePlayController;
 	
 	public StaticPanel(WindowFrame window)
 	{
@@ -41,8 +43,8 @@ public class StaticPanel extends JPanel implements IComposite, IPanel{
 		
 	}
 	
-	public void createButtons() {
-		
+	public void createButtons(GamePlayController gamePlayController) {
+		this.gamePlayController = gamePlayController;
 		createPlayButton();
 		createPauseButton();
 		createRestartButton();
@@ -51,21 +53,21 @@ public class StaticPanel extends JPanel implements IComposite, IPanel{
 		
 	}
 	private void createPlayButton() {
-		StaticPanelButton playButton = new StaticPanelButton("Play", Color.green, windowFrame);
+		StaticPanelButton playButton = new StaticPanelButton("Play", Color.green, windowFrame, gamePlayController);
 		playButton.setAlignmentX(0);
 		this.add(Box.createRigidArea(new Dimension(10, 100)));
 		this.add(playButton);
 	}
 
 	private void createPauseButton() {
-		StaticPanelButton pauseButton = new StaticPanelButton("Pause", Color.red, windowFrame );
+		StaticPanelButton pauseButton = new StaticPanelButton("Pause", Color.red, windowFrame, gamePlayController );
 		pauseButton.setAlignmentX(0);
 		this.add(Box.createRigidArea(new Dimension(10, 100)));
 		this.add(pauseButton);
 	}
 
 	private void createRestartButton() {
-		StaticPanelButton restartButton = new StaticPanelButton("Restart", Color.blue, windowFrame);
+		StaticPanelButton restartButton = new StaticPanelButton("Restart", Color.blue, windowFrame, gamePlayController);
 		restartButton.setAlignmentX(0);
 		this.add(Box.createRigidArea(new Dimension(10, 100)));
 		this.add(restartButton);
@@ -73,7 +75,7 @@ public class StaticPanel extends JPanel implements IComposite, IPanel{
 	}
 	
 	private void createSaveButton() {
-		StaticPanelButton saveButton = new StaticPanelButton("Save", Color.blue, windowFrame);
+		StaticPanelButton saveButton = new StaticPanelButton("Save", Color.blue, windowFrame, gamePlayController);
 		saveButton.setAlignmentX(0);
 		this.add(Box.createRigidArea(new Dimension(10, 100)));
 		this.add(saveButton);
@@ -81,7 +83,7 @@ public class StaticPanel extends JPanel implements IComposite, IPanel{
 	}
 	
 	private void createLoadButton() {
-		StaticPanelButton loadButton = new StaticPanelButton("Load", Color.blue, windowFrame);
+		StaticPanelButton loadButton = new StaticPanelButton("Load", Color.blue, windowFrame, gamePlayController);
 		loadButton.setAlignmentX(0);
 		this.add(Box.createRigidArea(new Dimension(10, 100)));
 		this.add(loadButton);

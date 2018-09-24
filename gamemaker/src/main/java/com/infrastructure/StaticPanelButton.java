@@ -15,9 +15,10 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import com.controller.GamePlayController;
 import com.view.WindowFrame;
 
-public class StaticPanelButton extends JButton implements ActionListener {
+public class StaticPanelButton extends JButton {
 	
 	String name;
 	private WindowFrame windowFrame;
@@ -36,12 +37,12 @@ public class StaticPanelButton extends JButton implements ActionListener {
 	JRadioButton event;
 	ButtonGroup group;
 	
-	public StaticPanelButton(String name, Color yellow, WindowFrame windowFrame) {
+	public StaticPanelButton(String name, Color yellow, WindowFrame windowFrame, GamePlayController gamePlayController) {
 		this.name = name;
 		setText(name);
 //		selected.setType(name);
 		setActionCommand(name);
-		addActionListener(this);
+		addActionListener(gamePlayController);
 		setVisible(true);
 		setAlignmentX(CENTER_ALIGNMENT);
 		setAlignmentY(CENTER_ALIGNMENT);
@@ -52,9 +53,11 @@ public class StaticPanelButton extends JButton implements ActionListener {
 		
 	}
 	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-	}
-
+//	@Override
+//	public void actionPerformed(ActionEvent e) {
+//		if (name == "Save") {
+//			
+////			windowFrame.save();
+//		}
+//	}
 }

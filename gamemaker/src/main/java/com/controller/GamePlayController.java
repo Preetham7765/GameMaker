@@ -1,6 +1,8 @@
 package com.controller;
 
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.FileInputStream;
@@ -20,10 +22,12 @@ import com.infrastructure.AbstractComponent;
 import com.infrastructure.ComponentType;
 import com.infrastructure.ObjectListType;
 import com.infrastructure.Observer;
+import com.observable.GameTimer;
 import com.view.WindowFrame;
+
 import com.infrastructure.Constants;
 
-public class GamePlayController implements Observer, KeyListener {
+public class GamePlayController implements Observer, KeyListener, ActionListener {
 	
 	private ArrayList<AbstractComponent> actionList;
 	private AbstractComponent gameCharacter;
@@ -33,9 +37,10 @@ public class GamePlayController implements Observer, KeyListener {
 	private Deque<Command> commandQueue;
 	private Clock clock;
 	private int collectiblesCollected = 0;
+	private GameTimer gameTimer;
 	
-	public GamePlayController(WindowFrame windowFrame) {
-		
+	public GamePlayController(WindowFrame windowFrame, GameTimer gameTimer) {
+		this.gameTimer = gameTimer;
 		this.windowFrame = windowFrame;
 		loadComponentList();
 		
@@ -222,5 +227,19 @@ public class GamePlayController implements Observer, KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String commandText = e.getActionCommand();
+		if(commandText.equals("Play")) {
+			gameTimer.registerObserver(this);
+		}
+		else if(commandText.equals("Save")) {
+			save();
+		}
+		else if(commandText.equals("Load")) {
+			load();
+		}
+	}
 }
 

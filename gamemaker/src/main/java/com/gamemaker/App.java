@@ -24,6 +24,7 @@ public class App
 	public static void makeGame() {
 
 		GameTimer gameTimer = new GameTimer();
+		gameTimer.startTimer();
 
 		
 		String[] gameChoice = {"Game Maker", "Game Play"};
@@ -62,10 +63,7 @@ public class App
 		
 		GameMakerController gmController = new GameMakerController(windowFrame);
 		System.out.println("Game maker controller created");
-		
-		GamePlayController gpController = new GamePlayController(windowFrame);
-		System.out.println("Game maker controller created");
-		
+				
 		windowFrame.setFormPanel(formPanel);
 		windowFrame.setGamePanel(gamePanel);
 
@@ -87,6 +85,9 @@ public class App
 			
 			WindowFrame windowFrame = new WindowFrame();
 			
+			GamePlayController gpController = new GamePlayController(windowFrame, gameTimer);
+			System.out.println("Game maker controller created");
+			
 			MainPanel mainPanel = new MainPanel();
 			windowFrame.addComponent(mainPanel);
 			
@@ -106,7 +107,7 @@ public class App
 			mainPanel.addComponent(staticPanel);
 			windowFrame.setGamePanel(gamePanel);
 			windowFrame.setStaticPanel(staticPanel);
-			staticPanel.createButtons();
+			staticPanel.createButtons(gpController);
 			
 			windowFrame.setVisible(true);
 			windowFrame.pack();

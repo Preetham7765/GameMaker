@@ -111,15 +111,42 @@ public class GamePanel extends JPanel implements IComposite, IPanel	 {
 
 	@Override
 	public void save(ObjectOutputStream op) {
+		/*
 		for (AbstractComponent abstractComponent: compositeList) {
 			abstractComponent.save(op);
-		}		
+		}
+		*/
+		try {
+			op.writeObject(compositeList);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void load(ObjectInputStream ip) {
-		// TODO Auto-generated method stub
+		try {
+			compositeList = (ArrayList<AbstractComponent>) ip.readObject();
+		} catch (java.lang.ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		/*
+		while (true) {
+			AbstractComponent abstractComponent = () ip.readObject();
+		}
+		*/
+		/*
 		
+		
+		try {
+			Ball obj = (Ball)ip.readObject();
+			return obj;
+		} catch (ClassNotFoundException | IOException e) {
+			log.error(e.getMessage());
+		}
+		*/
 	}
 
 }
