@@ -131,6 +131,7 @@ public class StaticPanel extends JPanel implements IComposite, IPanel{
 	@Override
 	public void paintComponent(Graphics g)
 	{
+		
 		for(IComposite composite : compositeList) {
 			System.out.println(composite);
 			composite.draw(g);
