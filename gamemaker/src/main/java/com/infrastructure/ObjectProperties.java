@@ -1,6 +1,8 @@
 package com.infrastructure;
 
-public class ObjectProperties {
+import java.io.Serializable;
+
+public class ObjectProperties implements Serializable {
 	
 	private ObjectListType objectListType;
 	private ComponentType componentType; 

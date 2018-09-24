@@ -13,6 +13,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Deque;
+import java.util.LinkedList;
 
 import com.commands.ClockTickCommand;
 import com.commands.Command;
@@ -41,30 +42,33 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 	
 	public GamePlayController(WindowFrame windowFrame, GameTimer gameTimer) {
 		this.gameTimer = gameTimer;
+		
 		this.windowFrame = windowFrame;
 		loadComponentList();
 		
 	}
 	
 	public void loadComponentList() {
+
 		
 		actionList = new ArrayList<>();
 		collectibleList = new ArrayList<>();
 		compositeList = windowFrame.getGamePanel().getComponentList();
 //		clock = new Clock();
+		commandQueue = new LinkedList<>();
 		
 		for(AbstractComponent abstractComponent : compositeList) {
 			
 			ObjectListType objectListType = abstractComponent.getObjectProperties().getObjectListType();	
 			if(objectListType == ObjectListType.ACTION) {
 				actionList.add(abstractComponent);
-			} else if(objectListType == ObjectListType.EVENT) {
+			} else if(objectListType.equals(ObjectListType.EVENT)) {
 				gameCharacter = abstractComponent;
 			} else if(objectListType == ObjectListType.COLLECTIBLE) {
 				collectibleList.add(abstractComponent);
 			}		
 		}
-
+		System.out.println("gameCharacter " + gameCharacter);
 	}
 
 	public void save() {
@@ -80,6 +84,7 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 			out.close();
 			fileOut.close();
 			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -87,7 +92,8 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 	}
 	
 	public void update() {
-		commandQueue.addFirst(new ClockTickCommand(this.clock));
+//		commandQueue.addFirst(new ClockTickCommand(this.clock));
+//		System.out.print(actionList.size() + " Size");
 		for(AbstractComponent abstractComponent : actionList) {
 			int x = abstractComponent.getVelY();
 			int y = abstractComponent.getVelX();
@@ -239,6 +245,7 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 		}
 		else if(commandText.equals("Load")) {
 			load();
+			loadComponentList();
 		}
 	}
 }

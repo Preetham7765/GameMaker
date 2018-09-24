@@ -15,16 +15,16 @@ public class Move implements ActionBehavior {
 
 	@Override
 	public void performAction() {
-		
+
+		System.out.println(objectProperties.getVelX() + " " + objectProperties.getVelY());
+
 		int newX = objectProperties.getX() + objectProperties.getVelX();
 		int newY = objectProperties.getY() + objectProperties.getVelY();
 		
-		if (newX < 0) objectProperties.setX(0);
-		if (newY < 0) objectProperties.setY(0);
-		
-		if (newX > Constants.GAME_PANEL_WIDTH) objectProperties.setX(Constants.GAME_PANEL_WIDTH);
-		if (newY > Constants.GAME_PANEL_HEIGHT) objectProperties.setY(Constants.GAME_PANEL_HEIGHT);
+		objectProperties.setX(objectProperties.getVelX() + objectProperties.getX());
+		objectProperties.setY(objectProperties.getVelY() + objectProperties.getY());
 						
+		System.out.println(objectProperties.getVelX() + " " + objectProperties.getVelY());
 	}
 	
 }

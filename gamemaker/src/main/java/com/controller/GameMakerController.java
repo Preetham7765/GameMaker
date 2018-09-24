@@ -48,7 +48,7 @@ public class GameMakerController implements ActionListener, MouseListener {
             ComponentType componentType = formPanelSelected.getComponentType();
         	AbstractComponent abstractComponent = null;
         	selected.setComponentType(formPanelSelected.getComponentType());
-
+        	selected.setObjectListType(formPanelSelected.getObjectListType());
         	selected.setHeight(formPanelSelected.getHeight());
         	selected.setWidth(formPanelSelected.getWidth());
         	selected.setVelX(formPanelSelected.getVelX());
@@ -80,6 +80,7 @@ public class GameMakerController implements ActionListener, MouseListener {
         		}
         	}
         	
+        	System.out.println(" comp typ  " + abstractComponent.getObjectProperties().getObjectListType());
         	windowFrame.getGamePanel().addComponent(abstractComponent);
         	if(abstractComponent.getObjectProperties().getObjectListType() == ObjectListType.COLLECTIBLE) {
 

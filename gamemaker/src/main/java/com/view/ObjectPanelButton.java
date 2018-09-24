@@ -3,6 +3,11 @@ package com.view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Enumeration;
 
 import javax.swing.AbstractButton;
@@ -82,7 +87,49 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 		selected.setComponentType(componentType);
 
 	}
-		
+
+	public void save() {
+//		pause();
+		try {
+			String fileName = windowFrame.showSaveDialog();
+			if(!fileName.isEmpty()) {
+			FileOutputStream fileOut = new FileOutputStream(fileName);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			
+			windowFrame.save(out);
+//			out.writeObject(commandQueue);
+			out.close();
+			fileOut.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	
+	}
+
+	public void load() {
+//		pause();
+//		commandQueue.clear();
+		try {
+			String fileName = windowFrame.showOpenDialog();
+			if(!fileName.isEmpty()) {
+			FileInputStream fileIn = new FileInputStream(fileName);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			
+			windowFrame.load(in);
+			
+//			commandQueue.clear();
+//			Deque<Command> loadCmdQueue = (Deque<Command>) in.readObject();
+//			commandQueue.addAll(loadCmdQueue);
+//			initCommands();
+			in.close();
+			fileIn.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		windowFrame.draw(null);
+	}	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -94,17 +141,17 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 		
 		else if(componentType.equals(ComponentType.PLAY))
 		{
-			//TODO
+			
 		}
 		
 		else if(componentType.equals(ComponentType.SAVE))
 		{
-			//TODO
+			save();
 		}
 		
 		else if(componentType.equals(ComponentType.LOAD))
 		{
-			//TODO
+			load();
 		}
 		
 		else
