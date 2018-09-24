@@ -163,6 +163,7 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 					}
 			}
 //			Collision with game character
+			System.out.println("actionComponent: " + actionComponent + " gameCharacter: " + gameCharacter);
 			if(actionComponent.getBounds().intersects(gameCharacter.getBounds())) {
 				actionComponent.setVelX(-actionComponent.getVelX());
 				actionComponent.setVelY(-actionComponent.getVelY());
