@@ -1,6 +1,7 @@
 package com.controller;
 
 import java.awt.Graphics;
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -14,6 +15,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Deque;
 import java.util.LinkedList;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import com.commands.ClockTickCommand;
 import com.commands.CollectedCommand;
@@ -40,6 +46,7 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 	private Clock clock;
 	private int collectiblesCollected = 0;
 	private GameTimer gameTimer;
+	private boolean gameOver = false;
 	
 	public GamePlayController(WindowFrame windowFrame, GameTimer gameTimer) {
 		this.gameTimer = gameTimer;
@@ -47,9 +54,9 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 		this.windowFrame = windowFrame;
 		loadComponentList();
 		
-		this.windowFrame.getMainPanel().addKeyListener(this);
+//		this.windowFrame.getMainPanel().addKeyListener(this);
 		
-		this.windowFrame.getMainPanel().requestFocus();
+//		this.windowFrame.getMainPanel().requestFocus();
 		
 	}
 	
@@ -98,13 +105,16 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 	public void update() {
 //		commandQueue.addFirst(new ClockTickCommand(this.clock));
 //		System.out.print(actionList.size() + " Size");
-		for(AbstractComponent abstractComponent : actionList) {
-			int x = abstractComponent.getVelY();
-			int y = abstractComponent.getVelX();
-			commandQueue.add(new MoveCommand(abstractComponent, x, y));
-		}	
-		checkCollisionDetection();
-		this.windowFrame.draw(null);
+		if (!gameOver) { 
+
+			for(AbstractComponent abstractComponent : actionList) {
+				int x = abstractComponent.getVelY();
+				int y = abstractComponent.getVelX();
+				commandQueue.add(new MoveCommand(abstractComponent, x, y));
+			}	
+			checkCollisionDetection();
+			this.windowFrame.draw(null);
+		}
 	}
 	
 	
@@ -136,91 +146,89 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 	}
 
 	private void checkCollisionDetection() {
-		
-//		Collision with action objects
-		System.out.println("Size of collectible list = " + collectibleList.size());
-		System.out.println("Size of actionList list = " + actionList.size());
-		for (AbstractComponent actionComponent: actionList)
-		{
-			for (AbstractComponent actionComponent2: actionList)
+		if (!gameOver) { 
+	//		Collision with action objects
+			System.out.println("Size of collectible list = " + collectibleList.size());
+			System.out.println("Size of actionList list = " + actionList.size());
+			outer: for (AbstractComponent actionComponent: actionList)
 			{
-				// TODO IF THEY ARESAME COMPONENT
-//				Collision with other action component
-				if(actionComponent.getBounds().intersects(actionComponent2.getBounds()))
-				{
-					actionComponent.setVelX(-actionComponent.getVelX());
-					actionComponent.setVelY(-actionComponent.getVelY());
-					actionComponent2.setVelX(-actionComponent2.getVelX());
-					actionComponent2.setVelY(-actionComponent2.getVelY());
-				}
-			}
-			System.out.println("Action component can collect = " + actionComponent.getCanCollect());
-			if(actionComponent.getCanCollect()) {
-				for (AbstractComponent collectibleComponent: collectibleList)
-				{
-	//				Collision with collectible component
-					if(actionComponent.getBounds().intersects(collectibleComponent.getBounds()))
-					{	
-//						collectibleComponent.performAction();
-						commandQueue.addLast(new CollectedCommand(collectibleComponent));
-						if(collectiblesCollected == collectibleList.size()-1)
-						{
-//							Game Ends							
+	//			for (AbstractComponent actionComponent2: actionList)
+	//			{
+	//				// TODO IF THEY ARESAME COMPONENT
+	////				Collision with other action component
+	//				if(actionComponent.getBounds().intersects(actionComponent2.getBounds()))
+	//				{
+	//					actionComponent.setVelX(-actionComponent.getVelX());
+	//					actionComponent.setVelY(-actionComponent.getVelY());
+	//					actionComponent2.setVelX(-actionComponent2.getVelX());
+	//					actionComponent2.setVelY(-actionComponent2.getVelY());
+	//				}
+	//			}
+	//			System.out.println("Action component can collect = " + actionComponent.getCanCollect());
+				System.out.println("collectiblesCollected = " + collectiblesCollected);
+	
+				if(actionComponent.getCanCollect()) {
+					for (AbstractComponent collectibleComponent: collectibleList)
+					{
+		//				Collision with collectible component
+						if(actionComponent.getBounds().intersects(collectibleComponent.getBounds()) && collectibleComponent.getVisibility())
+						{	
+	//						collectibleComponent.performAction();
+							commandQueue.addLast(new CollectedCommand(collectibleComponent));
+							if(++collectiblesCollected == collectibleList.size())
+							{
+								gameOver();
+								gameOver = true;
+								break outer;
+							}
+							actionComponent.setVelX(-actionComponent.getVelX());
+							actionComponent.setVelY(-actionComponent.getVelY());
 						}
-						else
-							collectiblesCollected++;
-						actionComponent.setVelX(-actionComponent.getVelX());
-//						actionComponent.setVelY(-actionComponent.getVelY());
 					}
 				}
-			}
-//			Collision with game character
-//			System.out.println("actionComponent: " + actionComponent + " gameCharacter: " + gameCharacter);
-			if(actionComponent.getBounds().intersects(gameCharacter.getBounds())) {
-				actionComponent.setVelX(-actionComponent.getVelX());
-//				actionComponent.setVelY(-actionComponent.getVelY());
-			}
-			
-//			Collision action component with right wall
-			if(actionComponent.getRightCoordinates() >= Constants.GAME_PANEL_WIDTH)
-			{
-				actionComponent.setVelX(-actionComponent.getVelX());
-			}
-			
-//			Collision action component with left wall
-			if(actionComponent.getRightCoordinates() - actionComponent.getWidth() <= 0)
-			{
-				actionComponent.setVelX(-actionComponent.getVelX());
-			}
-			
-//			Collision action component with up wall
-			
-			if(actionComponent.getBottomCoordinates() - actionComponent.getHeight() <= 0)
-			{
-				actionComponent.setVelY(-actionComponent.getVelY());
-			}
-			
-//			Collision action component with bottom wall
-			
-			if(actionComponent.getBottomCoordinates() >= Constants.GAME_PANEL_HEIGHT)
-			{
-				actionComponent.setVelY(-actionComponent.getVelY());
+	//			Collision with game character
+	//			System.out.println("actionComponent: " + actionComponent + " gameCharacter: " + gameCharacter);
+				if(actionComponent.getBounds().intersects(gameCharacter.getBounds())) {
+					actionComponent.setVelX(-actionComponent.getVelX());
+					actionComponent.setVelY(-actionComponent.getVelY());
+				}
+				
+	//			Collision action component with right wall
+				if(actionComponent.getRightCoordinates() >= Constants.GAME_PANEL_WIDTH)
+				{
+					actionComponent.setVelX(-actionComponent.getVelX());
+				}
+				
+	//			Collision action component with left wall
+				if(actionComponent.getRightCoordinates() - actionComponent.getWidth() <= 0)
+				{
+					actionComponent.setVelX(-actionComponent.getVelX());
+				}
+				
+	//			Collision action component with up wall
+				
+				if(actionComponent.getBottomCoordinates() - actionComponent.getHeight() <= 0)
+				{
+					actionComponent.setVelY(-actionComponent.getVelY());
+				}
+				
+	//			Collision action component with bottom wall
+				
+				if(actionComponent.getBottomCoordinates() >= Constants.GAME_PANEL_HEIGHT)
+				{
+					actionComponent.setVelY(-actionComponent.getVelY());
+				}
 			}
 		}
 		
-//		Collision of gameCharacter with collectible list
-		
-		for(AbstractComponent collectibleComponent : collectibleList)
-		{
-			if(collectibleComponent.getBounds().intersects(gameCharacter.getBounds()))
-				collectibleComponent.performAction();
-			if(collectiblesCollected == collectibleList.size()-1)
-			{}
-//				Game Ends
-			else
-				collectiblesCollected++;
-		}
-		
+	}
+
+	private void gameOver() {
+//		this.windowFrame.getGamePanel().
+		JPanel myPanel = new JPanel();
+		myPanel.add(new JLabel("Game Over"));
+		int result1 = JOptionPane.showConfirmDialog(null, myPanel, 
+           "Close", JOptionPane.OK_CANCEL_OPTION);
 	}
 
 	@Override
