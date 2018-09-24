@@ -61,7 +61,7 @@ public class GamePanel extends JPanel implements IComposite, IPanel	 {
 			System.out.println(composite);
 			if (composite.getVisibility())
 				composite.draw(g);
-		}		
+		}
 	}
 	
 	public void draw(Graphics g) {

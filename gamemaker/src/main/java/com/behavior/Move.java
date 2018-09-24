@@ -16,7 +16,7 @@ public class Move implements ActionBehavior {
 	@Override
 	public void performAction() {
 
-		System.out.println(objectProperties.getVelX() + " " + objectProperties.getVelY());
+//		System.out.println(objectProperties.getVelX() + " " + objectProperties.getVelY());
 
 		int newX = objectProperties.getX() + objectProperties.getVelX();
 		int newY = objectProperties.getY() + objectProperties.getVelY();
@@ -24,7 +24,7 @@ public class Move implements ActionBehavior {
 		objectProperties.setX(objectProperties.getVelX() + objectProperties.getX());
 		objectProperties.setY(objectProperties.getVelY() + objectProperties.getY());
 						
-		System.out.println(objectProperties.getVelX() + " " + objectProperties.getVelY());
+//		System.out.println(objectProperties.getVelX() + " " + objectProperties.getVelY());
 	}
 	
 }

@@ -25,7 +25,15 @@ public class WindowFrame extends JFrame implements IComposite {
 	private GamePanel gamePanel;
 	private StaticPanel staticPanel;
 	private JFileChooser fileChooser;
+	private MainPanel mainPanel;
 
+	public MainPanel getMainPanel() {
+		return mainPanel;
+	}
+
+	public void setMainPanel(MainPanel mainPanel) {
+		this.mainPanel = mainPanel;
+	}
 
 	public WindowFrame() {
 		super();
@@ -104,6 +112,7 @@ public class WindowFrame extends JFrame implements IComposite {
 		System.out.println("In getform panel");
 		return formPanel;
 	}
+	
 
 	public void setFormPanel(FormPanel formPanel) {
 		this.formPanel = formPanel;

@@ -26,7 +26,7 @@ public class Ball extends AbstractComponent {
 	}
 
 	public void draw(Graphics g) {
-		System.out.println("Ball is drawn at " + getX() + " " + getY());
+//		System.out.println("Ball is drawn at " + getX() + " " + getY());
 		g.setColor(Color.green);
 		g.fillOval(this.getX(), this.getY(), this.getWidth()/2, this.getWidth()/2);
 	}

@@ -47,6 +47,10 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 		this.windowFrame = windowFrame;
 		loadComponentList();
 		
+		this.windowFrame.getMainPanel().addKeyListener(this);
+		
+		this.windowFrame.getMainPanel().requestFocus();
+		
 	}
 	
 	public void loadComponentList() {
@@ -68,10 +72,6 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 				collectibleList.add(abstractComponent);
 			}		
 		}
-		
-		System.out.println(collectibleList.size() + " my size");
-//		System.out.println(gameCharacter.getCanCollect());
-
 	}
 
 	public void save() {
@@ -90,7 +90,8 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 			
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}		System.out.println("keyPressed");
+
 	
 	}
 	
@@ -118,13 +119,15 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			
 			windowFrame.load(in);
-			
+
+			windowFrame.getMainPanel().requestFocus();
 //			commandQueue.clear();
 //			Deque<Command> loadCmdQueue = (Deque<Command>) in.readObject();
 //			commandQueue.addAll(loadCmdQueue);
 //			initCommands();
 			in.close();
 			fileIn.close();
+//			windowFrame.getMainPanel().requestFocus();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -172,7 +175,7 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 				}
 			}
 //			Collision with game character
-			System.out.println("actionComponent: " + actionComponent + " gameCharacter: " + gameCharacter);
+//			System.out.println("actionComponent: " + actionComponent + " gameCharacter: " + gameCharacter);
 			if(actionComponent.getBounds().intersects(gameCharacter.getBounds())) {
 				actionComponent.setVelX(-actionComponent.getVelX());
 //				actionComponent.setVelY(-actionComponent.getVelY());
@@ -224,7 +227,7 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 	public void keyPressed(KeyEvent e) {
 		int curX = Math.abs(this.gameCharacter.getVelX());
 		int curY = Math.abs(this.gameCharacter.getVelY());
-		
+		System.out.println("keyPressed");
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) // && canMoveLeft(this, Constants.getPaddleLeftOffset()
 			commandQueue.addFirst(new MoveCommand(this.gameCharacter, -curX, 0));
 		
@@ -249,13 +252,16 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 		String commandText = e.getActionCommand();
 		if(commandText.equals("Play")) {
 			gameTimer.registerObserver(this);
+			windowFrame.getMainPanel().requestFocus();
 		}
 		else if(commandText.equals("Save")) {
 			save();
+			windowFrame.getMainPanel().requestFocus();
 		}
 		else if(commandText.equals("Load")) {
 			load();
 			loadComponentList();
+			windowFrame.getMainPanel().requestFocus();
 		}
 	}
 }
