@@ -184,14 +184,14 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 			
 			if(actionComponent.getBottomCoordinates() - actionComponent.getHeight() <= 0)
 			{
-				actionComponent.setVelX(-actionComponent.getVelY());
+				actionComponent.setVelY(-actionComponent.getVelY());
 			}
 			
 //			Collision action component with bottom wall
 			
 			if(actionComponent.getBottomCoordinates() >= Constants.GAME_PANEL_HEIGHT)
 			{
-				actionComponent.setVelX(-actionComponent.getVelY());
+				actionComponent.setVelY(-actionComponent.getVelY());
 			}
 		}
 		

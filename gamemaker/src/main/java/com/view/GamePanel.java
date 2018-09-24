@@ -64,7 +64,7 @@ public class GamePanel extends JPanel implements IComposite, IPanel	 {
 	}
 	
 	public void draw(Graphics g) {
-        revalidate();
+//        revalidate();
 		repaint();
 	}
 
