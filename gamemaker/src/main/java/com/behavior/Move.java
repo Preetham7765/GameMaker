@@ -1,6 +1,7 @@
 package com.behavior;
 
 import com.infrastructure.ActionBehavior;
+import com.infrastructure.Constants;
 import com.infrastructure.ObjectProperties;
 
 public class Move implements ActionBehavior {
@@ -14,11 +15,16 @@ public class Move implements ActionBehavior {
 
 	@Override
 	public void performAction() {
-		// TODO Auto-generated method stub
-		objectProperties.setX(objectProperties.getX() + objectProperties.getVelX());
-		objectProperties.setY(objectProperties.getY() + objectProperties.getVelY());
-		
-	}
 
+//		System.out.println(objectProperties.getVelX() + " " + objectProperties.getVelY());
+
+		int newX = objectProperties.getX() + objectProperties.getVelX();
+		int newY = objectProperties.getY() + objectProperties.getVelY();
+		
+		objectProperties.setX(objectProperties.getVelX() + objectProperties.getX());
+		objectProperties.setY(objectProperties.getVelY() + objectProperties.getY());
+						
+//		System.out.println(objectProperties.getVelX() + " " + objectProperties.getVelY());
+	}
 	
 }

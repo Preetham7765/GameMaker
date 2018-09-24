@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -58,5 +60,19 @@ public class MainPanel extends JPanel implements IComposite, IPanel {
 	@Override
 	public void removeComponent(AbstractComponent asbtractComponent) throws Exception {
 		throw new Exception();
+	}
+
+	@Override
+	public void save(ObjectOutputStream op) {
+		for(IComposite composite : compositeList) {
+			composite.save(op);
+		}	
+	}
+
+	@Override
+	public void load(ObjectInputStream ip) {
+		for(IComposite composite : compositeList) {
+			composite.load(ip);
+		}	
 	}
 }

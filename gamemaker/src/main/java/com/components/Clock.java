@@ -1,5 +1,7 @@
 package com.components;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.io.Serializable;
 
@@ -50,5 +52,12 @@ public class Clock extends AbstractComponent implements Serializable {
 	@Override
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
+		String min=Integer.toString(getMinutes());
+		String sec=Integer.toString(getSeconds());
+//		g.drawString(iterator, x, y);
+		g.setColor(Color.RED);
+		g.setFont(new Font("Helvetica", Font.BOLD, 30));
+		g.drawString(min+":"+sec, 200 , 80);
+		
 	}
 }

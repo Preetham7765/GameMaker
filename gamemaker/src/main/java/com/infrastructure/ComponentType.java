@@ -7,5 +7,8 @@ public enum ComponentType {
 	BRICK,
 	FIRE,
 	CLOCK,
-	BACKGROUND;
+	BACKGROUND,
+	LOAD,
+	SAVE,
+	PLAY;
 }

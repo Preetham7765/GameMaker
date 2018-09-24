@@ -1,6 +1,8 @@
 package com.infrastructure;
 
-public interface ActionBehavior {
+import java.io.Serializable;
+
+public interface ActionBehavior extends Serializable {
 	
 	public void performAction();
 	

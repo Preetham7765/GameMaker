@@ -16,7 +16,6 @@ public class Visibility implements ActionBehavior {
 	@Override
 	public void performAction() {
 		// TODO Auto-generated method stub
-		
 		objectProperties.setVisibility(false);
 	}
 	

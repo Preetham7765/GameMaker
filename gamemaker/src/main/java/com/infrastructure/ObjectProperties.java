@@ -1,6 +1,8 @@
 package com.infrastructure;
 
-public class ObjectProperties {
+import java.io.Serializable;
+
+public class ObjectProperties implements Serializable {
 	
 	private ObjectListType objectListType;
 	private ComponentType componentType; 
@@ -85,8 +87,8 @@ public class ObjectProperties {
 		this.y = 5;
 		this.velX = 1;
 		this.velY = 1;
-		this.width = 10;
-		this.height = 10;
+		this.width = 50;
+		this.height = 50;
 //		this.type = "";
 		this.canCollect = false;
 //		this.collectible = false;

@@ -1,5 +1,6 @@
 package com.components;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.io.Serializable;
@@ -16,6 +17,7 @@ public class Paddle extends AbstractComponent {
 	}
 
 	public void draw(Graphics g) {
+		g.setColor(Color.RED);
 		g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 	}
 }

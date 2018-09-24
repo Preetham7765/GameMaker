@@ -2,18 +2,15 @@ package com.gamemaker;
 
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import javax.swing.WindowConstants;
 
+import com.components.Clock;
 import com.controller.GameMakerController;
-
 import com.controller.GamePlayController;
-import com.infrastructure.Constants;
+import com.infrastructure.ObjectProperties;
 import com.observable.GameTimer;
-
 import com.view.FormPanel;
 import com.view.GamePanel;
 import com.view.MainPanel;
@@ -27,6 +24,7 @@ public class App
 	public static void makeGame() {
 
 		GameTimer gameTimer = new GameTimer();
+		gameTimer.startTimer();
 
 		
 		String[] gameChoice = {"Game Maker", "Game Play"};
@@ -61,43 +59,56 @@ public class App
 		
 		GamePanel gamePanel = new GamePanel();
 		mainPanel.addComponent(gamePanel);
-		windowFrame.setGamePanel(gamePanel);
+//		windowFrame.setGamePanel(gamePanel);
 		
 		GameMakerController gmController = new GameMakerController(windowFrame);
 		System.out.println("Game maker controller created");
-		
-		GamePlayController gpController = new GamePlayController(windowFrame);
-		System.out.println("Game maker controller created");
-		
+				
 		windowFrame.setFormPanel(formPanel);
 		windowFrame.setGamePanel(gamePanel);
 
+		GamePlayController gpController = new GamePlayController(windowFrame, gameTimer);
+		System.out.println("Game maker controller created");
 		
-		gamePanel.addControllerListener(gmController);
+//		gamePanel.addControllerListener(gmController);
 
 		formPanel.createButtons();
 		gamePanel.addControllerListener(gmController);
 		
-
 		windowFrame.setVisible(true);
 		windowFrame.pack();
 
 	}
 		else if( selectType=="Game Play" && result==JOptionPane.OK_OPTION) {
-			WindowFrame windowFrame = new WindowFrame();
+			ObjectProperties objectProperties=new ObjectProperties();
+			objectProperties.setX(20);
+			objectProperties.setY(50);
 			
+			WindowFrame windowFrame = new WindowFrame();
+						
 			MainPanel mainPanel = new MainPanel();
 			windowFrame.addComponent(mainPanel);
 			
 			StaticPanel staticPanel = new StaticPanel(windowFrame);
-			System.out.println("Static Panel"+ staticPanel);
+			Clock clock=new Clock(objectProperties);
+			try {
+				staticPanel.addComponent(clock);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 			mainPanel.addComponent(staticPanel);
 			
 			GamePanel gamePanel = new GamePanel();
-			mainPanel.add(gamePanel);
+			mainPanel.addComponent(gamePanel);
+			mainPanel.addComponent(staticPanel);
+			windowFrame.setMainPanel(mainPanel);
 			windowFrame.setGamePanel(gamePanel);
 			windowFrame.setStaticPanel(staticPanel);
-			staticPanel.createButtons();
+			GamePlayController gpController = new GamePlayController(windowFrame, gameTimer);
+			mainPanel.addKeyListener(gpController);
+			mainPanel.requestFocus();
+			staticPanel.createButtons(gpController);
 			
 			windowFrame.setVisible(true);
 			windowFrame.pack();

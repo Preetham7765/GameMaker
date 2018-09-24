@@ -10,6 +10,8 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -55,14 +57,16 @@ public class GamePanel extends JPanel implements IComposite, IPanel	 {
 			g.drawImage(image, 0, 0, this);
 		}
 		System.out.println("Length of composite list: " + compositeList.size());
-		for(IComposite composite : compositeList) {
+		for(AbstractComponent composite : compositeList) {
 			System.out.println(composite);
-			composite.draw(g);
-		}		
+			if (composite.getVisibility())
+				composite.draw(g);
+		}
 	}
 	
 	public void draw(Graphics g) {
-        repaint();
+//        revalidate();
+		repaint();
 	}
 
 	public void addComponent(AbstractComponent abstractComponent) {
@@ -105,6 +109,46 @@ public class GamePanel extends JPanel implements IComposite, IPanel	 {
 	@Override
 	public void removeComponent(IComposite composite) throws Exception {
 		throw new Exception();	
+	}
+
+	@Override
+	public void save(ObjectOutputStream op) {
+		/*
+		for (AbstractComponent abstractComponent: compositeList) {
+			abstractComponent.save(op);
+		}
+		*/
+		try {
+			op.writeObject(compositeList);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void load(ObjectInputStream ip) {
+		try {
+			compositeList = (ArrayList<AbstractComponent>) ip.readObject();
+		} catch (java.lang.ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		/*
+		while (true) {
+			AbstractComponent abstractComponent = () ip.readObject();
+		}
+		*/
+		/*
+		
+		
+		try {
+			Ball obj = (Ball)ip.readObject();
+			return obj;
+		} catch (ClassNotFoundException | IOException e) {
+			log.error(e.getMessage());
+		}
+		*/
 	}
 
 }

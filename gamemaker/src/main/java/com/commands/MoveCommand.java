@@ -2,7 +2,7 @@ package com.commands;
 
 import com.infrastructure.AbstractComponent;
 
-public abstract class MoveCommand implements Command {
+public class MoveCommand implements Command {
 
 	protected int oldPositionX; 
 	protected int oldPositionY;
@@ -79,6 +79,8 @@ public abstract class MoveCommand implements Command {
 		this.setOldPositionY(abstractComponent.getY());
 		this.setOldPositionVelX(abstractComponent.getX());
 		this.setOldPositionVelY(abstractComponent.getY());
+		this.setxOffset(xOffset);
+		this.setyOffset(yOffset);
 		execute();
 	}
 
@@ -86,16 +88,21 @@ public abstract class MoveCommand implements Command {
 	 * This command was created when the timer ticked, so we advanced the ball accordingly
 	 */
 	public void execute() {
+//		System.out.print("execute");
 		if (getxOffset() != 0 && getyOffset() != 0) {
 			this.abstractComponent.performAction();
+//			System.out.println("  ball");
+
 		}
 		else if (getxOffset() != 0) {
 			this.abstractComponent.setVelY(0);
+			this.abstractComponent.setVelX(xOffset);
 			this.abstractComponent.performAction();
 			this.abstractComponent.setVelY(this.abstractComponent.getVelY());
 		}
 		else {
 			this.abstractComponent.setVelX(0);
+			this.abstractComponent.setVelY(yOffset);
 			this.abstractComponent.performAction();
 			this.abstractComponent.setVelX(this.abstractComponent.getVelX());
 		}

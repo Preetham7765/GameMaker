@@ -3,6 +3,11 @@ package com.view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Enumeration;
 
 import javax.swing.AbstractButton;
@@ -70,10 +75,61 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 		if(componentType == ComponentType.BACKGROUND)
 			setText("Background");
 		
+		if(componentType == ComponentType.SAVE)
+			setText("Save");
+		
+		if(componentType == ComponentType.LOAD)
+			setText("Load");
+		
+		if(componentType == ComponentType.PLAY)
+			setText("Play");
+		
 		selected.setComponentType(componentType);
 
 	}
-		
+
+	public void save() {
+//		pause();
+		try {
+			String fileName = windowFrame.showSaveDialog();
+			if(!fileName.isEmpty()) {
+			FileOutputStream fileOut = new FileOutputStream(fileName);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			
+			windowFrame.save(out);
+//			out.writeObject(commandQueue);
+			out.close();
+			fileOut.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	
+	}
+
+	public void load() {
+//		pause();
+//		commandQueue.clear();
+		try {
+			String fileName = windowFrame.showOpenDialog();
+			if(!fileName.isEmpty()) {
+			FileInputStream fileIn = new FileInputStream(fileName);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			
+			windowFrame.load(in);
+			
+//			commandQueue.clear();
+//			Deque<Command> loadCmdQueue = (Deque<Command>) in.readObject();
+//			commandQueue.addAll(loadCmdQueue);
+//			initCommands();
+			in.close();
+			fileIn.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		windowFrame.draw(null);
+	}	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -82,6 +138,22 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 		{
 			setBackground();
 		}
+		
+		else if(componentType.equals(ComponentType.PLAY))
+		{
+			
+		}
+		
+		else if(componentType.equals(ComponentType.SAVE))
+		{
+			save();
+		}
+		
+		else if(componentType.equals(ComponentType.LOAD))
+		{
+			load();
+		}
+		
 		else
 		{
 			
@@ -121,8 +193,13 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 			myPanel.add(event);
 			myPanel.add(Box.createHorizontalStrut(15));
 			
+			myPanel.add(action);
+	     
+			myPanel.add(Box.createHorizontalStrut(15));
+			
 			myPanel.add(collectible);
 	     
+			
 			int result1 = JOptionPane.showConfirmDialog(null, myPanel, 
 	               "Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
 	      
@@ -141,7 +218,8 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 	                	String text = button.getText();
 	                	if(text.equals("Collectible")) {
 	                		selected.setObjectListType(ObjectListType.COLLECTIBLE);
-	                		
+//	                    	System.out.println("Game maker controller can collect = here ");
+
 	                	}else if(text.equals("Player object")) {
 	                		selected.setObjectListType(ObjectListType.EVENT);
 	                		
