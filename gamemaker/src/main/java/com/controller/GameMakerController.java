@@ -49,10 +49,13 @@ public class GameMakerController implements ActionListener, MouseListener {
         	AbstractComponent abstractComponent = null;
         	selected.setComponentType(formPanelSelected.getComponentType());
         	selected.setObjectListType(formPanelSelected.getObjectListType());
+//        	System.out.println("Game maker controller can collect = " + formPanelSelected.getObjectListType());
         	selected.setHeight(formPanelSelected.getHeight());
         	selected.setWidth(formPanelSelected.getWidth());
         	selected.setVelX(formPanelSelected.getVelX());
         	selected.setVelY(formPanelSelected.getVelY());
+			selected.setCanCollect(formPanelSelected.getCanCollect());
+
         	switch(componentType) {
         		case BALL:
         		{
@@ -61,6 +64,7 @@ public class GameMakerController implements ActionListener, MouseListener {
         		}
         		case BRICK:
         		{
+//        			System.out.println( selected.getObjectListType() +  " Brick set as collectible");
         			abstractComponent = new Brick(selected);
         			break;
         		}
@@ -80,11 +84,9 @@ public class GameMakerController implements ActionListener, MouseListener {
         		}
         	}
         	
-        	System.out.println(" comp typ  " + abstractComponent.getObjectProperties().getObjectListType());
-        	windowFrame.getGamePanel().addComponent(abstractComponent);
         	if(abstractComponent.getObjectProperties().getObjectListType() == ObjectListType.COLLECTIBLE) {
-
         		// set behavior to the object to visibility
+        		System.out.println("visisbility");
         		Visibility visibility = new Visibility(selected);
         		abstractComponent.setActionBehavior(visibility);
         	}
@@ -95,7 +97,9 @@ public class GameMakerController implements ActionListener, MouseListener {
         		Move move = new Move(selected);
         		abstractComponent.setActionBehavior(move);
         	}
-        	
+
+        	System.out.println(" comp typ  " + abstractComponent.getObjectProperties().getObjectListType());
+        	windowFrame.getGamePanel().addComponent(abstractComponent);
         	windowFrame.draw(null);
 		}	
 	}

@@ -16,6 +16,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 
 import com.commands.ClockTickCommand;
+import com.commands.CollectedCommand;
 import com.commands.Command;
 import com.commands.MoveCommand;
 import com.components.Clock;
@@ -50,7 +51,6 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 	
 	public void loadComponentList() {
 
-		
 		actionList = new ArrayList<>();
 		collectibleList = new ArrayList<>();
 		compositeList = windowFrame.getGamePanel().getComponentList();
@@ -68,7 +68,10 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 				collectibleList.add(abstractComponent);
 			}		
 		}
-		System.out.println("gameCharacter " + gameCharacter);
+		
+		System.out.println(collectibleList.size() + " my size");
+//		System.out.println(gameCharacter.getCanCollect());
+
 	}
 
 	public void save() {
@@ -132,35 +135,41 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 	private void checkCollisionDetection() {
 		
 //		Collision with action objects
+		System.out.println("Size of collectible list = " + collectibleList.size());
+		System.out.println("Size of actionList list = " + actionList.size());
 		for (AbstractComponent actionComponent: actionList)
 		{
-			for (AbstractComponent actionComponent2: actionList)
-			{
-//				Collision with other action component
-				if(actionComponent.getBounds().intersects(actionComponent2.getBounds()))
+//			for (AbstractComponent actionComponent2: actionList)
+//			{
+//				// TODO IF THEY ARESAME COMPONENT
+////				Collision with other action component
+//				if(actionComponent.getBounds().intersects(actionComponent2.getBounds()))
+//				{
+//					actionComponent.setVelX(-actionComponent.getVelX());
+//					actionComponent.setVelY(-actionComponent.getVelY());
+//					actionComponent2.setVelX(-actionComponent2.getVelX());
+//					actionComponent2.setVelY(-actionComponent2.getVelY());
+//				}
+//			}
+			System.out.println("Action component can collect = " + actionComponent.getCanCollect());
+			if(actionComponent.getCanCollect()) {
+				for (AbstractComponent collectibleComponent: collectibleList)
 				{
-					actionComponent.setVelX(-actionComponent.getVelX());
-					actionComponent.setVelY(-actionComponent.getVelY());
-					actionComponent2.setVelX(-actionComponent2.getVelX());
-					actionComponent2.setVelY(-actionComponent2.getVelY());
-				}
-			}
-			for (AbstractComponent collectibleComponent: collectibleList)
-			{
-//				Collision with collectible component
-				if(actionComponent.getBounds().intersects(collectibleComponent.getBounds()))
-				{	
-					if(actionComponent.getCanCollect()) {
-						collectibleComponent.performAction();
+	//				Collision with collectible component
+					if(actionComponent.getBounds().intersects(collectibleComponent.getBounds()))
+					{	
+//						collectibleComponent.performAction();
+						commandQueue.addLast(new CollectedCommand(collectibleComponent));
 						if(collectiblesCollected == collectibleList.size()-1)
-						{}
-//							Game Ends
+						{
+//							Game Ends							
+						}
 						else
 							collectiblesCollected++;
+						actionComponent.setVelX(-actionComponent.getVelX());
+						actionComponent.setVelY(-actionComponent.getVelY());
 					}
-					actionComponent.setVelX(-actionComponent.getVelX());
-					actionComponent.setVelY(-actionComponent.getVelY());
-					}
+				}
 			}
 //			Collision with game character
 			System.out.println("actionComponent: " + actionComponent + " gameCharacter: " + gameCharacter);

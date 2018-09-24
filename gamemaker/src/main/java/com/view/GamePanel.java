@@ -57,9 +57,10 @@ public class GamePanel extends JPanel implements IComposite, IPanel	 {
 			g.drawImage(image, 0, 0, this);
 		}
 		System.out.println("Length of composite list: " + compositeList.size());
-		for(IComposite composite : compositeList) {
+		for(AbstractComponent composite : compositeList) {
 			System.out.println(composite);
-			composite.draw(g);
+			if (composite.getVisibility())
+				composite.draw(g);
 		}		
 	}
 	

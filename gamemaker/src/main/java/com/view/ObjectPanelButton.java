@@ -218,7 +218,8 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 	                	String text = button.getText();
 	                	if(text.equals("Collectible")) {
 	                		selected.setObjectListType(ObjectListType.COLLECTIBLE);
-	                		
+//	                    	System.out.println("Game maker controller can collect = here ");
+
 	                	}else if(text.equals("Player object")) {
 	                		selected.setObjectListType(ObjectListType.EVENT);
 	                		
