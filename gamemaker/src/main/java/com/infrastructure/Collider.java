@@ -35,7 +35,7 @@ public class Collider implements Serializable {
 	
 	public void execute(GamePlayController controller) {
 		
-		if(primaryComponent.getVisibility() && secondaryComponent.getVisibility() && collisionChecker.checkIntersectionBetweenElements(primaryComponent, secondaryComponent)) {
+		if(primaryComponent.getVisibility() && secondaryComponent.getVisibility() && collision.checkIntersectionBetweenElements(primaryComponent, secondaryComponent)) {
 		
 			if(eventList != null) {
 				for(Command eventCommand : eventList) {
