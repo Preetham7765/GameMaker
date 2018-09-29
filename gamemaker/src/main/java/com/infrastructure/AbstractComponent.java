@@ -1,6 +1,8 @@
 package com.infrastructure;
 
+import java.awt.Color;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -10,9 +12,43 @@ public abstract class AbstractComponent implements IComposite, Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private ObjectProperties objectProperties;
-	//private drawable;
+	private Drawable drawable;
+	private BufferedImage image;
+	private Color color;
+	private ComponentShape shape;
 	
-	
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+	public ComponentShape getShape() {
+		return shape;
+	}
+
+	public void setShape(ComponentShape shape) {
+		this.shape = shape;
+	}
+
+	public Drawable getDrawable() {
+		return drawable;
+	}
+
+	public void setDrawable(Drawable drawable) {
+		this.drawable = drawable;
+	}
+
+	public BufferedImage getImage() {
+		return image;
+	}
+
+	public void setImage(BufferedImage image) {
+		this.image = image;
+	}
+
 	public ObjectProperties getObjectProperties() {
 		return objectProperties;
 	}
@@ -113,7 +149,7 @@ public abstract class AbstractComponent implements IComposite, Serializable {
 		return getX() + getWidth();
 	}
 
-	@Override
+	/*@Override
 	public void save(ObjectOutputStream op) {
 		try {
 			op.writeObject(this);
@@ -126,7 +162,7 @@ public abstract class AbstractComponent implements IComposite, Serializable {
 	public void load(ObjectInputStream ip) {
 		// TODO Auto-generated method stub
 		
-	}
+	}*/
 	
 
 }
