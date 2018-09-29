@@ -30,8 +30,8 @@ import com.infrastructure.ObjectProperties;
 public class ObjectPanelButton extends JButton implements ActionListener {
 	
 //	private String name;
-	private WindowFrame windowFrame;
-	private ObjectProperties selected = new ObjectProperties();
+//	private WindowFrame windowFrame;
+	private ObjectProperties active;
 	private ComponentType componentType;
 	
 	JTextField vXField;
@@ -45,16 +45,18 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 	JRadioButton action;
 	ButtonGroup group;
 	
-	public ObjectPanelButton(ComponentType componentType, Color yellow, WindowFrame windowFrame) {
+	public ObjectPanelButton(ComponentType componentType, Color yellow,ObjectProperties active) {
 
 		addActionListener(this);
 		setVisible(true);
 		setAlignmentX(CENTER_ALIGNMENT);
 		setAlignmentY(CENTER_ALIGNMENT);
-		this.windowFrame = windowFrame;
+//		this.windowFrame = windowFrame;
 		
 		
-		this.windowFrame.getFormPanel().selected = selected;
+//		this.windowFrame.getFormPanel().selected = selected;
+		
+		this.active = active;
 		
 		this.componentType = componentType;
 		if(componentType == ComponentType.BALL)
@@ -83,34 +85,32 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 		
 		if(componentType == ComponentType.PLAY)
 			setText("Play");
-		
-		selected.setComponentType(componentType);
 
 	}
 
 	public void save() {
 //		pause();
-		try {
-			String fileName = windowFrame.showSaveDialog();
+		/*try {
+//			String fileName = windowFrame.showSaveDialog();
 			if(!fileName.isEmpty()) {
 			FileOutputStream fileOut = new FileOutputStream(fileName);
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			
-			windowFrame.save(out);
+//			windowFrame.save(out);
 //			out.writeObject(commandQueue);
 			out.close();
 			fileOut.close();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 	
 	}
 
 	public void load() {
 //		pause();
 //		commandQueue.clear();
-		try {
+		/*try {
 			String fileName = windowFrame.showOpenDialog();
 			if(!fileName.isEmpty()) {
 			FileInputStream fileIn = new FileInputStream(fileName);
@@ -128,7 +128,7 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		windowFrame.draw(null);
+		windowFrame.draw(null);*/
 	}	
 	
 	@Override
@@ -157,11 +157,15 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 		else
 		{
 			
+			String component = e.getActionCommand();
+			System.out.println(component);
+			active.setComponentType(ComponentType.valueOf(component.toUpperCase()));
 			
-			vXField = new JTextField(Integer.toString(selected.getVelX()) ,5);
-			vYField = new JTextField(Integer.toString(selected.getVelY()) ,5);
-		    widthField = new JTextField(Integer.toString(selected.getWidth()), 5);
-			heightField = new JTextField(Integer.toString(selected.getHeight()) ,5);
+			
+			vXField = new JTextField(Integer.toString(active.getVelX()) ,5);
+			vYField = new JTextField(Integer.toString(active.getVelY()) ,5);
+		    widthField = new JTextField(Integer.toString(active.getWidth()), 5);
+			heightField = new JTextField(Integer.toString(active.getHeight()) ,5);
 			canCollectField = new JCheckBox("Can collect the collectibles");
 			
 			
@@ -204,11 +208,11 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 	               "Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
 	      
 			if (result1 == JOptionPane.OK_OPTION) {
-				selected.setVelX(Integer.parseInt(vXField.getText()));
-				selected.setVelY(Integer.parseInt(vYField.getText()));
-				selected.setWidth(Integer.parseInt(widthField.getText()));
-				selected.setHeight(Integer.parseInt(heightField.getText()));
-				selected.setCanCollect(canCollectField.isSelected());
+				active.setVelX(Integer.parseInt(vXField.getText()));
+				active.setVelY(Integer.parseInt(vYField.getText()));
+				active.setWidth(Integer.parseInt(widthField.getText()));
+				active.setHeight(Integer.parseInt(heightField.getText()));
+				active.setCanCollect(canCollectField.isSelected());
 				int n = 1;
 				for (Enumeration<AbstractButton> buttons = group.getElements(); buttons.hasMoreElements(); n++)
 	            {
@@ -217,26 +221,25 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 	                {
 	                	String text = button.getText();
 	                	if(text.equals("Collectible")) {
-	                		selected.setObjectListType(ObjectListType.COLLECTIBLE);
+	                		active.setObjectListType(ObjectListType.COLLECTIBLE);
 //	                    	System.out.println("Game maker controller can collect = here ");
 
 	                	}else if(text.equals("Player object")) {
-	                		selected.setObjectListType(ObjectListType.EVENT);
+	                		active.setObjectListType(ObjectListType.EVENT);
 	                		
 	                	}else if(text.equals("Game Object")) {
-	                		selected.setObjectListType(ObjectListType.ACTION);
+	                		active.setObjectListType(ObjectListType.ACTION);
 	                		
 	                	}
 	                }
 	            }				
-				windowFrame.getFormPanel().setSelected(selected);
 	      	}
 		}
 	}
 	
 	public void setBackground()
 	{
-		String imagePath = windowFrame.getFormPanel().fileExplorer();
-		windowFrame.getGamePanel().setImage(imagePath);
+//		String imagePath = windowFrame.getFormPanel().fileExplorer();
+//		windowFrame.getGamePanel().setImage(imagePath);
 	}
 }

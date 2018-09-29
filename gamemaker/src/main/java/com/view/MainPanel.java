@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.event.ActionListener;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -13,16 +14,16 @@ import javax.swing.JPanel;
 
 import com.infrastructure.AbstractComponent;
 import com.infrastructure.IComposite;
-import com.infrastructure.IPanel;
+import com.infrastructure.ObjectProperties;
 
 @SuppressWarnings("serial")
-public class MainPanel extends JPanel implements IComposite, IPanel {
+public class MainPanel extends JPanel implements IComposite {
 
 	private ArrayList<IComposite> compositeList;
-	
+
 	public MainPanel() {
 		super();
-		setBorder( BorderFactory.createLineBorder(Color.red));
+		setBorder(BorderFactory.createLineBorder(Color.red));
 		this.compositeList = new ArrayList<IComposite>();
 		setLayout(new FlowLayout());
 		setFocusable(true);
@@ -30,9 +31,9 @@ public class MainPanel extends JPanel implements IComposite, IPanel {
 	}
 
 	public void draw(Graphics g) {
-		for(IComposite composite : compositeList) {
+		for (IComposite composite : compositeList) {
 			composite.draw(g);
-		}	
+		}
 	}
 
 	public Rectangle getBounds() {
@@ -45,34 +46,44 @@ public class MainPanel extends JPanel implements IComposite, IPanel {
 
 	public void addComponent(IComposite composite) {
 		compositeList.add(composite);
-		this.add((JPanel)composite);
+		this.add((JPanel) composite);
 	}
 
 	public void removeComponent(IComposite composite) {
 		compositeList.remove(composite);
 	}
 
-	@Override
-	public void addComponent(AbstractComponent asbtractComponent) throws Exception {
-		throw new Exception();
+	public ObjectProperties getActiveObjectProperties() {
+		for (IComposite composite : compositeList) {
+			if (composite instanceof FormPanel)
+				return ((FormPanel) composite).getActiveObjectProperties();
+		}
+
+		return null;
 	}
 
-	@Override
-	public void removeComponent(AbstractComponent asbtractComponent) throws Exception {
-		throw new Exception();
+	public void setFocusForGamePanel() {
+
+		for (IComposite composite : compositeList) {
+			if (composite instanceof GamePanel)
+				((GamePanel) composite).requestFocus();
+			return;
+		}
+
 	}
 
 	@Override
 	public void save(ObjectOutputStream op) {
-		for(IComposite composite : compositeList) {
+		for (IComposite composite : compositeList) {
 			composite.save(op);
-		}	
+		}
 	}
 
 	@Override
 	public void load(ObjectInputStream ip) {
-		for(IComposite composite : compositeList) {
+		for (IComposite composite : compositeList) {
 			composite.load(ip);
-		}	
+		}
 	}
+
 }

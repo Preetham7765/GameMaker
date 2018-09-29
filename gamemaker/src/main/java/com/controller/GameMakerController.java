@@ -26,27 +26,28 @@ public class GameMakerController implements ActionListener, MouseListener {
 		this.windowFrame = windowFrame;
 	}
 
-	public void displayButtons() {
+	/*public void displayButtons() {
 		this.windowFrame.getFormPanel().createButtons();
-	}
+	}*/
 
 	public void actionPerformed(ActionEvent e) {}
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		ObjectProperties selected = new ObjectProperties();
-		ObjectProperties formPanelSelected = windowFrame.getFormPanel().getSelected();
+		ObjectProperties selected = windowFrame.getActiveObjectProperties();
 		
 		
-		if (formPanelSelected != null) {
+		if (selected != null) {
 			
             int x = arg0.getX(); 
             int y = arg0.getY(); 
             selected.setX(x);
             selected.setY(y);
 
-            ComponentType componentType = formPanelSelected.getComponentType();
+            ComponentType componentType = selected.getComponentType();
+            System.out.println(componentType);
         	AbstractComponent abstractComponent = null;
+        	/*
         	selected.setComponentType(formPanelSelected.getComponentType());
         	selected.setObjectListType(formPanelSelected.getObjectListType());
 //        	System.out.println("Game maker controller can collect = " + formPanelSelected.getObjectListType());
@@ -55,7 +56,7 @@ public class GameMakerController implements ActionListener, MouseListener {
         	selected.setVelX(formPanelSelected.getVelX());
         	selected.setVelY(formPanelSelected.getVelY());
 			selected.setCanCollect(formPanelSelected.getCanCollect());
-
+			*/
         	switch(componentType) {
         		case BALL:
         		{
@@ -80,7 +81,7 @@ public class GameMakerController implements ActionListener, MouseListener {
         		}      
         		case BACKGROUND:
         		{
-        			windowFrame.getFormPanel().createSetBackgroundButton();
+//        			windowFrame.createSetBackgroundButton();
         		}
         	}
         	
