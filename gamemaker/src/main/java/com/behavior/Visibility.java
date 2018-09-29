@@ -1,10 +1,10 @@
 package com.behavior;
 
 import com.infrastructure.AbstractComponent;
-import com.infrastructure.ActionBehavior;
+//import com.infrastructure.ActionBehavior;
 import com.infrastructure.ObjectProperties;
 
-public class Visibility implements ActionBehavior {
+public class Visibility {
 	
 	private ObjectProperties objectProperties;
 	
@@ -13,11 +13,11 @@ public class Visibility implements ActionBehavior {
 		this.objectProperties = objectProperties;
 	}
 
-	@Override
+	/*@Override
 	public void performAction() {
 		// TODO Auto-generated method stub
 		objectProperties.setVisibility(false);
-	}
+	}*/
 	
 	
 

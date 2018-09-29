@@ -19,12 +19,12 @@ public class CollectedCommand implements Command {
 //				ScreenController.brickList.remove(i);
 //			}
 //		}
-		this.abstractComponent.performAction();
+		//this.abstractComponent.performAction();
 	}
 
 	@Override
 	public void undo() {
-		this.abstractComponent.performAction();
+		//this.abstractComponent.performAction();
 	}
 	
 //	public String save() {

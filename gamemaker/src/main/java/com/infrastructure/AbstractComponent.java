@@ -10,6 +10,8 @@ public abstract class AbstractComponent implements IComposite, Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private ObjectProperties objectProperties;
+	//private drawable;
+	
 	
 	public ObjectProperties getObjectProperties() {
 		return objectProperties;
