@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import com.infrastructure.Constants;
 import com.infrastructure.IComposite;
+import com.infrastructure.ObjectProperties;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -21,11 +22,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class WindowFrame extends JFrame implements IComposite {
 	private ArrayList<IComposite> compositeList;
 
-	private FormPanel formPanel;
-	private GamePanel gamePanel;
-	private StaticPanel staticPanel;
-	private JFileChooser fileChooser;
+//	private FormPanel formPanel;
+	private GamePanel gamePanel; // game panel is also used in gameplay controller
+//	private StaticPanel staticPanel;
 	private MainPanel mainPanel;
+	private JFileChooser fileChooser;
 
 	public MainPanel getMainPanel() {
 		return mainPanel;
@@ -42,11 +43,20 @@ public class WindowFrame extends JFrame implements IComposite {
 	}
 
 	
+	public void setFocusForGamePanel() {
+		
+		for(IComposite composite : compositeList) {
+			if(composite instanceof MainPanel)
+				((MainPanel)composite).setFocusForGamePanel();
+				return;
+		}
+		
+	} 
 	public String showOpenDialog() {
 		try {
 		fileChooser = new JFileChooser();
 		fileChooser.setFileFilter(new FileNameExtensionFilter("serialize file","ser"));
-		int rVal = fileChooser.showOpenDialog(gamePanel);
+		int rVal = fileChooser.showOpenDialog(null);
 	    if (rVal == JFileChooser.APPROVE_OPTION) {
 	    	String name = fileChooser.getSelectedFile().toString();
 	    	return name;
@@ -62,7 +72,7 @@ public class WindowFrame extends JFrame implements IComposite {
 			fileChooser = new JFileChooser();
 			fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
 			fileChooser.setFileFilter(new FileNameExtensionFilter("serialize file","ser"));
-			int rVal = fileChooser.showSaveDialog(this);
+			int rVal = fileChooser.showSaveDialog(null);
 		      if (rVal == JFileChooser.APPROVE_OPTION) {
 		        String name = fileChooser.getSelectedFile().toString();
 		    	if (!name.endsWith(".ser"))
@@ -73,6 +83,7 @@ public class WindowFrame extends JFrame implements IComposite {
 			e.printStackTrace();
 		}
 	     return "";
+		
 	}
 
 	
@@ -108,6 +119,7 @@ public class WindowFrame extends JFrame implements IComposite {
 		compositeList.remove(composite);
 	}
 	
+	/*
 	public FormPanel getFormPanel() {
 		System.out.println("In getform panel");
 		return formPanel;
@@ -116,7 +128,7 @@ public class WindowFrame extends JFrame implements IComposite {
 
 	public void setFormPanel(FormPanel formPanel) {
 		this.formPanel = formPanel;
-	}
+	}*/
 
 	public GamePanel getGamePanel() {
 		return gamePanel;
@@ -126,7 +138,7 @@ public class WindowFrame extends JFrame implements IComposite {
 		this.gamePanel = gamePanel;
 	}
 	
-	public StaticPanel getStaticPanel() {
+	/*public StaticPanel getStaticPanel() {
 		System.out.println("In getform panel");
 		
 		return staticPanel;
@@ -134,9 +146,26 @@ public class WindowFrame extends JFrame implements IComposite {
 
 	public void setStaticPanel(StaticPanel staticPanel) {
 		this.staticPanel = staticPanel;
+	}*/
+
+	public ObjectProperties getActiveObjectProperties() {
+		for(IComposite composite : compositeList) {
+			if(composite instanceof MainPanel)
+				return ((MainPanel)composite).getActiveObjectProperties();
+		}
+		
+		return null;
 	}
-
-
+	
+	/*public void createSetBackgroundButton() {
+		// TODO Auto-generated method stub
+		for(IComposite composite : compositeList) {
+			if(composite instanceof MainPanel)
+				mainPanel.set
+		}
+		
+	}*/
+	
 	@Override
 	public void save(ObjectOutputStream op) {
 		for(IComposite composite : compositeList) {
@@ -150,4 +179,7 @@ public class WindowFrame extends JFrame implements IComposite {
 			composite.load(ip);
 		}	
 	}
+
+
+	
 }

@@ -130,7 +130,8 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 			
 			windowFrame.load(in);
 
-			windowFrame.getMainPanel().requestFocus();
+//			windowFrame.getMainPanel().requestFocus();
+			windowFrame.setFocusForGamePanel();
 //			commandQueue.clear();
 //			Deque<Command> loadCmdQueue = (Deque<Command>) in.readObject();
 //			commandQueue.addAll(loadCmdQueue);
@@ -260,16 +261,19 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 		String commandText = e.getActionCommand();
 		if(commandText.equals("Play")) {
 			gameTimer.registerObserver(this);
-			windowFrame.getMainPanel().requestFocus();
+//			windowFrame.getMainPanel().requestFocus();
+			windowFrame.setFocusForGamePanel();
 		}
 		else if(commandText.equals("Save")) {
 			save();
-			windowFrame.getMainPanel().requestFocus();
+//			windowFrame.getMainPanel().requestFocus();
+			windowFrame.setFocusForGamePanel();
 		}
 		else if(commandText.equals("Load")) {
 			load();
 			loadComponentList();
-			windowFrame.getMainPanel().requestFocus();
+//			windowFrame.getMainPanel().requestFocus();
+			windowFrame.setFocusForGamePanel();
 		}
 	}
 }

@@ -2,29 +2,25 @@ package com.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.util.HashMap;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import com.controller.GameMakerController;
-
-import com.infrastructure.ComponentType;
-
 import com.infrastructure.AbstractComponent;
-
+import com.infrastructure.ComponentType;
 import com.infrastructure.Constants;
 import com.infrastructure.IComposite;
 import com.infrastructure.IPanel;
@@ -32,38 +28,40 @@ import com.infrastructure.ObjectProperties;
 
 @SuppressWarnings("serial")
 public class FormPanel extends JPanel implements IComposite, IPanel {
-	
-	public ObjectProperties selected = new ObjectProperties();
-		
-	public ObjectProperties getSelected() {
-		return selected;
-	}
 
-	public void setSelected(ObjectProperties selected) {
-		this.selected = selected;
-	}
+	private ObjectProperties active;
+	private List<ObjectPanelButton> objectButtons; // should we need it lets see?
 
 	private GameMakerController controller;
-	private WindowFrame windowFrame;
-	
+	// private WindowFrame windowFrame;
+
 	public FormPanel(WindowFrame window) {
 		super();
-		this.windowFrame = window;
-		setBorder( BorderFactory.createLineBorder(Color.red));
+		// this.windowFrame = window;
+		this.objectButtons = new ArrayList<>();
+		this.active = new ObjectProperties();
+		setBorder(BorderFactory.createLineBorder(Color.red));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setMaximumSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
 		setMinimumSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
-		setPreferredSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));	
+		setPreferredSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
 		setBackground(Color.BLACK);
 	}
-	
-	public String fileExplorer()
-	{
+
+	public ObjectProperties getActive() {
+		return active;
+	}
+
+	public void setSelected(ObjectProperties selected) {
+		this.active = selected;
+	}
+
+	public String fileExplorer() {
 		JFileChooser chooser = new JFileChooser();
 		chooser.setCurrentDirectory(new File("."));
 		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 		int returnVal = chooser.showOpenDialog(this);
-		if(returnVal == JFileChooser.APPROVE_OPTION) {
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = chooser.getSelectedFile();
 			String path = file.getAbsolutePath();
 			System.out.println("path = " + path);
@@ -71,10 +69,8 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 		}
 		System.out.println("Return NULL");
 		return null;
-		
-	}
-	
 
+	}
 
 	public void createButtons() {
 
@@ -94,8 +90,12 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 		createBrickButton();
 		createPaddleButton();
 		createFireButton();
+<<<<<<< HEAD
 		createAddstaticButton();
 		
+=======
+
+>>>>>>> UIRefactor
 		JLabel gameFunc = new JLabel("Game Options:");
 		gameFunc.setForeground(Color.red);
 		gameFunc.setFont(new Font("Helvetica", Font.BOLD, 15));
@@ -105,13 +105,22 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 		createSaveButton();
 		createPlayButton();
 	}
+<<<<<<< HEAD
 	
 	
 	
+=======
+
+	public ObjectProperties getActiveObjectProperties() {
+		return active;
+	}
+
+>>>>>>> UIRefactor
 	public void createSetBackgroundButton() {
-		ObjectPanelButton setBackgroundButton = new ObjectPanelButton(ComponentType.BACKGROUND, null, windowFrame);
+		ObjectPanelButton setBackgroundButton = new ObjectPanelButton(ComponentType.BACKGROUND, null, active);
 		this.add(Box.createRigidArea(new Dimension(30, 30)));
 		this.add(setBackgroundButton);
+		this.objectButtons.add(setBackgroundButton);
 	}
 	
 	//added by cbrahme
@@ -122,49 +131,56 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 	}
 
 	private void createFireButton() {
-		ObjectPanelButton fireButton = new ObjectPanelButton(ComponentType.FIRE, Color.YELLOW, windowFrame);
+		ObjectPanelButton fireButton = new ObjectPanelButton(ComponentType.FIRE, Color.YELLOW, active);
 		fireButton.setBackground(Color.yellow);
 		this.add(Box.createRigidArea(new Dimension(30, 30)));
 		this.add(fireButton);
+		this.objectButtons.add(fireButton);
 	}
 
 	private void createPaddleButton() {
-		ObjectPanelButton paddleButton = new ObjectPanelButton(ComponentType.PADDLE, Color.red, windowFrame );
+		ObjectPanelButton paddleButton = new ObjectPanelButton(ComponentType.PADDLE, Color.red, active);
 		paddleButton.setBackground(Color.red);
 		this.add(Box.createRigidArea(new Dimension(30, 30)));
 		this.add(paddleButton);
+		this.objectButtons.add(paddleButton);
 	}
 
 	private void createBrickButton() {
-		ObjectPanelButton brickButton = new ObjectPanelButton(ComponentType.BRICK, Color.blue, windowFrame);
+		ObjectPanelButton brickButton = new ObjectPanelButton(ComponentType.BRICK, Color.blue, active);
 		brickButton.setBackground(Color.blue);
 		this.add(Box.createRigidArea(new Dimension(30, 30)));
-		this.add(brickButton);		
+		this.add(brickButton);
+		this.objectButtons.add(brickButton);
 	}
 
 	private void createBallButton() {
-		ObjectPanelButton ballButton = new ObjectPanelButton(ComponentType.BALL, Color.green, windowFrame);
+		ObjectPanelButton ballButton = new ObjectPanelButton(ComponentType.BALL, Color.green, active);
 		ballButton.setBackground(Color.green);
 		this.add(Box.createRigidArea(new Dimension(30, 30)));
-		this.add(ballButton);				
+		this.add(ballButton);
+		this.objectButtons.add(ballButton);
 	}
-	
+
 	private void createLoadButton() {
-		ObjectPanelButton LoadButton = new ObjectPanelButton(ComponentType.LOAD, Color.CYAN, windowFrame);
+		ObjectPanelButton loadButton = new ObjectPanelButton(ComponentType.LOAD, Color.CYAN, active);
 		this.add(Box.createRigidArea(new Dimension(30, 30)));
-		this.add(LoadButton);				
+		this.add(loadButton);
+		this.objectButtons.add(loadButton);
 	}
-	
+
 	private void createSaveButton() {
-		ObjectPanelButton saveButton = new ObjectPanelButton(ComponentType.SAVE, Color.BLUE, windowFrame);
+		ObjectPanelButton saveButton = new ObjectPanelButton(ComponentType.SAVE, Color.BLUE, active);
 		this.add(Box.createRigidArea(new Dimension(30, 30)));
-		this.add(saveButton);				
+		this.add(saveButton);
+		this.objectButtons.add(saveButton);
 	}
-	
+
 	private void createPlayButton() {
-		ObjectPanelButton playButton = new ObjectPanelButton(ComponentType.PLAY, Color.GREEN, windowFrame);
+		ObjectPanelButton playButton = new ObjectPanelButton(ComponentType.PLAY, Color.GREEN, active);
 		this.add(Box.createRigidArea(new Dimension(30, 30)));
-		this.add(playButton);				
+		this.add(playButton);
+		this.objectButtons.add(playButton);
 	}
 
 	public void draw(Graphics g) {
@@ -180,12 +196,12 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 
 	@Override
 	public void addComponent(AbstractComponent asbtractComponent) throws Exception {
-		throw new Exception();		
+		throw new Exception();
 	}
 
 	@Override
 	public void removeComponent(AbstractComponent asbtractComponent) throws Exception {
-		throw new Exception();		
+		throw new Exception();
 	}
 
 	@Override

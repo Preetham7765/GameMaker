@@ -22,7 +22,7 @@ public class StaticPanelButton extends JButton {
 	
 	String name;
 	private WindowFrame windowFrame;
-	private ObjectProperties selected = new ObjectProperties();
+//	private ObjectProperties selected = new ObjectProperties();
 //	public HashMap<String, Object> selected = new HashMap<String, Object>();
 //	public ObjectProperties selected = null;
 	
@@ -49,7 +49,7 @@ public class StaticPanelButton extends JButton {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.windowFrame = windowFrame;
 		
-		this.windowFrame.getStaticPanel().selected=selected;
+//		this.windowFrame.getStaticPanel().selected=selected;
 		
 	}
 	
