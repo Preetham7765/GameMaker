@@ -3,6 +3,12 @@ package com.infrastructure;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import com.commands.ChangeVelXCommand;
+import com.commands.ChangeVelYCommand;
+import com.commands.Command;
+import com.commands.MoveCommand;
+import com.controller.GamePlayController;
+
 //import org.apache.log4j.Logger;
 
 
@@ -14,20 +20,20 @@ public class Collider implements Serializable {
 	private CollisionType primaryCollisionType;
 	private CollisionType secondaryCollisionType;
 	private Collision collision;
-	//private ArrayList<Command> eventList;
+	private ArrayList<Command> eventList;
 	
 	public Collider(AbstractComponent primaryComponent, AbstractComponent secondaryComponent,CollisionType primaryCollisionType,CollisionType secondaryCollisionType,Collision collision) {
 		this.primaryComponent = primaryComponent;
 		this.secondaryComponent = secondaryComponent;
-		//this.collisionType1 = collisionType1;
-		//this.collisionType2 = collisionType2;
+		this.primaryCollisionType = primaryCollisionType;
+		this.secondaryCollisionType = secondaryCollisionType;
 		this.collision = collision;
 		//this.eventList = eventList;
 	}
 	
-	public void execute(MainController controller) {
+	public void execute(GamePlayController controller) {
 		
-		if(element1.isVisible() && element2.isVisible() && collisionChecker.checkIntersectionBetweenElements(element1, element2)) {
+		if(primaryComponent.getVisibility() && secondaryComponent.getVisibility() && collisionChecker.checkIntersectionBetweenElements(primaryComponent, secondaryComponent)) {
 		
 			if(eventList != null) {
 				for(Command eventCommand : eventList) {
@@ -35,45 +41,45 @@ public class Collider implements Serializable {
 					controller.addCommand(eventCommand);
 				}
 			}
-			Command command = getCollisionAction(element1, collisionType1);
-			if (collisionType1 == CollisionType.BOUNCE) {
-				Direction direction = collisionChecker.checkCollisionBetweenGameElements(element1, element2);
-				changeDirectionsOnCollision(element1, direction,controller);
+			Command command = getCollisionAction(primaryComponent, primaryCollisionType);
+			if (primaryCollisionType == CollisionType.BOUNCE) {
+				Direction direction = collision.checkIntersectionBetweenComponents(primaryComponent, secondaryComponent);
+				changeDirectionsOnCollision(primaryComponent, direction,controller);
 			}
 			command.execute();
 			controller.addCommand(command);
-			command = getCollisionAction(element2, collisionType2);
-			if (collisionType2 == CollisionType.BOUNCE) {
-				Direction direction = collisionChecker.checkCollisionBetweenGameElements(element2, element1);
-				changeDirectionsOnCollision(element2, direction,controller);
+			command = getCollisionAction(secondaryComponent, secondaryCollisionType);
+			if (secondaryCollisionType == CollisionType.BOUNCE) {
+				Direction direction = collision.checkIntersectionBetweenComponents(secondaryComponent, primaryComponent);
+				changeDirectionsOnCollision(secondaryComponent, direction,controller);
 			}
 			command.execute();
 			controller.addCommand(command);
 		}
 	}
 	
-	public Command getCollisionAction(GameElement gameElement, CollisionType collisionType) {
+	public Command getCollisionAction(AbstractComponent component, CollisionType collisionType) {
 		if(collisionType == CollisionType.BOUNCE) {
-			return new MoveCommand(gameElement);
+			return new MoveCommand(component);
 		}
 		if(collisionType == CollisionType.EXPLODE) {
-			return new ExplodeCommand(gameElement);
+			return new ExplodeCommand(component);
 		}
-		return new NullCommand(gameElement);
+		return new NullCommand(component);
 	}
 	
-	public void changeDirectionsOnCollision(GameElement element, Direction direction,MainController controller) {
+	public void changeDirectionsOnCollision(AbstractComponent component, Direction direction,GamePlayController controller) {
 		Command changeVelXCommand = null;
 		Command changeVelYCommand = null;
 		if(direction == Direction.X) {
-			 changeVelXCommand = new ChangeVelXCommand(element);
+			 changeVelXCommand = new ChangeVelXCommand(component);
 		}
 		if(direction == Direction.Y) {
-			changeVelYCommand = new ChangeVelYCommand(element);
+			changeVelYCommand = new ChangeVelYCommand(component);
 		}
 		if(direction == Direction.BOTH) {
-			changeVelXCommand = new ChangeVelXCommand(element);
-			changeVelYCommand = new ChangeVelYCommand(element);
+			changeVelXCommand = new ChangeVelXCommand(component);
+			changeVelYCommand = new ChangeVelYCommand(component);
 		}
 		if(changeVelXCommand != null) {
 			changeVelXCommand.execute();
