@@ -13,11 +13,9 @@ public class Clock extends AbstractComponent implements Serializable {
 	private static final long serialVersionUID = 8L;
 	
 	public long milisecondsElapsed;
-//	public final int DELTA;
 
 	public Clock(ObjectProperties objectProperties) {
 		super(objectProperties);
-//		this.DELTA = delta;
 		milisecondsElapsed = 0;
 	}
 
@@ -33,6 +31,14 @@ public class Clock extends AbstractComponent implements Serializable {
 		}
 	}
 
+	public long getMilisecondsElapsed() {
+		return milisecondsElapsed;
+	}
+	
+	public void setMilisecondsElapsed(long milisecondsElapsed) {
+		this.milisecondsElapsed = milisecondsElapsed;
+	}
+	
 	public void reset() {
 		milisecondsElapsed = 0;
 	}
@@ -40,6 +46,8 @@ public class Clock extends AbstractComponent implements Serializable {
 	public void setTime(long ms) {
 		this.milisecondsElapsed = ms;
 	}
+	
+	
 
 	public int getMinutes() {
 		return (int) (milisecondsElapsed / 60000);
