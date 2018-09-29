@@ -27,37 +27,30 @@ public class Collision {
 	}
 	
 	public RectangularShape getDims(AbstractComponent component) {
-		if(component.getAbstractComponentShape() == AbstractComponentShape.RECTANGLE)
+		if(component.getShape() == ComponentShape.RECTANGLE)
 			return new Rectangle(component.getX(), component.getY(), component.getWidth(), component.getHeight());
 		else
 			return new Ellipse2D.Double(component.getX(), component.getY(), component.getWidth(), component.getHeight());
 	}
 	
 	public Direction checkCollisionBetweenAbstractComponentAndBounds(AbstractComponent component) {
-
-		Coordinate delta = component.getCoordinate();
-		
- 		//get current position of ball
+ 		//get current position of component
  		int left =  component.getX();
  		int right = component.getX() + component.getWidth();
  		int top = component.getY();
  		int bottom = component.getY() + component.getHeight();
  		
  		
- 		if((left <=0) && (delta.getX() < 0))
- 		{
+ 		if(left + component.getVelX() <=0){
  		    return Direction.X;
  		}
- 		if((right >= Constants.GAME_PANEL_WIDTH) && (delta.getX() > 0))
- 		{
+ 		if(right + component.getVelX() >= Constants.GAME_PANEL_WIDTH){
  			return Direction.X;
  		}
- 		if((top <=0) && (delta.getY() < 0))
- 		{
+ 		if(top + component.getVelY() <=0){
  			return Direction.Y;
  		}
- 		if((bottom >= Constants.GAME_PANEL_HEIGHT) && (delta.getY() > 0))
- 		{
+ 		if(bottom + component.getVelY() >= Constants.GAME_PANEL_HEIGHT){
  			return Direction.Y;
  		}
  	
@@ -70,7 +63,7 @@ public class Collision {
 		ElementCoordinates e1 = getElementCoordinates(component1);
 		ElementCoordinates e2 = getElementCoordinates(component2);
 		
-		if(component1.getAbstractComponentShape() == AbstractComponentShape.RECTANGLE) {
+		if(component1.getShape() == ComponentShape.RECTANGLE) {
 			if((component1.getX() <= e2.getTopRightX()) || (e1.getTopRightX() >= component2.getX()))
 				return Direction.X;
 			if((component1.getY() <= e2.getBottomLeftY()) || (e1.getBottomLeftY() >= component2.getY()))
