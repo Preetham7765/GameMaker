@@ -1,10 +1,10 @@
 package com.behavior;
 
-import com.infrastructure.ActionBehavior;
+//import com.infrastructure.ActionBehavior;
 import com.infrastructure.Constants;
 import com.infrastructure.ObjectProperties;
 
-public class Move implements ActionBehavior {
+public class Move implements ActionBehavior{
 	
 	private ObjectProperties objectProperties;
 	

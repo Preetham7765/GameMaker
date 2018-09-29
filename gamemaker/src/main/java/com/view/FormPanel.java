@@ -94,6 +94,7 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 		createBrickButton();
 		createPaddleButton();
 		createFireButton();
+		createAddstaticButton();
 		
 		JLabel gameFunc = new JLabel("Game Options:");
 		gameFunc.setForeground(Color.red);
@@ -105,10 +106,19 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 		createPlayButton();
 	}
 	
+	
+	
 	public void createSetBackgroundButton() {
 		ObjectPanelButton setBackgroundButton = new ObjectPanelButton(ComponentType.BACKGROUND, null, windowFrame);
 		this.add(Box.createRigidArea(new Dimension(30, 30)));
 		this.add(setBackgroundButton);
+	}
+	
+	//added by cbrahme
+	public void createAddstaticButton() {
+		ObjectPanelButton staticButton = new ObjectPanelButton(ComponentType.STATIC, Color.GREEN, windowFrame);
+		this.add(Box.createRigidArea(new Dimension(30, 30)));
+		this.add(staticButton);
 	}
 
 	private void createFireButton() {
