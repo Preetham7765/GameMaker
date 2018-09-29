@@ -23,7 +23,7 @@ public class ClockTickCommand implements Command {
 	 */
 	@Override
 	public void execute() {
-		clock.performAction();
+		//clock.performAction();
 	}
 
 	/**

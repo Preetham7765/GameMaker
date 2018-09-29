@@ -29,7 +29,7 @@ public class StaticPanel extends JPanel implements IComposite, IPanel{
 	private GamePlayController gamePlayController;
 	
 	public StaticPanel(WindowFrame window)
-	{
+	{ 
 		super();
 		compositeList=new ArrayList<>();
 		this.windowFrame=window;

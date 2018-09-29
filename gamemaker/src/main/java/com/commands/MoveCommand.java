@@ -90,20 +90,20 @@ public class MoveCommand implements Command {
 	public void execute() {
 //		System.out.print("execute");
 		if (getxOffset() != 0 && getyOffset() != 0) {
-			this.abstractComponent.performAction();
+			//this.abstractComponent.performAction();
 //			System.out.println("  ball");
 
 		}
 		else if (getxOffset() != 0) {
 			this.abstractComponent.setVelY(0);
 			this.abstractComponent.setVelX(xOffset);
-			this.abstractComponent.performAction();
+			//this.abstractComponent.performAction();
 			this.abstractComponent.setVelY(this.abstractComponent.getVelY());
 		}
 		else {
 			this.abstractComponent.setVelX(0);
 			this.abstractComponent.setVelY(yOffset);
-			this.abstractComponent.performAction();
+			//this.abstractComponent.performAction();
 			this.abstractComponent.setVelX(this.abstractComponent.getVelX());
 		}
 	}
