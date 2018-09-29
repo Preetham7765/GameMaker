@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import com.commands.ChangeVelXCommand;
 import com.commands.ChangeVelYCommand;
 import com.commands.Command;
+import com.commands.ExplodeCommand;
 import com.commands.MoveCommand;
+import com.commands.NullCommand;
 import com.controller.GamePlayController;
 
 //import org.apache.log4j.Logger;
