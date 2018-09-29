@@ -72,6 +72,10 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 		if(componentType == ComponentType.FIRE)
 			setText("Fire");
 		
+		//added by cbrahme
+		if(componentType == ComponentType.STATIC)
+			setText("Static Component");
+		
 		if(componentType == ComponentType.BACKGROUND)
 			setText("Background");
 		
@@ -188,7 +192,7 @@ public class ObjectPanelButton extends JButton implements ActionListener {
 			myPanel.add(new JLabel("Height: "));
 			myPanel.add(heightField);
 
-			myPanel.add(canCollectField);
+			myPanel.add(canCollectField); 
 			
 			myPanel.add(event);
 			myPanel.add(Box.createHorizontalStrut(15));

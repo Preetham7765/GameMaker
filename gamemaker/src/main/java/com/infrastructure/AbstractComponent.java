@@ -6,13 +6,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public abstract class AbstractComponent implements IComposite, Serializable, ActionBehavior {
+public abstract class AbstractComponent implements IComposite, Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	private ActionBehavior actionBehavior;
 	private ObjectProperties objectProperties;
 	
 	public ObjectProperties getObjectProperties() {
@@ -22,15 +18,6 @@ public abstract class AbstractComponent implements IComposite, Serializable, Act
 	public void setObjectProperties(ObjectProperties objectProperties) {
 		this.objectProperties = objectProperties;
 	}
-
-	public void setActionBehavior(ActionBehavior actionBehavior) {
-		this.actionBehavior = actionBehavior;
-	}
-	
-	public void performAction() {
-		actionBehavior.performAction();
-	}
-	
 	
 	public AbstractComponent(ObjectProperties objectProperties)
 	{

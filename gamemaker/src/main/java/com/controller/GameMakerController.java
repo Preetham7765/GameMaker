@@ -82,20 +82,24 @@ public class GameMakerController implements ActionListener, MouseListener {
         		{
         			windowFrame.getFormPanel().createSetBackgroundButton();
         		}
+        		case STATIC:
+        		{
+        			
+        		}
         	}
         	
         	if(abstractComponent.getObjectProperties().getObjectListType() == ObjectListType.COLLECTIBLE) {
         		// set behavior to the object to visibility
         		System.out.println("visisbility");
         		Visibility visibility = new Visibility(selected);
-        		abstractComponent.setActionBehavior(visibility);
+        		//abstractComponent.setActionBehavior(visibility);
         	}
         	
         	if(abstractComponent.getObjectProperties().getObjectListType() == ObjectListType.EVENT ||
         			 abstractComponent.getObjectProperties().getObjectListType() == ObjectListType.ACTION) {
         		// set behavior to move
         		Move move = new Move(selected);
-        		abstractComponent.setActionBehavior(move);
+        		//abstractComponent.setActionBehavior(move);
         	}
 
         	System.out.println(" comp typ  " + abstractComponent.getObjectProperties().getObjectListType());
