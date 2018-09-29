@@ -1,12 +1,14 @@
 package com.gamemaker;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import com.components.Clock;
+import com.components.Clock;	
 import com.controller.GameMakerController;
 import com.controller.GamePlayController;
 import com.infrastructure.ObjectProperties;
@@ -17,10 +19,9 @@ import com.view.MainPanel;
 import com.view.StaticPanel;
 import com.view.WindowFrame;
 
-
 public class App 
 {
-	
+	public static Logger logger = LogManager.getLogger(App.class);
 	public static void makeGame() {
 
 		GameTimer gameTimer = new GameTimer();
