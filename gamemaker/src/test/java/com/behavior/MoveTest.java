@@ -1,33 +1,50 @@
 package com.behavior;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
+
+import com.commands.MoveCommand;
+import com.infrastructure.AbstractComponent;
 import com.infrastructure.ObjectProperties;
 
-import junit.framework.Assert;
-
+@TestInstance(Lifecycle.PER_CLASS)
 public class MoveTest {
 	
-	Move move;
-	ObjectProperties objectProperties;
-	public MoveTest()
-	{
-		objectProperties=new ObjectProperties();
-		objectProperties.setCanCollect(true);
-		objectProperties.setHeight(10);
-		objectProperties.setVelX(10);
-		objectProperties.setVelY(10);
-		objectProperties.setWidth(20);
-		objectProperties.setX(10);
-		objectProperties.setY(20);
-		move=new Move(objectProperties);
+	@Mock
+	ObjectProperties properties;
+	
+	@InjectMocks @Spy
+	AbstractComponent component;
+	
+	@InjectMocks
+	MoveCommand moveCommand;
+	
+	@BeforeEach
+	public void setup() throws Exception{
+		MockitoAnnotations.initMocks(this);
+		moveCommand = new MoveCommand(component);
 	}
-
 	
 	@Test
-	public void performActionTest()
-	{
-		move.performAction();
-		Assert.assertEquals(10, objectProperties.getHeight());
+	public void testExecute() {	
+		when(component.getX()).thenReturn(1);
+		when(component.getY()).thenReturn(1);
+		when(component.getVelX()).thenReturn(2);
+		when(component.getVelY()).thenReturn(2);
+		System.out.println(component.getVelX());
+		moveCommand.execute();
+		System.out.println(moveCommand.abstractComponent.getVelX());
+		assertEquals(3, component.getX());
+		assertEquals(3, component.getY());
 	}
 }
