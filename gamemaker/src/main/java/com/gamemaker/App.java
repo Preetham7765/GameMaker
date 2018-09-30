@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.gamemaker;
 
 import org.apache.logging.log4j.LogManager;
@@ -129,6 +130,7 @@ public class App
 		});
     }
 }
+=======
 package com.gamemaker;
 
 import javax.swing.BoxLayout;
