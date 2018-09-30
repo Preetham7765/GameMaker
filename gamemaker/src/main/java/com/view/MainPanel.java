@@ -13,11 +13,12 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 import com.infrastructure.AbstractComponent;
+import com.infrastructure.IAddActionListener;
 import com.infrastructure.IComposite;
 import com.infrastructure.ObjectProperties;
 
 @SuppressWarnings("serial")
-public class MainPanel extends JPanel implements IComposite {
+public class MainPanel extends JPanel implements IComposite, IAddActionListener {
 
 	private ArrayList<IComposite> compositeList;
 
@@ -86,4 +87,11 @@ public class MainPanel extends JPanel implements IComposite {
 		}
 	}
 
+	@Override
+	public void addActionListener(ActionListener listener) {
+		for(IComposite composite : compositeList) {
+			if(composite instanceof IAddActionListener)
+				((IAddActionListener)composite).addActionListener(listener);
+		}	
+	}
 }

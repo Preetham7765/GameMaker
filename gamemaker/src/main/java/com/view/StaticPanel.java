@@ -3,6 +3,7 @@ package com.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -21,7 +22,7 @@ import com.infrastructure.IPanel;
 import com.infrastructure.ObjectProperties;
 import com.infrastructure.StaticPanelButton; 
 
-public class StaticPanel extends JPanel implements IComposite, IPanel{
+public class StaticPanel extends JPanel implements IComposite{
 
 	private WindowFrame windowFrame;
 	public ObjectProperties selected = new ObjectProperties();
@@ -98,17 +99,6 @@ public class StaticPanel extends JPanel implements IComposite, IPanel{
 		this.selected = selected;
 	}
 
-	@Override
-	public void addComponent(IComposite composite) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void removeComponent(IComposite composite) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void draw(Graphics g) {
@@ -116,17 +106,6 @@ public class StaticPanel extends JPanel implements IComposite, IPanel{
 		repaint();
 	}
 
-	@Override
-	public void addComponent(AbstractComponent asbtractComponent) throws Exception {
-		 compositeList.add(asbtractComponent);
-		
-	}
-
-	@Override
-	public void removeComponent(AbstractComponent asbtractComponent) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	@Override
 	public void paintComponent(Graphics g)
@@ -147,6 +126,12 @@ public class StaticPanel extends JPanel implements IComposite, IPanel{
 	@Override
 	public void load(ObjectInputStream ip) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	public void addComponent(AbstractComponent component) {
+		// TODO Auto-generated method stub
+		compositeList.add(component);
 		
 	}
 }

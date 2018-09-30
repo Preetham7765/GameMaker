@@ -22,12 +22,13 @@ import com.controller.GameMakerController;
 import com.infrastructure.AbstractComponent;
 import com.infrastructure.ComponentType;
 import com.infrastructure.Constants;
+import com.infrastructure.IAddActionListener;
 import com.infrastructure.IComposite;
 import com.infrastructure.IPanel;
 import com.infrastructure.ObjectProperties;
 
 @SuppressWarnings("serial")
-public class FormPanel extends JPanel implements IComposite, IPanel {
+public class FormPanel extends JPanel implements IComposite, IAddActionListener  {
 
 	private ObjectProperties active;
 	private List<ObjectPanelButton> objectButtons; // should we need it lets see?
@@ -106,14 +107,14 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 	}
 
 	public void createSetBackgroundButton() {
-		ObjectPanelButton setBackgroundButton = new ObjectPanelButton(ComponentType.BACKGROUND, null, active);
+		ObjectPanelButton setBackgroundButton = new ObjectPanelButton(ComponentType.BACKGROUND, null);
 		this.add(Box.createRigidArea(new Dimension(30, 30)));
 		this.add(setBackgroundButton);
 		this.objectButtons.add(setBackgroundButton);
 	}
 
 	private void createFireButton() {
-		ObjectPanelButton fireButton = new ObjectPanelButton(ComponentType.FIRE, Color.YELLOW, active);
+		ObjectPanelButton fireButton = new ObjectPanelButton(ComponentType.FIRE, Color.YELLOW);
 		fireButton.setBackground(Color.yellow);
 		this.add(Box.createRigidArea(new Dimension(30, 30)));
 		this.add(fireButton);
@@ -121,7 +122,7 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 	}
 
 	private void createPaddleButton() {
-		ObjectPanelButton paddleButton = new ObjectPanelButton(ComponentType.PADDLE, Color.red, active);
+		ObjectPanelButton paddleButton = new ObjectPanelButton(ComponentType.PADDLE, Color.red);
 		paddleButton.setBackground(Color.red);
 		this.add(Box.createRigidArea(new Dimension(30, 30)));
 		this.add(paddleButton);
@@ -129,7 +130,7 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 	}
 
 	private void createBrickButton() {
-		ObjectPanelButton brickButton = new ObjectPanelButton(ComponentType.BRICK, Color.blue, active);
+		ObjectPanelButton brickButton = new ObjectPanelButton(ComponentType.BRICK, Color.blue);
 		brickButton.setBackground(Color.blue);
 		this.add(Box.createRigidArea(new Dimension(30, 30)));
 		this.add(brickButton);
@@ -137,7 +138,7 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 	}
 
 	private void createBallButton() {
-		ObjectPanelButton ballButton = new ObjectPanelButton(ComponentType.BALL, Color.green, active);
+		ObjectPanelButton ballButton = new ObjectPanelButton(ComponentType.BALL, Color.green);
 		ballButton.setBackground(Color.green);
 		this.add(Box.createRigidArea(new Dimension(30, 30)));
 		this.add(ballButton);
@@ -145,21 +146,21 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 	}
 
 	private void createLoadButton() {
-		ObjectPanelButton loadButton = new ObjectPanelButton(ComponentType.LOAD, Color.CYAN, active);
+		ObjectPanelButton loadButton = new ObjectPanelButton(ComponentType.LOAD, Color.CYAN);
 		this.add(Box.createRigidArea(new Dimension(30, 30)));
 		this.add(loadButton);
 		this.objectButtons.add(loadButton);
 	}
 
 	private void createSaveButton() {
-		ObjectPanelButton saveButton = new ObjectPanelButton(ComponentType.SAVE, Color.BLUE, active);
+		ObjectPanelButton saveButton = new ObjectPanelButton(ComponentType.SAVE, Color.BLUE);
 		this.add(Box.createRigidArea(new Dimension(30, 30)));
 		this.add(saveButton);
 		this.objectButtons.add(saveButton);
 	}
 
 	private void createPlayButton() {
-		ObjectPanelButton playButton = new ObjectPanelButton(ComponentType.PLAY, Color.GREEN, active);
+		ObjectPanelButton playButton = new ObjectPanelButton(ComponentType.PLAY, Color.GREEN);
 		this.add(Box.createRigidArea(new Dimension(30, 30)));
 		this.add(playButton);
 		this.objectButtons.add(playButton);
@@ -177,21 +178,17 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 	}
 
 	@Override
-	public void addComponent(AbstractComponent asbtractComponent) throws Exception {
-		throw new Exception();
-	}
-
-	@Override
-	public void removeComponent(AbstractComponent asbtractComponent) throws Exception {
-		throw new Exception();
-	}
-
-	@Override
 	public void save(ObjectOutputStream op) {
 	}
 
 	@Override
 	public void load(ObjectInputStream ip) {
 	}
-
+	
+	@Override
+	public void addActionListener(ActionListener listener) {
+		for(ObjectPanelButton button: objectButtons) {
+			button.addActionListener(listener);
+		}	
+	}
 }

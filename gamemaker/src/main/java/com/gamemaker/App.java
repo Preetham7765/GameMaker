@@ -53,13 +53,13 @@ public class App {
 
 			GamePanel gamePanel = new GamePanel();
 			mainPanel.addComponent(gamePanel);
-			// windowFrame.setGamePanel(gamePanel);
+			 windowFrame.setGamePanel(gamePanel);
 
 			GameMakerController gmController = new GameMakerController(windowFrame);
 			System.out.println("Game maker controller created");
 
 			// windowFrame.setFormPanel(formPanel);
-			windowFrame.setGamePanel(gamePanel);
+//			windowFrame.setGamePanel(gamePanel);
 
 			GamePlayController gpController = new GamePlayController(windowFrame, gameTimer);
 			System.out.println("Game maker controller created");
@@ -67,7 +67,10 @@ public class App {
 			// gamePanel.addControllerListener(gmController);
 
 			formPanel.createButtons();
+
 			gamePanel.addControllerListener(gmController);
+			
+			windowFrame.addActionListener(gmController);
 
 			windowFrame.setVisible(true);
 			windowFrame.pack();
@@ -95,7 +98,7 @@ public class App {
 			GamePanel gamePanel = new GamePanel();
 			mainPanel.addComponent(gamePanel);
 			mainPanel.addComponent(staticPanel);
-			windowFrame.setMainPanel(mainPanel);
+//			windowFrame.setMainPanel(mainPanel);
 			windowFrame.setGamePanel(gamePanel);
 			// windowFrame.setStaticPanel(staticPanel);
 			GamePlayController gpController = new GamePlayController(windowFrame, gameTimer);

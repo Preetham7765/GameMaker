@@ -9,4 +9,5 @@ public interface IComposite {
 	public void draw(Graphics g);
 	public void save(ObjectOutputStream op);
 	public void load(ObjectInputStream ip);
+	
 }

@@ -3,38 +3,38 @@ package com.view;
 //import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.event.ActionListener;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.infrastructure.Constants;
+import com.infrastructure.IAddActionListener;
 import com.infrastructure.IComposite;
 import com.infrastructure.ObjectProperties;
 
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
 @SuppressWarnings("serial")
-public class WindowFrame extends JFrame implements IComposite {
+public class WindowFrame extends JFrame implements IComposite, IAddActionListener {
 	private ArrayList<IComposite> compositeList;
 
 //	private FormPanel formPanel;
 	private GamePanel gamePanel; // game panel is also used in gameplay controller
 //	private StaticPanel staticPanel;
-	private MainPanel mainPanel;
+//	private MainPanel mainPanel;
 	private JFileChooser fileChooser;
 
-	public MainPanel getMainPanel() {
+	/*public MainPanel getMainPanel() {
 		return mainPanel;
 	}
 
 	public void setMainPanel(MainPanel mainPanel) {
 		this.mainPanel = mainPanel;
-	}
+	}*/
 
 	public WindowFrame() {
 		super();
@@ -179,7 +179,13 @@ public class WindowFrame extends JFrame implements IComposite {
 			composite.load(ip);
 		}	
 	}
-
-
+	
+	@Override
+	public void addActionListener(ActionListener listener) {
+		for(IComposite composite : compositeList) {
+			if( composite instanceof IAddActionListener)
+			((IAddActionListener)composite).addActionListener(listener);
+		}	
+	}
 	
 }
