@@ -6,25 +6,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-<<<<<<< HEAD
 public abstract class AbstractComponent implements IComposite, Serializable {
 	
-=======
-public abstract class AbstractComponent implements IComposite, Serializable, ActionBehavior {
 
-	/**
-	 * 
-	 */
->>>>>>> UIRefactor
 	private static final long serialVersionUID = 1L;
 	private ObjectProperties objectProperties;
-<<<<<<< HEAD
-	//private drawable;
-	
-	
-=======
 
->>>>>>> UIRefactor
 	public ObjectProperties getObjectProperties() {
 		return objectProperties;
 	}
@@ -32,23 +19,9 @@ public abstract class AbstractComponent implements IComposite, Serializable, Act
 	public void setObjectProperties(ObjectProperties objectProperties) {
 		this.objectProperties = objectProperties;
 	}
-<<<<<<< HEAD
 	
 	public AbstractComponent(ObjectProperties objectProperties)
 	{
-		this.objectProperties = objectProperties;
-=======
-
-	public void setActionBehavior(ActionBehavior actionBehavior) {
-		this.actionBehavior = actionBehavior;
-	}
-
-	public void performAction() {
-		actionBehavior.performAction();
-	}
-
-	public AbstractComponent(ObjectProperties objectProperties) {
-
 		this.objectProperties = new ObjectProperties();
 		this.objectProperties.setX(objectProperties.getX());
 		this.objectProperties.setY(objectProperties.getY());
@@ -59,7 +32,6 @@ public abstract class AbstractComponent implements IComposite, Serializable, Act
 		this.objectProperties.setVelX(objectProperties.getVelX());
 		this.objectProperties.setVelY(objectProperties.getVelY());
 		this.objectProperties.setCanCollect(objectProperties.getCanCollect());
->>>>>>> UIRefactor
 	}
 
 	public int getX() {

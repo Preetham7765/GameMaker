@@ -90,12 +90,7 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 		createBrickButton();
 		createPaddleButton();
 		createFireButton();
-<<<<<<< HEAD
-		createAddstaticButton();
 		
-=======
-
->>>>>>> UIRefactor
 		JLabel gameFunc = new JLabel("Game Options:");
 		gameFunc.setForeground(Color.red);
 		gameFunc.setFont(new Font("Helvetica", Font.BOLD, 15));
@@ -105,17 +100,11 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 		createSaveButton();
 		createPlayButton();
 	}
-<<<<<<< HEAD
-	
-	
-	
-=======
 
 	public ObjectProperties getActiveObjectProperties() {
 		return active;
 	}
 
->>>>>>> UIRefactor
 	public void createSetBackgroundButton() {
 		ObjectPanelButton setBackgroundButton = new ObjectPanelButton(ComponentType.BACKGROUND, null, active);
 		this.add(Box.createRigidArea(new Dimension(30, 30)));
@@ -123,12 +112,6 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 		this.objectButtons.add(setBackgroundButton);
 	}
 	
-	//added by cbrahme
-	public void createAddstaticButton() {
-		ObjectPanelButton staticButton = new ObjectPanelButton(ComponentType.STATIC, Color.GREEN, windowFrame);
-		this.add(Box.createRigidArea(new Dimension(30, 30)));
-		this.add(staticButton);
-	}
 
 	private void createFireButton() {
 		ObjectPanelButton fireButton = new ObjectPanelButton(ComponentType.FIRE, Color.YELLOW, active);
