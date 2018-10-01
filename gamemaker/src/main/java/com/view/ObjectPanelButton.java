@@ -17,8 +17,11 @@ public class ObjectPanelButton extends JButton {
 		setVisible(true);
 		setAlignmentX(CENTER_ALIGNMENT);
 		setAlignmentY(CENTER_ALIGNMENT);
+		
+		if (componentType == ComponentType.ELEMENT)
+			setText("ELEMENT");
 
-		if (componentType == ComponentType.BALL)
+		/*if (componentType == ComponentType.BALL)
 			setText("Ball");
 
 		if (componentType == ComponentType.BRICK)
@@ -32,7 +35,7 @@ public class ObjectPanelButton extends JButton {
 
 		if (componentType == ComponentType.FIRE)
 			setText("Fire");
-
+*/
 		// added by cbrahme
 		if (componentType == ComponentType.STATIC)
 			setText("Static Component");

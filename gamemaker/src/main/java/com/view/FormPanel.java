@@ -15,6 +15,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -86,10 +87,12 @@ public class FormPanel extends JPanel implements IComposite, IAddActionListener 
 		select_object.setFont(new Font("Helvetica", Font.BOLD, 15));
 		this.add(Box.createRigidArea(new Dimension(10, 50)));
 		this.add(select_object);
-		createBallButton();
+		
+		this.add(createButton());
+		/*createBallButton();
 		createBrickButton();
 		createPaddleButton();
-		createFireButton();
+		createFireButton();*/
 
 		JLabel gameFunc = new JLabel("Game Options:");
 		gameFunc.setForeground(Color.red);
@@ -111,8 +114,19 @@ public class FormPanel extends JPanel implements IComposite, IAddActionListener 
 		this.add(setBackgroundButton);
 		this.objectButtons.add(setBackgroundButton);
 	}
+	
+	private ObjectPanelButton createButton() {
+		ObjectPanelButton button = new ObjectPanelButton(ComponentType.ELEMENT, Color.YELLOW);
+		
+		//JButton button=new JButton(name);
+		//fireButton.setBackground(Color.yellow);
+		this.add(Box.createRigidArea(new Dimension(30, 30)));
+		//this.add(fireButton);
+		this.objectButtons.add(button);
+		return button;
+	}
 
-	private void createFireButton() {
+	/*private void createFireButton() {
 		ObjectPanelButton fireButton = new ObjectPanelButton(ComponentType.FIRE, Color.YELLOW);
 		fireButton.setBackground(Color.yellow);
 		this.add(Box.createRigidArea(new Dimension(30, 30)));
@@ -134,15 +148,15 @@ public class FormPanel extends JPanel implements IComposite, IAddActionListener 
 		this.add(Box.createRigidArea(new Dimension(30, 30)));
 		this.add(brickButton);
 		this.objectButtons.add(brickButton);
-	}
+	}*/
 
-	private void createBallButton() {
+	/*private void createBallButton() {
 		ObjectPanelButton ballButton = new ObjectPanelButton(ComponentType.BALL, Color.green);
 		ballButton.setBackground(Color.green);
 		this.add(Box.createRigidArea(new Dimension(30, 30)));
 		this.add(ballButton);
 		this.objectButtons.add(ballButton);
-	}
+	}*/
 
 	private void createLoadButton() {
 		ObjectPanelButton loadButton = new ObjectPanelButton(ComponentType.LOAD, Color.CYAN);

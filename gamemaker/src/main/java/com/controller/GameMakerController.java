@@ -20,6 +20,7 @@ import com.infrastructure.AbstractComponent;
 import com.infrastructure.ComponentType;
 import com.infrastructure.ObjectListType;
 import com.infrastructure.ObjectProperties;
+import com.view.FormView;
 import com.view.ObjectPropertiesPanel;
 import com.view.WindowFrame;
 
@@ -27,6 +28,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 	private WindowFrame windowFrame;
 	private ObjectProperties selectedComponent;
+	private FormView formData;
 
 	public GameMakerController(WindowFrame windowFrame) {
 		this.windowFrame = windowFrame;
@@ -103,8 +105,8 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 		else {
 
-			ObjectPropertiesPanel popUp = new ObjectPropertiesPanel(componentType);
-			selectedComponent = popUp.getProperties();
+			ObjectPropertiesPanel popUp = new ObjectPropertiesPanel();
+			formData = popUp.getProperties();
 		}
 	}
 

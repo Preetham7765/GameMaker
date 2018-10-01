@@ -11,5 +11,6 @@ public enum ComponentType {
 	LOAD,
 	SAVE,
 	PLAY,
+	ELEMENT,
 	STATIC;
 }
