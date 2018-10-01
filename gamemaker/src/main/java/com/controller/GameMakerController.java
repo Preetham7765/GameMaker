@@ -9,15 +9,21 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import com.behavior.Move;
 import com.behavior.Visibility;
+import com.commands.Command;
 import com.components.Ball;
 import com.components.Brick;
 import com.components.Fire;
 import com.components.Paddle;
 import com.infrastructure.AbstractComponent;
+import com.infrastructure.Collider;
 import com.infrastructure.ComponentType;
+import com.infrastructure.ElementType;
 import com.infrastructure.ObjectListType;
 import com.infrastructure.ObjectProperties;
 import com.view.ObjectPropertiesPanel;
@@ -27,9 +33,20 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 	private WindowFrame windowFrame;
 	private ObjectProperties selectedComponent;
+	private ArrayList<AbstractComponent> allComponents;
+	private	ArrayList<AbstractComponent> timeComponents;
+	private ArrayList<Collider> colliders;
+	private HashMap<String, AbstractComponent> componentIdMap;
+	private HashMap<Integer, List<Command>> keyActionMap;
+	
 
 	public GameMakerController(WindowFrame windowFrame) {
 		this.windowFrame = windowFrame;
+		allComponents = new ArrayList<>();
+		timeComponents = new ArrayList<>();
+		colliders = new ArrayList<>();
+		keyActionMap = new HashMap<>();
+		componentIdMap = new HashMap<>();
 	}
 
 	/*
@@ -37,6 +54,31 @@ public class GameMakerController implements ActionListener, MouseListener {
 	 * this.windowFrame.getFormPanel().createButtons(); }
 	 */
 
+	public void addComponent(AbstractComponent component, ElementType elementType) {
+		
+		//componentIdMap.put(component.getId(), component);
+		allComponents.add(component);
+		if(elementType == ElementType.PLAYEROBJECT) {
+//			for(Integer key : keyList) {
+//				if(keyActionMap.containsKey(key)) {
+//					keyActionMap.get(key).add(command);
+//				}
+//				else {
+//					keyActionMap.put(key, new ArrayList<Command>());
+//					keyActionMap.get(key).add(command);
+//				}
+//			}
+		}
+		if(elementType ==  ElementType.GAMEOBJECT) {
+			timeComponents.add(component);
+		}
+	}
+	
+	public void addCollider(Collider collider) {
+		colliders.add(collider);
+	}
+	
+	
 	public void save() {
 		// pause();
 		try {
