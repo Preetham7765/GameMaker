@@ -21,5 +21,16 @@ public interface Constants {
 	
 	//----------------------------/observable/GameTimer.java/------------------
 	public final static int TIMER_COUNT = 25;
+	
+	public final static String COLLECTIBLE = "Collectible";
+	public final static String KEY_DEPENDENT = "Move using Keys";
+	public final static String TIME_DEPENDENT = "Move with Time";
+	public final static String ADD_ELEMENT = "Add Element";
+	public final static String VEL_X = "Velocity X";
+	public final static String VEL_Y = "Velocity Y";
+	public final static String WIDTH = "Width";
+	public final static String HEIGHT = "Height";
+	public final static String ELEMENT_TYPE = "Element Type";
+	//public final static String COLLECTIBLE = "Collectible";
 
 }

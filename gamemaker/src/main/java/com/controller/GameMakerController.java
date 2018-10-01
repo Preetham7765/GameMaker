@@ -26,6 +26,7 @@ import com.infrastructure.ComponentType;
 import com.infrastructure.ElementType;
 import com.infrastructure.ObjectListType;
 import com.infrastructure.ObjectProperties;
+import com.view.FormView;
 import com.view.ObjectPropertiesPanel;
 import com.view.WindowFrame;
 
@@ -33,12 +34,12 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 	private WindowFrame windowFrame;
 	private ObjectProperties selectedComponent;
+	private FormView formData;
 	private ArrayList<AbstractComponent> allComponents;
 	private	ArrayList<AbstractComponent> timeComponents;
 	private ArrayList<Collider> colliders;
 	private HashMap<String, AbstractComponent> componentIdMap;
 	private HashMap<Integer, List<Command>> keyActionMap;
-	
 
 	public GameMakerController(WindowFrame windowFrame) {
 		this.windowFrame = windowFrame;
@@ -145,8 +146,8 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 		else {
 
-			ObjectPropertiesPanel popUp = new ObjectPropertiesPanel(componentType);
-			selectedComponent = popUp.getProperties();
+			ObjectPropertiesPanel popUp = new ObjectPropertiesPanel();
+			formData = popUp.getProperties();
 		}
 	}
 
