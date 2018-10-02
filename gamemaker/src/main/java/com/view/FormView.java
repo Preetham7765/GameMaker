@@ -7,6 +7,7 @@ import com.infrastructure.ElementType;
 
 public class FormView {
 	private ElementType elementType;
+	private String elementName;
 	private int x;
 	private int y;
 	private int velX;
@@ -15,8 +16,16 @@ public class FormView {
 	private int height;
 	private boolean collectible;
 	private int actionType;
-	private Map<Integer, Integer> keyActionMap;
-	private ArrayList<Integer> timeActionArray;
+	private Map<Integer, String> keyActionMap;
+	private ArrayList<String> timeActionArray;
+
+	public String getElementName() {
+		return elementName;
+	}
+
+	public void setElementName(String elementName) {
+		this.elementName = elementName;
+	}
 
 	public ElementType getElementType() {
 		return elementType;
@@ -90,19 +99,19 @@ public class FormView {
 		this.actionType = actionType;
 	}
 
-	public Map<Integer, Integer> getKeyActionMap() {
+	public Map<Integer, String> getKeyActionMap() {
 		return keyActionMap;
 	}
 
-	public void setKeyActionMap(Map<Integer, Integer> keyActionMap) {
+	public void setKeyActionMap(Map<Integer, String> keyActionMap) {
 		this.keyActionMap = keyActionMap;
 	}
 
-	public ArrayList<Integer> getTimeActionArray() {
+	public ArrayList<String> getTimeActionArray() {
 		return timeActionArray;
 	}
 
-	public void setTimeActionArray(ArrayList<Integer> timeActionArray) {
+	public void setTimeActionArray(ArrayList<String> timeActionArray) {
 		this.timeActionArray = timeActionArray;
 	}
 
