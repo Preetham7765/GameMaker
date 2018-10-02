@@ -1,13 +1,14 @@
 package com.view;
 
-import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -18,7 +19,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 
 import com.infrastructure.Constants;
 import com.infrastructure.ElementType;
@@ -27,6 +27,7 @@ public class ObjectPropertiesPanel extends JPanel {
 
 	private FormView formData;
 	private ElementType elementType;
+	private JTextField elementName;
 	private JTextField vXField;
 	private JTextField vYField;
 	private JTextField widthField;
@@ -48,7 +49,7 @@ public class ObjectPropertiesPanel extends JPanel {
 	private JCheckBox rightMove;
 	private JCheckBox upMove;
 	private JCheckBox downMove;
-	private JCheckBox spaceMove;
+	private JCheckBox freeMove;
 
 	private JComboBox leftCombo;
 	private JComboBox rightCombo;
@@ -57,11 +58,15 @@ public class ObjectPropertiesPanel extends JPanel {
 	private	JComboBox spaceCombo;
 	
 	private ButtonGroup radioGroup;
+	
+	Object[] keyActions = { Constants.SELECT_KEY, Constants.MOVE_LEFT, Constants.MOVE_RIGHT, Constants.MOVE_UP,
+			Constants.MOVE_DOWN, Constants.EXPLODE , Constants.FIRE};
 
 	private JPanel keyPanel;
 
 	private void createFormElements() {
 
+		elementName =  new JTextField(formData.getElementName(),7);
 		vXField = new JTextField(Integer.toString(formData.getVelX()), 7);
 		vYField = new JTextField(Integer.toString(formData.getVelY()), 7);
 		widthField = new JTextField(Integer.toString(formData.getWidth()), 7);
@@ -84,10 +89,8 @@ public class ObjectPropertiesPanel extends JPanel {
 		rightMove = new JCheckBox(Constants.RIGHT_KEY);
 		upMove = new JCheckBox(Constants.UP_KEY);
 		downMove = new JCheckBox(Constants.DOWN_KEY);
-		spaceMove = new JCheckBox(Constants.SPACE);
+		freeMove = new JCheckBox(Constants.FREE);
 		
-		Object[] keyActions = { Constants.SELECT_KEY, Constants.MOVE_LEFT, Constants.MOVE_RIGHT, Constants.MOVE_UP,
-				Constants.MOVE_DOWN, Constants.EXPLODE , Constants.FIRE};
 		leftCombo = new JComboBox(keyActions);
 		rightCombo = new JComboBox(keyActions);
 		upCombo = new JComboBox(keyActions);
@@ -126,6 +129,14 @@ public class ObjectPropertiesPanel extends JPanel {
 		c.gridx = 1;
 		c.gridy = 0;
 		properties.add(elementTypes,c);
+		
+		c.gridx = 2;
+		c.gridy = 0;
+		properties.add(new JLabel(Constants.ELEMENT_NAME),c);
+		
+		c.gridx = 3;
+		c.gridy = 0;
+		properties.add(elementName,c);
 
 		c.gridx = 0;
 		c.gridy = 1;
@@ -135,100 +146,104 @@ public class ObjectPropertiesPanel extends JPanel {
 		c.gridy = 1;
 		properties.add(vXField,c);
 
-		c.gridx = 0;
-		c.gridy = 2;
+		c.gridx = 2;
+		c.gridy = 1;
 		properties.add(new JLabel(Constants.VEL_Y),c);
 
-		c.gridx = 1;
-		c.gridy = 2;
+		c.gridx = 3;
+		c.gridy = 1;
 		properties.add(vYField,c);
 
 		c.gridx = 0;
-		c.gridy = 3;
+		c.gridy = 2;
 		properties.add(new JLabel(Constants.WIDTH),c);
 
 		c.gridx = 1;
-		c.gridy = 3;
+		c.gridy = 2;
 		properties.add(widthField,c);
 
-		c.gridx = 0;
-		c.gridy = 4;
+		c.gridx = 2;
+		c.gridy = 2;
 		properties.add(new JLabel(Constants.HEIGHT),c);
 
-		c.gridx = 1;
-		c.gridy = 4;
+		c.gridx = 3;
+		c.gridy = 2;
 		properties.add(heightField,c);
 
 		c.gridx = 0;
-		c.gridy = 5;
+		c.gridy = 3;
 		properties.add(collectible,c);
 
 		c.gridx = 0;
-		c.gridy = 6;
+		c.gridy = 4;
 		properties.add(keyDependent,c);
 
-		c.gridx = 4;
-		c.gridy = 6;
+		c.gridx = 3;
+		c.gridy = 4;
 		properties.add(timeDependent,c);
 		
 		radioGroup.add(keyDependent);
 		radioGroup.add(timeDependent);
 		
 		c.gridx = 0;
-		c.gridy = 7;
+		c.gridy = 5;
 		properties.add(left,c);
 
 		c.gridx = 1;
-		c.gridy = 7;
+		c.gridy = 5;
 		properties.add(leftCombo,c);
 
 		c.gridx = 0;
-		c.gridy = 8;
+		c.gridy = 6;
 		properties.add(right,c);
 
 		c.gridx = 1;
-		c.gridy = 8;
+		c.gridy = 6;
 		properties.add(rightCombo,c);
 
 		c.gridx = 0;
-		c.gridy = 9;
+		c.gridy = 7;
 		properties.add(up,c);
 
 		c.gridx = 1;
-		c.gridy = 9;
+		c.gridy = 7;
 		properties.add(upCombo,c);
 
 		c.gridx = 0;
-		c.gridy = 10;
+		c.gridy = 8;
 		properties.add(down,c);
 
 		c.gridx = 1;
-		c.gridy = 10;
+		c.gridy = 8;
 		properties.add(downCombo,c);
 
 		c.gridx = 0;
-		c.gridy = 11;
+		c.gridy = 9;
 		properties.add(space,c);
 
 		c.gridx = 1;
-		c.gridy = 11;
+		c.gridy = 9;
 		properties.add(spaceCombo,c);
 		
-		c.gridx = 4;
-		c.gridy = 7;
+		c.gridx = 3;
+		c.gridy = 5;
 		properties.add(leftMove,c);
 		
-		c.gridx = 4;
-		c.gridy = 8;
+		c.gridx = 3;
+		c.gridy = 6;
 		properties.add(rightMove,c);
 		
-		c.gridx = 4;
-		c.gridy = 9;
+		c.gridx = 3;
+		c.gridy = 7;
 		properties.add(upMove,c);
 		
-		c.gridx = 4;
-		c.gridy = 10;
+		c.gridx = 3;
+		c.gridy = 8;
 		properties.add(downMove,c);
+		
+		c.gridx = 3;
+		c.gridy = 9;
+		properties.add(freeMove,c);
 		
 		disableKeyElements();
 		keyDependent.addActionListener(new ActionListener() {
@@ -319,6 +334,7 @@ public class ObjectPropertiesPanel extends JPanel {
 		rightMove.setEnabled(true);
 		upMove.setEnabled(true);
 		downMove.setEnabled(true);
+		freeMove.setEnabled(true);
 	}
 
 	public void disableTimeElements()
@@ -327,53 +343,44 @@ public class ObjectPropertiesPanel extends JPanel {
 		rightMove.setEnabled(false);
 		upMove.setEnabled(false);
 		downMove.setEnabled(false);
+		freeMove.setEnabled(false);
 	}
 
-	/*public void disablePanel(JPanel panel) {
-		System.out.println("Disabled panel");
-		Component[] com = panel.getComponents();
-
-		for (int a = 0; a < com.length; a++) {
-			com[a].setEnabled(false);
-		}
-	}
-
-	public void enablePanel(JPanel panel) {
-		System.out.println("Enabled panel");
-
-		Component[] com = panel.getComponents();
-
-		for (int a = 0; a < com.length; a++) {
-			com[a].setEnabled(true);
-		}
-	}*/
 	public FormView getProperties() {
 
-		if (result == JOptionPane.OK_OPTION) {
+		if (result == JOptionPane.OK_OPTION) 
+		{
+			formData.setElementType((ElementType)elementTypes.getSelectedItem());
+			formData.setElementName(elementName.getText());
 			formData.setVelX(Integer.parseInt(vXField.getText()));
 			formData.setVelY(Integer.parseInt(vYField.getText()));
 			formData.setWidth(Integer.parseInt(widthField.getText()));
 			formData.setHeight(Integer.parseInt(heightField.getText()));
 			formData.setCollectible(collectible.isSelected());
-			//active.setCanCollect(canCollectField.isSelected());
-			/*	int n = 1;
-			for (Enumeration<AbstractButton> buttons = group.getElements(); buttons.hasMoreElements(); n++) {
-				AbstractButton button = buttons.nextElement();
-				if (button.isSelected()) {
-					String text = button.getText();
-					if (text.equals("Collectible")) {
-						active.setObjectListType(ObjectListType.COLLECTIBLE);
-						// System.out.println("Game maker controller can collect = here ");
-
-					} else if (text.equals("Player object")) {
-						active.setObjectListType(ObjectListType.EVENT);
-
-					} else if (text.equals("Game Object")) {
-						active.setObjectListType(ObjectListType.ACTION);
-
-					}
-				}
-			}*/
+			
+			Map<Integer, String> keyActionMap=null;
+			ArrayList<String> timeActionArray=null;
+			if(keyDependent.isSelected())
+			{
+				keyActionMap=new HashMap<Integer,String>();
+				if(left.isSelected())	keyActionMap.put(KeyEvent.VK_LEFT, keyActions[leftCombo.getSelectedIndex()].toString());
+				if(right.isSelected())	keyActionMap.put(KeyEvent.VK_RIGHT, keyActions[rightCombo.getSelectedIndex()].toString());
+				if(up.isSelected())	keyActionMap.put(KeyEvent.VK_UP, keyActions[upCombo.getSelectedIndex()].toString());
+				if(down.isSelected())	keyActionMap.put(KeyEvent.VK_DOWN, keyActions[downCombo.getSelectedIndex()].toString());
+				if(space.isSelected())	keyActionMap.put(KeyEvent.VK_SPACE, keyActions[spaceCombo.getSelectedIndex()].toString());
+			}
+			
+			if(timeDependent.isSelected())
+			{
+				timeActionArray=new ArrayList<String>();
+				if(leftMove.isSelected())	timeActionArray.add(Constants.LEFT_KEY);
+				if(rightMove.isSelected())	timeActionArray.add(Constants.RIGHT_KEY);
+				if(upMove.isSelected())	timeActionArray.add(Constants.UP_KEY);
+				if(downMove.isSelected())	timeActionArray.add(Constants.DOWN_KEY);
+				if(freeMove.isSelected())	timeActionArray.add(Constants.FREE);
+			}
+			formData.setKeyActionMap(keyActionMap);
+			formData.setTimeActionArray(timeActionArray);
 		}
 		return formData;
 	}

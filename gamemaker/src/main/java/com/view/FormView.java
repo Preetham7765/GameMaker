@@ -7,6 +7,7 @@ import com.infrastructure.ElementType;
 
 public class FormView {
 	private ElementType elementType;
+	private String elementName;
 	private int x;
 	private int y;
 	private int velX;
@@ -17,6 +18,15 @@ public class FormView {
 	private int actionType;
 	private Map<Integer, String> keyActionMap;
 	private ArrayList<String> timeActionArray;
+
+	public String getElementName() {
+		return elementName;
+	}
+
+	public void setElementName(String elementName) {
+		this.elementName = elementName;
+	}
+
 
 	public ElementType getElementType() {
 		return elementType;
