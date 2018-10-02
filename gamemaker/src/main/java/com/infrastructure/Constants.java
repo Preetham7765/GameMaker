@@ -32,5 +32,19 @@ public interface Constants {
 	public final static String HEIGHT = "Height";
 	public final static String ELEMENT_TYPE = "Element Type";
 	//public final static String COLLECTIBLE = "Collectible";
+	
+	public final static String LEFT_KEY = "Left";
+	public final static String RIGHT_KEY = "Right";
+	public final static String UP_KEY = "Up";
+	public final static String DOWN_KEY = "Down";
+	public final static String SPACE = "Space";
+	
+	public final static String SELECT_KEY = "Select Key";
+	public final static String MOVE_LEFT = "Move Left";
+	public final static String MOVE_RIGHT = "Move Right";
+	public final static String MOVE_UP = "Move Up";
+	public final static String MOVE_DOWN = "Move Down";
+	public final static String EXPLODE = "Explode";
+	public final static String FIRE = "Fire";
 
 }
