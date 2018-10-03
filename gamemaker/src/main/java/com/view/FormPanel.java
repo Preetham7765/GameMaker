@@ -191,14 +191,6 @@ public class FormPanel extends JPanel implements IComposite, IAddActionListener 
 	public void draw(Graphics g) {
 	}
 
-	public void addComponent(IComposite composite) throws Exception {
-		throw new Exception();
-	}
-
-	public void removeComponent(IComposite composite) throws Exception {
-		throw new Exception();
-	}
-
 	@Override
 	public void save(ObjectOutputStream op) {
 	}
