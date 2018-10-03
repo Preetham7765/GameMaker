@@ -12,5 +12,6 @@ public enum ComponentType {
 	SAVE,
 	PLAY,
 	ELEMENT,
-	STATIC;
+	STATIC,
+	COLLISION;
 }

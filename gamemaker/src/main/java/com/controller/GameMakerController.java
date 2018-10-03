@@ -31,6 +31,8 @@ import com.infrastructure.Constants;
 import com.infrastructure.ElementType;
 import com.infrastructure.ObjectListType;
 import com.infrastructure.ObjectProperties;
+import com.view.ColliderData;
+import com.view.CollisionFormPanel;
 import com.view.FormView;
 import com.view.ObjectPropertiesPanel;
 import com.view.WindowFrame;
@@ -40,6 +42,9 @@ public class GameMakerController implements ActionListener, MouseListener {
 	private WindowFrame windowFrame;
 	private ObjectProperties selectedComponent;
 	private FormView formData;
+	private ColliderData colliderData;
+	private ArrayList<String> dataList;
+	private AbstractComponent component;
 	private ArrayList<AbstractComponent> allComponents;
 	private	ArrayList<AbstractComponent> timeComponents;
 	private ArrayList<Collider> colliders;
@@ -54,6 +59,8 @@ public class GameMakerController implements ActionListener, MouseListener {
 		colliders = new ArrayList<>();
 		keyActionMap = new HashMap<>();
 		componentIdMap = new HashMap<>();
+		dataList = new ArrayList<String>();
+		dataList.add("All");
 	}
 
 	/*
@@ -184,10 +191,14 @@ public class GameMakerController implements ActionListener, MouseListener {
 			load();
 		}
 
-		else {
-
+		else if (componentType.equals(ComponentType.ELEMENT)) {
 			ObjectPropertiesPanel popUp = new ObjectPropertiesPanel();
 			formData = popUp.getProperties();
+			dataList.add(formData.getElementName());
+		}
+		else if (componentType.equals(ComponentType.COLLISION)) {
+			CollisionFormPanel popUp = new CollisionFormPanel(dataList);
+			colliderData = popUp.getProperties();
 		}
 	}
 

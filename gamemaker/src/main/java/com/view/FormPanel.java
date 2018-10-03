@@ -89,6 +89,7 @@ public class FormPanel extends JPanel implements IComposite, IAddActionListener 
 		this.add(select_object);
 		
 		this.add(createButton());
+		this.add(createCollisionButton());
 		/*createBallButton();
 		createBrickButton();
 		createPaddleButton();
@@ -124,6 +125,14 @@ public class FormPanel extends JPanel implements IComposite, IAddActionListener 
 		//this.add(fireButton);
 		this.objectButtons.add(button);
 		return button;
+	}
+	
+	private ObjectPanelButton createCollisionButton() {
+		ObjectPanelButton collisionButton = new ObjectPanelButton(ComponentType.COLLISION, Color.YELLOW);
+		
+		this.add(Box.createRigidArea(new Dimension(30, 30)));
+		this.objectButtons.add(collisionButton);
+		return collisionButton;
 	}
 
 	/*private void createFireButton() {
