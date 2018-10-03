@@ -1,5 +1,6 @@
 package com.controller;
 
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -12,10 +13,13 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 import com.behavior.Move;
 import com.behavior.Visibility;
 import com.commands.Command;
+import com.commands.MoveLeftCommand;
+import com.commands.MoveRightCommand;
+import com.commands.MoveUpCommand;
 import com.components.Ball;
 import com.components.Brick;
 import com.components.Fire;
@@ -23,6 +27,7 @@ import com.components.Paddle;
 import com.infrastructure.AbstractComponent;
 import com.infrastructure.Collider;
 import com.infrastructure.ComponentType;
+import com.infrastructure.Constants;
 import com.infrastructure.ElementType;
 import com.infrastructure.ObjectListType;
 import com.infrastructure.ObjectProperties;
@@ -40,6 +45,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 	private ArrayList<Collider> colliders;
 	private HashMap<String, AbstractComponent> componentIdMap;
 	private HashMap<Integer, List<Command>> keyActionMap;
+	
 
 	public GameMakerController(WindowFrame windowFrame) {
 		this.windowFrame = windowFrame;
@@ -55,24 +61,58 @@ public class GameMakerController implements ActionListener, MouseListener {
 	 * this.windowFrame.getFormPanel().createButtons(); }
 	 */
 
-	public void addComponent(AbstractComponent component, ElementType elementType) {
+	public void addComponent(FormView formView, ElementType elementType) {
+		AbstractComponent component = createAbstractComponent(formView);
+		componentIdMap.put(component.getComponentName(), component);
+		allComponents.add(component);	//Might not be needed as we have it in componentIdMap through which we can iterate
+		if(formView.getKeyActionMap() != null) {
+			for(Map.Entry<Integer, String> entry : formView.getKeyActionMap().entrySet()) {
+				Integer key = entry.getKey();
+				Command command = createCommand(entry.getValue(), component);
+				if(keyActionMap.containsKey(key)) {
+					keyActionMap.get(key).add(command);
+				}
+				else {
+					keyActionMap.put(key, new ArrayList<Command>());
+					keyActionMap.get(key).add(command);
+				}
+			}
+		}
 		
-		//componentIdMap.put(component.getId(), component);
-		allComponents.add(component);
-		if(elementType == ElementType.PLAYEROBJECT) {
-//			for(Integer key : keyList) {
-//				if(keyActionMap.containsKey(key)) {
-//					keyActionMap.get(key).add(command);
-//				}
-//				else {
-//					keyActionMap.put(key, new ArrayList<Command>());
-//					keyActionMap.get(key).add(command);
-//				}
-//			}
+		if(formView.getTimeActionArray() != null) {
+			 timeComponents.add(component);
 		}
-		if(elementType ==  ElementType.GAMEOBJECT) {
-			timeComponents.add(component);
+		
+		windowFrame.revalidate();
+		windowFrame.repaint();
+	}
+	
+	public Command createCommand(String commandType, AbstractComponent component) {
+		switch(commandType) {
+		case Constants.MOVE_DOWN:
+			return new MoveLeftCommand(component);
+		case Constants.MOVE_UP:
+			return new MoveUpCommand(component);
+		case Constants.MOVE_LEFT:
+			return new MoveLeftCommand(component);
+		case Constants.MOVE_RIGHT:
+			return new MoveRightCommand(component);
+		default:
+			return null;
 		}
+	}
+	
+	public AbstractComponent createAbstractComponent(FormView formView) {
+		AbstractComponent component = new AbstractComponent();
+		component.setX(formView.getX());
+		component.setY(formView.getY());
+		component.setVelX(formView.getVelX());
+		component.setVelY(formView.getVelY());
+		//component.setDrawable();
+		component.setWidth(formView.getWidth());
+		component.setHeight(formView.getHeight());
+		
+		return component;
 	}
 	
 	public void addCollider(Collider collider) {
