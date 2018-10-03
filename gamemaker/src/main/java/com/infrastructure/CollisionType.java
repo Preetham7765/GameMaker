@@ -4,5 +4,6 @@ public enum CollisionType {
 	
 	BOUNCE, 
 	EXPLODE, 
-	FIXED;
+	FIXED,
+	CHANGE_DIRECTION;
 }

@@ -48,5 +48,11 @@ public interface Constants {
 	public final static String MOVE_DOWN = "Move Down";
 	public final static String EXPLODE = "Explode";
 	public final static String FIRE = "Fire";
+	
+	public final static String COLLISION = "Add Collision";
+	public final static String PRIMARY_ELE = "Primary Element";
+	public final static String SECONDARY_ELE = "Secondary Element";
+	public final static String PRIMARY_ACT = "Primary Action";
+	public final static String SECONDARY_ACT = "Secondary Action";
 
 }
