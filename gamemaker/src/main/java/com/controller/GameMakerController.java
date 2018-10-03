@@ -63,11 +63,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 		dataList.add("All");
 	}
 
-	/*
-	 * public void displayButtons() {
-	 * this.windowFrame.getFormPanel().createButtons(); }
-	 */
-
+	//Helper method to segregate components based on their movement type, actions and controls 
 	public void addComponent(FormView formView, ElementType elementType) {
 		AbstractComponent component = createAbstractComponent(formView);
 		componentIdMap.put(component.getComponentName(), component);
@@ -94,6 +90,15 @@ public class GameMakerController implements ActionListener, MouseListener {
 		windowFrame.repaint();
 	}
 	
+	//Creates collider type by getting ColliderData from View
+	public void addCollider(ColliderData colliderData) {
+		AbstractComponent primaryComponent = componentIdMap.get(colliderData.getPrimaryElement());
+		AbstractComponent secondaryComponent = componentIdMap.get(colliderData.getSecondaryElement());
+		Collider collider = new Collider(primaryComponent, secondaryComponent, colliderData.getPrimaryAct(), colliderData.getSecondaryAct(),null);
+		colliders.add(collider);
+	}
+	
+	//Helper method to make command for component based on movement type
 	public Command createCommand(String commandType, AbstractComponent component) {
 		switch(commandType) {
 		case Constants.MOVE_DOWN:
@@ -109,6 +114,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 		}
 	}
 	
+	//Creates Component by taking form data user defined for game element from view
 	public AbstractComponent createAbstractComponent(FormView formView) {
 		AbstractComponent component = new AbstractComponent();
 		component.setX(formView.getX());
@@ -122,9 +128,6 @@ public class GameMakerController implements ActionListener, MouseListener {
 		return component;
 	}
 	
-	public void addCollider(Collider collider) {
-		colliders.add(collider);
-	}
 	
 	
 	public void save() {
