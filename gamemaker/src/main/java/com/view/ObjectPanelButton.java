@@ -20,6 +20,9 @@ public class ObjectPanelButton extends JButton {
 		
 		if (componentType == ComponentType.ELEMENT)
 			setText("ELEMENT");
+		
+		if (componentType == ComponentType.COLLISION)
+			setText("Collision");
 
 		/*if (componentType == ComponentType.BALL)
 			setText("Ball");

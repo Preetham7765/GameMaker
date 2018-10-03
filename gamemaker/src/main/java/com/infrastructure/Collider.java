@@ -92,4 +92,37 @@ public class Collider implements Serializable {
 			controller.addCommand(changeVelYCommand);
 		}
 	}
+
+	public AbstractComponent getPrimaryComponent() {
+		return primaryComponent;
+	}
+
+	public void setPrimaryComponent(AbstractComponent primaryComponent) {
+		this.primaryComponent = primaryComponent;
+	}
+
+	public AbstractComponent getSecondaryComponent() {
+		return secondaryComponent;
+	}
+
+	public void setSecondaryComponent(AbstractComponent secondaryComponent) {
+		this.secondaryComponent = secondaryComponent;
+	}
+
+	public CollisionType getPrimaryCollisionType() {
+		return primaryCollisionType;
+	}
+
+	public void setPrimaryCollisionType(CollisionType primaryCollisionType) {
+		this.primaryCollisionType = primaryCollisionType;
+	}
+
+	public CollisionType getSecondaryCollisionType() {
+		return secondaryCollisionType;
+	}
+
+	public void setSecondaryCollisionType(CollisionType secondaryCollisionType) {
+		this.secondaryCollisionType = secondaryCollisionType;
+	}
+	
 }
