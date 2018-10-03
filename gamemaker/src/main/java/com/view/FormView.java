@@ -27,6 +27,7 @@ public class FormView {
 		this.elementName = elementName;
 	}
 
+
 	public ElementType getElementType() {
 		return elementType;
 	}
