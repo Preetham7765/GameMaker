@@ -304,5 +304,52 @@ public class GameMakerController implements ActionListener, MouseListener {
 		// TODO Auto-generated method stub
 
 	}
+	
+	public AbstractComponent getComponent() {
+		return component;
+	}
 
+	public void setComponent(AbstractComponent component) {
+		this.component = component;
+	}
+
+	public ArrayList<AbstractComponent> getAllComponents() {
+		return allComponents;
+	}
+
+	public void setAllComponents(ArrayList<AbstractComponent> allComponents) {
+		this.allComponents = allComponents;
+	}
+
+	public ArrayList<AbstractComponent> getTimeComponents() {
+		return timeComponents;
+	}
+
+	public void setTimeComponents(ArrayList<AbstractComponent> timeComponents) {
+		this.timeComponents = timeComponents;
+	}
+
+	public ArrayList<Collider> getColliders() {
+		return colliders;
+	}
+
+	public void setColliders(ArrayList<Collider> colliders) {
+		this.colliders = colliders;
+	}
+
+	public HashMap<String, AbstractComponent> getComponentIdMap() {
+		return componentIdMap;
+	}
+
+	public void setComponentIdMap(HashMap<String, AbstractComponent> componentIdMap) {
+		this.componentIdMap = componentIdMap;
+	}
+
+	public HashMap<Integer, List<Command>> getKeyActionMap() {
+		return keyActionMap;
+	}
+
+	public void setKeyActionMap(HashMap<Integer, List<Command>> keyActionMap) {
+		this.keyActionMap = keyActionMap;
+	}
 }
