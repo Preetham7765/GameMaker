@@ -46,7 +46,6 @@ public class GameMakerController implements ActionListener, MouseListener {
 	private ObjectProperties selectedComponent;
 	private FormView formData;
 	private ColliderData colliderData;
-	private ArrayList<String> dataList;
 	private AbstractComponent component;
 	private ArrayList<AbstractComponent> allComponents;
 	private	ArrayList<AbstractComponent> timeComponents;
@@ -63,9 +62,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 		colliders = new ArrayList<>();
 		keyActionMap = new HashMap<>();
 		componentIdMap = new HashMap<>();
-		dataList = new ArrayList<String>();
 		this.gameTimer = gameTimer;
-		dataList.add("All");
 	}
 
 	//Helper method to segregate components based on their movement type, actions and controls 
@@ -203,10 +200,9 @@ public class GameMakerController implements ActionListener, MouseListener {
 			ObjectPropertiesPanel popUp = new ObjectPropertiesPanel();
 			formData = popUp.getProperties();
 			addComponent();
-//			dataList.add(formData.getElementName());
 		}
 		else if (componentType.equals(ComponentType.COLLISION)) {
-			CollisionFormPanel popUp = new CollisionFormPanel(dataList);
+			CollisionFormPanel popUp = new CollisionFormPanel(componentIdMap.keySet().toArray());
 			colliderData = popUp.getProperties();
 		}
 	}
