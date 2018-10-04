@@ -272,6 +272,14 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 //		else if (e.getKeyCode() == KeyEvent.VK_DOWN) //  && canMoveRight(this, Constants.getPaddleRightOffset())
 //			commandQueue.addFirst(new MoveCommand(this.gameCharacter, 0, -curY));
 		
+		int key = e.getKeyCode();
+		
+		List<Command> keyComponents = gameMakerController.getComponentListForKeys(key);
+		if(keyComponents != null) {
+			for(Command command : keyComponents) {
+				command.execute();
+			}
+		}
 	}
 
 	@Override

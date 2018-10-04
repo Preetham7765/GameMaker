@@ -188,7 +188,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 		else if (componentType.equals(ComponentType.PLAY)) {
 			gameTimer.registerObserver(gamePlayController);
-			System.out.println("Gameplayer registered");
+//			System.out.println("Gameplayer registered");
 		}
 
 		else if (componentType.equals(ComponentType.SAVE)) {
@@ -308,6 +308,13 @@ public class GameMakerController implements ActionListener, MouseListener {
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public List<Command> getComponentListForKeys(int key){
+		if(keyActionMap.containsKey(key)) {
+			return keyActionMap.get(key);
+		}
+		return null;
 	}
 	
 	public AbstractComponent getComponent() {
