@@ -60,7 +60,6 @@ public class GamePanel extends JPanel implements IComposite {
 			g.drawImage(image, 0, 0, this);
 		}
 		for (AbstractComponent composite : compositeList) {
-			System.out.println(composite);
 			if (composite.getVisibility())
 				composite.draw(g);
 		}
