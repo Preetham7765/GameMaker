@@ -171,8 +171,8 @@ public class AbstractComponent implements IComposite, Serializable {
 
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-		
+		if(getVisibility())
+			drawable.draw(this, g);
 	}
 
 	@Override

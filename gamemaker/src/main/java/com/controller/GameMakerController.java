@@ -1,5 +1,6 @@
 package com.controller;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,6 +32,7 @@ import com.infrastructure.Constants;
 import com.infrastructure.ElementType;
 import com.infrastructure.ObjectListType;
 import com.infrastructure.ObjectProperties;
+import com.strategy.DrawOvalColor;
 import com.view.ColliderData;
 import com.view.CollisionFormPanel;
 import com.view.FormView;
@@ -64,12 +66,12 @@ public class GameMakerController implements ActionListener, MouseListener {
 	}
 
 	//Helper method to segregate components based on their movement type, actions and controls 
-	public void addComponent(FormView formView, ElementType elementType) {
-		AbstractComponent component = createAbstractComponent(formView);
+	public void addComponent() {
+		component = createAbstractComponent();
 		componentIdMap.put(component.getComponentName(), component);
 		allComponents.add(component);	//Might not be needed as we have it in componentIdMap through which we can iterate
-		if(formView.getKeyActionMap() != null) {
-			for(Map.Entry<Integer, String> entry : formView.getKeyActionMap().entrySet()) {
+		if(formData.getKeyActionMap() != null) {
+			for(Map.Entry<Integer, String> entry : formData.getKeyActionMap().entrySet()) {
 				Integer key = entry.getKey();
 				Command command = createCommand(entry.getValue(), component);
 				if(keyActionMap.containsKey(key)) {
@@ -82,12 +84,10 @@ public class GameMakerController implements ActionListener, MouseListener {
 			}
 		}
 		
-		if(formView.getTimeActionArray() != null) {
+		if(formData.getTimeActionArray() != null) {
 			 timeComponents.add(component);
 		}
 		
-		windowFrame.revalidate();
-		windowFrame.repaint();
 	}
 	
 	//Creates collider type by getting ColliderData from View
@@ -115,20 +115,20 @@ public class GameMakerController implements ActionListener, MouseListener {
 	}
 	
 	//Creates Component by taking form data user defined for game element from view
-	public AbstractComponent createAbstractComponent(FormView formView) {
-		AbstractComponent component = new AbstractComponent();
-		component.setX(formView.getX());
-		component.setY(formView.getY());
-		component.setVelX(formView.getVelX());
-		component.setVelY(formView.getVelY());
-		//component.setDrawable();
-		component.setWidth(formView.getWidth());
-		component.setHeight(formView.getHeight());
+	public AbstractComponent createAbstractComponent() {
+		ObjectProperties objectProperties = new ObjectProperties();
+		AbstractComponent component = new AbstractComponent(objectProperties);
+		component.setX(formData.getX());
+		component.setY(formData.getY());
+		component.setVelX(formData.getVelX());
+		component.setVelY(formData.getVelY());
+		component.setDrawable(new DrawOvalColor());
+		component.setColor(Color.BLACK);
+		component.setWidth(formData.getWidth());
+		component.setHeight(formData.getHeight());
 		
 		return component;
 	}
-	
-	
 	
 	public void save() {
 		// pause();
@@ -197,6 +197,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 		else if (componentType.equals(ComponentType.ELEMENT)) {
 			ObjectPropertiesPanel popUp = new ObjectPropertiesPanel();
 			formData = popUp.getProperties();
+			addComponent();
 			dataList.add(formData.getElementName());
 		}
 		else if (componentType.equals(ComponentType.COLLISION)) {
@@ -208,7 +209,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 
-		// ObjectProperties selected = windowFrame.getActiveObjectProperties();
+		 selectedComponent = component.getObjectProperties();
 
 		if (selectedComponent != null) {
 
@@ -217,9 +218,9 @@ public class GameMakerController implements ActionListener, MouseListener {
 			selectedComponent.setX(x);
 			selectedComponent.setY(y);
 
-			ComponentType componentType = selectedComponent.getComponentType();
-			System.out.println(componentType);
-			AbstractComponent abstractComponent = null;
+//			ComponentType componentType = selectedComponent.getComponentType();
+//			System.out.println(componentType);
+//			AbstractComponent abstractComponent = component;
 			/*
 			 * selected.setComponentType(formPanelSelected.getComponentType());
 			 * selected.setObjectListType(formPanelSelected.getObjectListType()); //
@@ -231,51 +232,51 @@ public class GameMakerController implements ActionListener, MouseListener {
 			 * selected.setVelY(formPanelSelected.getVelY());
 			 * selected.setCanCollect(formPanelSelected.getCanCollect());
 			 */
-			switch (componentType) {
-			case BALL: {
-				abstractComponent = new Ball(selectedComponent);
-				break;
-			}
-			case BRICK: {
-				// System.out.println( selected.getObjectListType() + " Brick set as
-				// collectible");
-				abstractComponent = new Brick(selectedComponent);
-				break;
-			}
-			case PADDLE: {
-				abstractComponent = new Paddle(selectedComponent);
-				break;
-			}
-			case FIRE: {
-				abstractComponent = new Fire(selectedComponent);
-				break;
-			}
-			case BACKGROUND: {
-				// windowFrame.createSetBackgroundButton();
-			}
+//			switch (componentType) {
+//			case BALL: {
+//				abstractComponent = new Ball(selectedComponent);
+//				break;
+//			}
+//			case BRICK: {
+//				// System.out.println( selected.getObjectListType() + " Brick set as
+//				// collectible");
+//				abstractComponent = new Brick(selectedComponent);
+//				break;
+//			}
+//			case PADDLE: {
+//				abstractComponent = new Paddle(selectedComponent);
+//				break;
+//			}
+//			case FIRE: {
+//				abstractComponent = new Fire(selectedComponent);
+//				break;
+//			}
+//			case BACKGROUND: {
+//				// windowFrame.createSetBackgroundButton();
+//			}
+//
+//			default:
+//				System.out.println("Error: Invalid Component");
+//			}
 
-			default:
-				System.out.println("Error: Invalid Component");
-			}
+//			if (component.getObjectProperties().getObjectListType() == ObjectListType.COLLECTIBLE) {
+//				// set behavior to the object to visibility
+//				System.out.println("visisbility");
+//
+//				Visibility visibility = new Visibility(selectedComponent);
+//				// component.setActionBehavior(visibility);
+//			}
+//
+//			if (component.getObjectProperties().getObjectListType() == ObjectListType.EVENT
+//					|| component.getObjectProperties().getObjectListType() == ObjectListType.ACTION) {
+//				// set behavior to move
+//
+//				Move move = new Move(selectedComponent);
+//				// component.setActionBehavior(move);
+//			}
 
-			if (abstractComponent.getObjectProperties().getObjectListType() == ObjectListType.COLLECTIBLE) {
-				// set behavior to the object to visibility
-				System.out.println("visisbility");
-
-				Visibility visibility = new Visibility(selectedComponent);
-				// abstractComponent.setActionBehavior(visibility);
-			}
-
-			if (abstractComponent.getObjectProperties().getObjectListType() == ObjectListType.EVENT
-					|| abstractComponent.getObjectProperties().getObjectListType() == ObjectListType.ACTION) {
-				// set behavior to move
-
-				Move move = new Move(selectedComponent);
-				// abstractComponent.setActionBehavior(move);
-			}
-
-			System.out.println(" comp typ  " + abstractComponent.getObjectProperties().getObjectListType());
-			windowFrame.getGamePanel().addComponent(abstractComponent);
+//			System.out.println(" comp typ  " + component.getObjectProperties().getObjectListType());
+			windowFrame.getGamePanel().addComponent(component);
 			windowFrame.draw(null);
 		}
 	}
