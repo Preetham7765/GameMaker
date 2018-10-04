@@ -15,18 +15,22 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.commands.ChangeVelXCommand;
+import com.commands.ChangeVelYCommand;
 import com.commands.ClockTickCommand;
 import com.commands.CollectedCommand;
 import com.commands.Command;
 import com.commands.MoveCommand;
 import com.components.Clock;
 import com.infrastructure.AbstractComponent;
+import com.infrastructure.Collision;
 import com.infrastructure.ComponentType;
 import com.infrastructure.ObjectListType;
 import com.infrastructure.Observer;
@@ -34,6 +38,7 @@ import com.observable.GameTimer;
 import com.view.WindowFrame;
 
 import com.infrastructure.Constants;
+import com.infrastructure.Direction;
 
 public class GamePlayController implements Observer, KeyListener, ActionListener {
 	
@@ -47,12 +52,16 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 	private int collectiblesCollected = 0;
 	private GameTimer gameTimer;
 	private boolean gameOver = false;
+	private GameMakerController gameMakerController;
+	private Collision collisionChecker;
 	
-	public GamePlayController(WindowFrame windowFrame, GameTimer gameTimer) {
+	public GamePlayController(WindowFrame windowFrame, GameTimer gameTimer, GameMakerController gameMakerController) {
 		this.gameTimer = gameTimer;
 		
 		this.windowFrame = windowFrame;
-		loadComponentList();
+		this.gameMakerController = gameMakerController;
+		collisionChecker = new Collision();
+//		loadComponentList();
 		
 //		this.windowFrame.getMainPanel().addKeyListener(this);
 		
@@ -102,19 +111,33 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 	
 	}
 	
+	@Override
 	public void update() {
 //		commandQueue.addFirst(new ClockTickCommand(this.clock));
 //		System.out.print(actionList.size() + " Size");
-		if (!gameOver) { 
-
-			for(AbstractComponent abstractComponent : actionList) {
-				int x = abstractComponent.getVelY();
-				int y = abstractComponent.getVelX();
-				commandQueue.add(new MoveCommand(abstractComponent, x, y));
-			}	
-			checkCollisionDetection();
-			this.windowFrame.draw(null);
+//		if (!gameOver) { 
+//
+//			for(AbstractComponent abstractComponent : actionList) {
+//				int x = abstractComponent.getVelY();
+//				int y = abstractComponent.getVelX();
+//				commandQueue.add(new MoveCommand(abstractComponent, x, y));
+//			}	
+//			checkCollisionDetection();
+//			this.windowFrame.draw(null);
+//		}
+		
+		List<AbstractComponent> timeComponents = gameMakerController.getTimeComponents();
+		for(AbstractComponent component : timeComponents) {
+			Direction changedDirection = collisionChecker.checkCollisionBetweenAbstractComponentAndBounds(component);
+			if(changedDirection == Direction.X || changedDirection == Direction.BOTH) {
+				new ChangeVelXCommand(component).execute();
+			}
+			if(changedDirection == Direction.Y || changedDirection == Direction.BOTH) {
+				new ChangeVelYCommand(component).execute();
+			}
+			new MoveCommand(component).execute();
 		}
+		windowFrame.draw(null);
 	}
 	
 	
@@ -234,20 +257,21 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		int curX = Math.abs(this.gameCharacter.getVelX());
-		int curY = Math.abs(this.gameCharacter.getVelY());
-		System.out.println("keyPressed");
-		if (e.getKeyCode() == KeyEvent.VK_LEFT) // && canMoveLeft(this, Constants.getPaddleLeftOffset()
-			commandQueue.addFirst(new MoveCommand(this.gameCharacter, -curX, 0));
+//		int curX = Math.abs(this.gameCharacter.getVelX());
+//		int curY = Math.abs(this.gameCharacter.getVelY());
+//		System.out.println("keyPressed");
+//		if (e.getKeyCode() == KeyEvent.VK_LEFT) // && canMoveLeft(this, Constants.getPaddleLeftOffset()
+//			commandQueue.addFirst(new MoveCommand(this.gameCharacter, -curX, 0));
+//		
+//		else if (e.getKeyCode() == KeyEvent.VK_RIGHT) //  && canMoveRight(this, Constants.getPaddleRightOffset())
+//			commandQueue.addFirst(new MoveCommand(this.gameCharacter, curX, 0));
+//
+//		else if (e.getKeyCode() == KeyEvent.VK_UP) // && canMoveLeft(this, Constants.getPaddleLeftOffset()
+//			commandQueue.addFirst(new MoveCommand(this.gameCharacter, 0, curY));
+//		
+//		else if (e.getKeyCode() == KeyEvent.VK_DOWN) //  && canMoveRight(this, Constants.getPaddleRightOffset())
+//			commandQueue.addFirst(new MoveCommand(this.gameCharacter, 0, -curY));
 		
-		else if (e.getKeyCode() == KeyEvent.VK_RIGHT) //  && canMoveRight(this, Constants.getPaddleRightOffset())
-			commandQueue.addFirst(new MoveCommand(this.gameCharacter, curX, 0));
-
-		else if (e.getKeyCode() == KeyEvent.VK_UP) // && canMoveLeft(this, Constants.getPaddleLeftOffset()
-			commandQueue.addFirst(new MoveCommand(this.gameCharacter, 0, curY));
-		
-		else if (e.getKeyCode() == KeyEvent.VK_DOWN) //  && canMoveRight(this, Constants.getPaddleRightOffset())
-			commandQueue.addFirst(new MoveCommand(this.gameCharacter, 0, -curY));
 	}
 
 	@Override

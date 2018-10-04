@@ -32,6 +32,7 @@ import com.infrastructure.Constants;
 import com.infrastructure.ElementType;
 import com.infrastructure.ObjectListType;
 import com.infrastructure.ObjectProperties;
+import com.observable.GameTimer;
 import com.strategy.DrawOvalColor;
 import com.view.ColliderData;
 import com.view.CollisionFormPanel;
@@ -52,9 +53,10 @@ public class GameMakerController implements ActionListener, MouseListener {
 	private ArrayList<Collider> colliders;
 	private HashMap<String, AbstractComponent> componentIdMap;
 	private HashMap<Integer, List<Command>> keyActionMap;
-	
+	private GameTimer gameTimer;
+	private GamePlayController gamePlayController;
 
-	public GameMakerController(WindowFrame windowFrame) {
+	public GameMakerController(WindowFrame windowFrame, GameTimer gameTimer) {
 		this.windowFrame = windowFrame;
 		allComponents = new ArrayList<>();
 		timeComponents = new ArrayList<>();
@@ -62,6 +64,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 		keyActionMap = new HashMap<>();
 		componentIdMap = new HashMap<>();
 		dataList = new ArrayList<String>();
+		this.gameTimer = gameTimer;
 		dataList.add("All");
 	}
 
@@ -86,6 +89,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 		
 		if(formData.getTimeActionArray() != null) {
 			 timeComponents.add(component);
+			 System.out.println("Added "+component.getComponentName() + " to time array");
 		}
 		
 	}
@@ -126,7 +130,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 		component.setColor(Color.BLACK);
 		component.setWidth(formData.getWidth());
 		component.setHeight(formData.getHeight());
-		
+		component.setComponentName(formData.getElementName());
 		return component;
 	}
 	
@@ -183,7 +187,8 @@ public class GameMakerController implements ActionListener, MouseListener {
 		}
 
 		else if (componentType.equals(ComponentType.PLAY)) {
-
+			gameTimer.registerObserver(gamePlayController);
+			System.out.println("Gameplayer registered");
 		}
 
 		else if (componentType.equals(ComponentType.SAVE)) {
@@ -198,7 +203,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 			ObjectPropertiesPanel popUp = new ObjectPropertiesPanel();
 			formData = popUp.getProperties();
 			addComponent();
-			dataList.add(formData.getElementName());
+//			dataList.add(formData.getElementName());
 		}
 		else if (componentType.equals(ComponentType.COLLISION)) {
 			CollisionFormPanel popUp = new CollisionFormPanel(dataList);
@@ -351,5 +356,13 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 	public void setKeyActionMap(HashMap<Integer, List<Command>> keyActionMap) {
 		this.keyActionMap = keyActionMap;
+	}
+	
+	public void setGamePlayController(GamePlayController gamePlayController) {
+		this.gamePlayController = gamePlayController;
+	}
+	
+	public GamePlayController getGamePlayController() {
+		return this.gamePlayController;
 	}
 }
