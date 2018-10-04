@@ -18,6 +18,7 @@ import java.util.Map;
 import com.behavior.Move;
 import com.behavior.Visibility;
 import com.commands.Command;
+import com.commands.MoveDownCommand;
 import com.commands.MoveLeftCommand;
 import com.commands.MoveRightCommand;
 import com.commands.MoveUpCommand;
@@ -103,7 +104,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 	public Command createCommand(String commandType, AbstractComponent component) {
 		switch(commandType) {
 		case Constants.MOVE_DOWN:
-			return new MoveLeftCommand(component);
+			return new MoveDownCommand(component);
 		case Constants.MOVE_UP:
 			return new MoveUpCommand(component);
 		case Constants.MOVE_LEFT:
@@ -185,6 +186,8 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 		else if (componentType.equals(ComponentType.PLAY)) {
 			gameTimer.registerObserver(gamePlayController);
+			windowFrame.getGamePanel().addKeyListener(gamePlayController);
+			windowFrame.getGamePanel().requestFocus();
 //			System.out.println("Gameplayer registered");
 		}
 
