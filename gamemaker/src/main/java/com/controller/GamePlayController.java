@@ -30,6 +30,7 @@ import com.commands.Command;
 import com.commands.MoveCommand;
 import com.components.Clock;
 import com.infrastructure.AbstractComponent;
+import com.infrastructure.Collider;
 import com.infrastructure.Collision;
 import com.infrastructure.ComponentType;
 import com.infrastructure.ObjectListType;
@@ -125,6 +126,10 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 //			checkCollisionDetection();
 //			this.windowFrame.draw(null);
 //		}
+		
+		for(Collider collider : gameMakerController.getColliders()) {
+			collider.execute();
+		}
 		
 		List<AbstractComponent> timeComponents = gameMakerController.getTimeComponents();
 		for(AbstractComponent component : timeComponents) {
