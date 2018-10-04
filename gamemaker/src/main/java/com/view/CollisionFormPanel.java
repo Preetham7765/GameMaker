@@ -19,7 +19,7 @@ import com.infrastructure.ElementType;
 
 public class CollisionFormPanel extends JPanel{
 	private ColliderData colliderData;
-	private ArrayList<String> dataList;
+	private Object[] dataList;
 	private JComboBox primaryElement;
 	private JComboBox secondaryElement;
 	private JComboBox primaryAction;
@@ -29,7 +29,7 @@ public class CollisionFormPanel extends JPanel{
 	 
 	private int result;
 	
-	public CollisionFormPanel(ArrayList<String> dataList) {
+	public CollisionFormPanel(Object[] dataList) {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.dataList = dataList;
 		colliderData = new ColliderData();
@@ -44,7 +44,7 @@ public class CollisionFormPanel extends JPanel{
 	
 	public void createFormElements() {
 		
-		Object[] data=dataList.toArray();
+		Object[] data=dataList;
 		primaryElement = new JComboBox(data);
 		secondaryElement = new JComboBox(data);
 		
