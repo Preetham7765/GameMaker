@@ -55,6 +55,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 	private ArrayList<Collider> colliders;
 	private HashMap<String, AbstractComponent> componentIdMap;
 	private HashMap<Integer, List<Command>> keyActionMap;
+	private ArrayList<AbstractComponent> rotatorList;
 	private GameTimer gameTimer;
 	private GamePlayController gamePlayController;
 	private Collision collision;
@@ -66,12 +67,13 @@ public class GameMakerController implements ActionListener, MouseListener {
 		colliders = new ArrayList<>();
 		keyActionMap = new HashMap<>();
 		componentIdMap = new HashMap<>();
+		rotatorList = new ArrayList<>();
 		this.gameTimer = gameTimer;
 		this.collision = new Collision();
 		initBounds("TOP WALL", 0, 1, Constants.GAME_PANEL_WIDTH, 2);
 		initBounds("LEFT WALL", 1, 0, 2, Constants.GAME_PANEL_HEIGHT);
-		initBounds("BOTTOM WALL", 0, Constants.GAME_PANEL_HEIGHT-2, Constants.GAME_PANEL_WIDTH, 2);
-		initBounds("RIGHT WALL", Constants.GAME_PANEL_WIDTH-2, 0, 2, Constants.GAME_PANEL_HEIGHT);
+		initBounds("BOTTOM WALL", 0, Constants.GAME_PANEL_HEIGHT, Constants.GAME_PANEL_WIDTH, 2);
+		initBounds("RIGHT WALL", Constants.GAME_PANEL_WIDTH, 0, 2, Constants.GAME_PANEL_HEIGHT);
 	}
 
 	//Helper method to segregate components based on their movement type, actions and controls 
@@ -94,9 +96,14 @@ public class GameMakerController implements ActionListener, MouseListener {
 		}
 		
 		if(formData.getTimeActionArray() != null) {
-			 timeComponents.add(component);
-//			 System.out.println("Added "+ component.getComponentName() + " to time array");
+			
+			//timeComponents.add(component);
+			rotatorList.add(component);
+//			System.out.println("Added "+ component.getComponentName() + " to time array");
 		}
+		
+		
+
 		
 	}
 	
@@ -105,7 +112,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 		AbstractComponent primaryComponent = componentIdMap.get(colliderData.getPrimaryElement());
 		AbstractComponent secondaryComponent = componentIdMap.get(colliderData.getSecondaryElement());
 		Collider collider = new Collider(primaryComponent, secondaryComponent, colliderData.getPrimaryAct(), colliderData.getSecondaryAct(),collision);
-		System.out.println("Collider add with name: "+ primaryComponent.getComponentName() + " and "+ colliderData.getSecondaryElement() );
+//		System.out.println("Collider add with name: "+ primaryComponent.getComponentName() + " and "+ colliderData.getSecondaryElement() );
 		colliders.add(collider);
 	}
 	
@@ -402,5 +409,13 @@ public class GameMakerController implements ActionListener, MouseListener {
 	
 	public GamePlayController getGamePlayController() {
 		return this.gamePlayController;
+	}
+	
+	public ArrayList<AbstractComponent> getRotatorList() {
+		return rotatorList;
+	}
+
+	public void setRotatorList(ArrayList<AbstractComponent> rotatorList) {
+		this.rotatorList = rotatorList;
 	}
 }

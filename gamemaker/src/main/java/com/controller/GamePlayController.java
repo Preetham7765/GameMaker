@@ -131,6 +131,10 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 			collider.execute();
 		}
 		
+		for(AbstractComponent component : gameMakerController.getRotatorList()) {
+			new MoveCommand(component).execute();
+		}
+		
 		List<AbstractComponent> timeComponents = gameMakerController.getTimeComponents();
 		for(AbstractComponent component : timeComponents) {
 			Direction changedDirection = collisionChecker.checkCollisionBetweenAbstractComponentAndBounds(component);
