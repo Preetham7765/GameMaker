@@ -14,7 +14,7 @@ public class AbstractComponent implements IComposite, Serializable {
 	private String componentName;
 	private ObjectProperties objectProperties;
 	private Drawable drawable;
-	private BufferedImage image;
+	private String image;
 	private Color color;
 	private ComponentShape shape;
 	
@@ -52,11 +52,11 @@ public class AbstractComponent implements IComposite, Serializable {
 		this.drawable = drawable;
 	}
 
-	public BufferedImage getImage() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(BufferedImage image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 

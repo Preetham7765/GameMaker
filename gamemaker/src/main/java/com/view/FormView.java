@@ -1,5 +1,6 @@
 package com.view;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -15,9 +16,28 @@ public class FormView {
 	private int width;
 	private int height;
 	private boolean collectible;
+	private boolean rotateable;
 	private int actionType;
+	private Color color;
+	private String backgroundLocation;
 	private Map<Integer, String> keyActionMap;
 	private ArrayList<String> timeActionArray;
+
+	public String getBackgroundLocation() {
+		return backgroundLocation;
+	}
+
+	public void setBackgroundLocation(String backgroundLocation) {
+		this.backgroundLocation = backgroundLocation;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
 
 	public String getElementName() {
 		return elementName;
@@ -90,6 +110,14 @@ public class FormView {
 
 	public void setCollectible(boolean collectible) {
 		this.collectible = collectible;
+	}
+
+	public boolean isRotateable() {
+		return rotateable;
+	}
+
+	public void setRotateable(boolean rotateable) {
+		this.rotateable = rotateable;
 	}
 
 	public int getActionType() {

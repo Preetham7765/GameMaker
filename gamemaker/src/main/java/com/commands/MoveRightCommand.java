@@ -3,6 +3,8 @@ package com.commands;
 import com.infrastructure.AbstractComponent;
 
 public class MoveRightCommand implements Command{
+	
+	private static final long serialVersionUID = 788831467916562104L;
 	private AbstractComponent abstractComponent;
 	
 	public MoveRightCommand(AbstractComponent abstractComponent) {

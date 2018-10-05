@@ -2,11 +2,14 @@ package com.strategy;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.Serializable;
 
 import com.infrastructure.AbstractComponent;
 import com.infrastructure.Drawable;
 
-public class DrawRectImage implements Drawable{
+public class DrawRectImage implements Drawable, Serializable{
+	
+	private static final long serialVersionUID = 5L;
 
 	@Override
 	public void draw(AbstractComponent component, Graphics g) {
