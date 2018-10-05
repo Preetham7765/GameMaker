@@ -95,12 +95,13 @@ public class GameMakerController implements ActionListener, MouseListener {
 				}
 			}
 		}
+		
+		if(formData.isRotateable())
 			rotatorList.add(component);
 
-		 if(formData.getTimeActionArray() != null) {
-			 timeComponents.add(component);
-//			 System.out.println("Added "+ component.getComponentName() + " to time array");
-
+		if(formData.getTimeActionArray() != null) {
+			if(!formData.isRotateable())
+				timeComponents.add(component);
 		}
 
 	}
