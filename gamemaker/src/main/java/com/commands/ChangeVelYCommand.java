@@ -4,6 +4,10 @@ import com.infrastructure.AbstractComponent;
 
 public class ChangeVelYCommand implements Command{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9L;
 	private AbstractComponent abstractComponent;
 	
 	public ChangeVelYCommand(AbstractComponent abstractComponent) {

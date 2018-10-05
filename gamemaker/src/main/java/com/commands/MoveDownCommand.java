@@ -4,6 +4,7 @@ import com.infrastructure.AbstractComponent;
 
 public class MoveDownCommand implements Command{
 
+	private static final long serialVersionUID = 3547876913401664825L;
 	private AbstractComponent abstractComponent;
 	
 	public MoveDownCommand(AbstractComponent abstractComponent) {

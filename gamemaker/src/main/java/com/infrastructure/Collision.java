@@ -4,8 +4,13 @@ import java.awt.Rectangle;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.RectangularShape;
+import java.io.Serializable;
 
-public class Collision {
+public class Collision implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6L;
 	private AbstractComponent primaryComponent;
 	private AbstractComponent secondaryComponent;
 	private String primaryCompAction;

@@ -4,6 +4,10 @@ import com.infrastructure.AbstractComponent;
 
 public class MoveCommand implements Command {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5600203752621923992L;
 	private AbstractComponent abstractComponent;
 	/**
 	 * Store the current state then update
