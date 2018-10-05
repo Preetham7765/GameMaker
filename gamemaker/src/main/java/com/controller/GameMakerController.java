@@ -1,7 +1,6 @@
 package com.controller;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -12,27 +11,23 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import com.behavior.Move;
-import com.behavior.Visibility;
+import java.util.Map.Entry;
+
 import com.commands.Command;
 import com.commands.MoveDownCommand;
 import com.commands.MoveLeftCommand;
 import com.commands.MoveRightCommand;
 import com.commands.MoveUpCommand;
-import com.components.Ball;
-import com.components.Brick;
-import com.components.Fire;
-import com.components.Paddle;
 import com.infrastructure.AbstractComponent;
 import com.infrastructure.Collider;
 import com.infrastructure.Collision;
 import com.infrastructure.ComponentType;
 import com.infrastructure.Constants;
 import com.infrastructure.ElementType;
-import com.infrastructure.ObjectListType;
 import com.infrastructure.ObjectProperties;
 import com.observable.GameTimer;
 import com.strategy.DrawOvalColor;
@@ -51,63 +46,76 @@ public class GameMakerController implements ActionListener, MouseListener {
 	private ColliderData colliderData;
 	private AbstractComponent component;
 	private ArrayList<AbstractComponent> allComponents;
-	private	ArrayList<AbstractComponent> timeComponents;
+	private ArrayList<AbstractComponent> timeComponents;
 	private ArrayList<Collider> colliders;
+	private ArrayList<String> componentNames;
 	private HashMap<String, AbstractComponent> componentIdMap;
 	private HashMap<Integer, List<Command>> keyActionMap;
 	private GameTimer gameTimer;
 	private GamePlayController gamePlayController;
 	private Collision collision;
+	private int idCounter;
 
 	public GameMakerController(WindowFrame windowFrame, GameTimer gameTimer) {
 		this.windowFrame = windowFrame;
-		allComponents = new ArrayList<>();
-		timeComponents = new ArrayList<>();
-		colliders = new ArrayList<>();
-		keyActionMap = new HashMap<>();
-		componentIdMap = new HashMap<>();
+		this.allComponents = new ArrayList<>();
+		this.timeComponents = new ArrayList<>();
+		this.colliders = new ArrayList<>();
+		this.keyActionMap = new HashMap<>();
+		this.componentIdMap = new HashMap<>();
+		this.componentNames = new ArrayList<>();
 		this.gameTimer = gameTimer;
 		this.collision = new Collision();
 		initBounds("TOP WALL", 0, 1, Constants.GAME_PANEL_WIDTH, 2);
 		initBounds("LEFT WALL", 1, 0, 2, Constants.GAME_PANEL_HEIGHT);
-		initBounds("BOTTOM WALL", 0, Constants.GAME_PANEL_HEIGHT-2, Constants.GAME_PANEL_WIDTH, 2);
-		initBounds("RIGHT WALL", Constants.GAME_PANEL_WIDTH-2, 0, 2, Constants.GAME_PANEL_HEIGHT);
+		initBounds("BOTTOM WALL", 0, Constants.GAME_PANEL_HEIGHT - 2, Constants.GAME_PANEL_WIDTH, 2);
+		initBounds("RIGHT WALL", Constants.GAME_PANEL_WIDTH - 2, 0, 2, Constants.GAME_PANEL_HEIGHT);
 	}
 
-	//Helper method to segregate components based on their movement type, actions and controls 
-	public void addComponent() {
+	// Helper method to segregate components based on their movement type, actions
+	// and controls
+	public void addComponent(int x, int y) {
+		System.out.println("print x and y" + x + " " + y);
 		component = createAbstractComponent();
+		component.setX(x);
+		component.setY(y);
 		componentIdMap.put(component.getComponentName(), component);
-		allComponents.add(component);	//Might not be needed as we have it in componentIdMap through which we can iterate
-		if(formData.getKeyActionMap() != null) {
-			for(Map.Entry<Integer, String> entry : formData.getKeyActionMap().entrySet()) {
+		allComponents.add(component); // Might not be needed as we have it in componentIdMap through which we can
+										// iterate
+		if (formData.getKeyActionMap() != null) {
+			for (Map.Entry<Integer, String> entry : formData.getKeyActionMap().entrySet()) {
 				Integer key = entry.getKey();
 				Command command = createCommand(entry.getValue(), component);
-				if(keyActionMap.containsKey(key)) {
+				if (keyActionMap.containsKey(key)) {
 					keyActionMap.get(key).add(command);
-				}
-				else {
+				} else {
 					keyActionMap.put(key, new ArrayList<Command>());
 					keyActionMap.get(key).add(command);
 				}
 			}
+		} else if (formData.getTimeActionArray() != null) {
+			timeComponents.add(component);
+			// System.out.println("Added "+ component.getComponentName() + " to time
+			// array");
 		}
-		else if(formData.getTimeActionArray() != null) {
-			 timeComponents.add(component);
-//			 System.out.println("Added "+ component.getComponentName() + " to time array");
-		}
-		
+
 	}
-	
-	//Creates collider type by getting ColliderData from View
+
+	// Creates collider type by getting ColliderData from View
 	public void addCollider() {
-		AbstractComponent primaryComponent = componentIdMap.get(colliderData.getPrimaryElement());
-		AbstractComponent secondaryComponent = componentIdMap.get(colliderData.getSecondaryElement());
-		Collider collider = new Collider(primaryComponent, secondaryComponent, colliderData.getPrimaryAct(), colliderData.getSecondaryAct(),collision);
-		System.out.println("Collider add with name: "+ primaryComponent.getComponentName() + " and "+ colliderData.getSecondaryElement() );
-		colliders.add(collider);
+
+		// O(n2) complexity here. Need to optimize
+		List<AbstractComponent> primaryComponents = getComponentByName(colliderData.getPrimaryElement());
+		List<AbstractComponent> secondaryComponents = getComponentByName(colliderData.getSecondaryElement());
+
+		for (AbstractComponent primeComponent : primaryComponents)
+			for (AbstractComponent secComponent : secondaryComponents) {
+				Collider collider = new Collider(primeComponent, secComponent, colliderData.getPrimaryAct(),
+						colliderData.getSecondaryAct(), collision);
+				colliders.add(collider);
+			}
 	}
-	
+
 	public void initBounds(String name, int x, int y, int width, int height) {
 		ObjectProperties objectProperties = new ObjectProperties();
 		AbstractComponent component = new AbstractComponent(objectProperties);
@@ -120,13 +128,14 @@ public class GameMakerController implements ActionListener, MouseListener {
 		component.setDrawable(new DrawRectColor());
 		component.setComponentName(name);
 		componentIdMap.put(name, component);
+		componentNames.add(name);
 		windowFrame.getGamePanel().addComponent(component);
 		windowFrame.draw(null);
 	}
-	
-	//Helper method to make command for component based on movement type
+
+	// Helper method to make command for component based on movement type
 	public Command createCommand(String commandType, AbstractComponent component) {
-		switch(commandType) {
+		switch (commandType) {
 		case Constants.MOVE_DOWN:
 			return new MoveDownCommand(component);
 		case Constants.MOVE_UP:
@@ -139,29 +148,31 @@ public class GameMakerController implements ActionListener, MouseListener {
 			return null;
 		}
 	}
-	
-	//Creates Component by taking form data user defined for game element from view
+
+	// Creates Component by taking form data user defined for game element from view
 	public AbstractComponent createAbstractComponent() {
 		ObjectProperties objectProperties = new ObjectProperties();
 		AbstractComponent component = new AbstractComponent(objectProperties);
-		component.setX(formData.getX());
-		component.setY(formData.getY());
+		// component.setX(formData.getX());
+		// component.setY(formData.getY());
+		component.setComponentName(formData.getElementName() + "_" + Integer.toString(idCounter));
 		component.setVelX(formData.getVelX());
 		component.setVelY(formData.getVelY());
 		component.setColor(Color.BLACK);
 		component.setWidth(formData.getWidth());
 		component.setHeight(formData.getHeight());
-		component.setComponentName(formData.getElementName());
+		// component.setComponentName(formData.getElementName());
 		component.setVisbility(true);
-		if(formData.getElementType() == ElementType.CIRCLE) {
+		if (formData.getElementType() == ElementType.CIRCLE) {
 			component.setDrawable(new DrawOvalColor());
-		}
-		else if(formData.getElementType() == ElementType.RECTANGLE){
+		} else if (formData.getElementType() == ElementType.RECTANGLE) {
 			component.setDrawable(new DrawRectColor());
 		}
+
+		this.idCounter++;
 		return component;
 	}
-	
+
 	public void save() {
 		// pause();
 		try {
@@ -171,13 +182,13 @@ public class GameMakerController implements ActionListener, MouseListener {
 				ObjectOutputStream out = new ObjectOutputStream(fileOut);
 				windowFrame.save(out);
 				// out.writeObject(commandQueue);
-				
+
 				out.writeObject(allComponents);// remove this if you need to remove all components in future
 				out.writeObject(timeComponents);
 				out.writeObject(componentIdMap);
 				out.writeObject(colliders);
 				out.writeObject(keyActionMap);
-				
+
 				out.close();
 				fileOut.close();
 			}
@@ -202,14 +213,15 @@ public class GameMakerController implements ActionListener, MouseListener {
 				// Deque<Command> loadCmdQueue = (Deque<Command>) in.readObject();
 				// commandQueue.addAll(loadCmdQueue);
 				// initCommands();
-				
-//				.writeObject(allComponents);// remove this if you need to remove all components in future
-				allComponents = (ArrayList<AbstractComponent>)in.readObject();
-				timeComponents = (ArrayList<AbstractComponent>)in.readObject();
-				componentIdMap = (HashMap<String,AbstractComponent>)in.readObject();
-				colliders = (ArrayList<Collider>)in.readObject();
-				keyActionMap = (HashMap<Integer, List<Command>>)in.readObject();
-				
+
+				// .writeObject(allComponents);// remove this if you need to remove all
+				// components in future
+				allComponents = (ArrayList<AbstractComponent>) in.readObject();
+				timeComponents = (ArrayList<AbstractComponent>) in.readObject();
+				componentIdMap = (HashMap<String, AbstractComponent>) in.readObject();
+				colliders = (ArrayList<Collider>) in.readObject();
+				keyActionMap = (HashMap<Integer, List<Command>>) in.readObject();
+
 				in.close();
 				fileIn.close();
 			}
@@ -217,6 +229,20 @@ public class GameMakerController implements ActionListener, MouseListener {
 			e.printStackTrace();
 		}
 		windowFrame.draw(null);
+	}
+
+	private List<AbstractComponent> getComponentByName(String name) {
+
+		List<AbstractComponent> components = new ArrayList<>();
+
+		for (Entry<String, AbstractComponent> component : componentIdMap.entrySet()) {
+			if (component.getKey().startsWith(name + "_")) {
+				components.add(component.getValue());
+			}
+		}
+
+		return components;
+
 	}
 
 	@Override
@@ -232,7 +258,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 			gameTimer.registerObserver(gamePlayController);
 			windowFrame.getGamePanel().addKeyListener(gamePlayController);
 			windowFrame.getGamePanel().requestFocus();
-//			System.out.println("Gameplayer registered");
+			// System.out.println("Gameplayer registered");
 		}
 
 		else if (componentType.equals(ComponentType.SAVE)) {
@@ -251,88 +277,95 @@ public class GameMakerController implements ActionListener, MouseListener {
 		else if (componentType.equals(ComponentType.ELEMENT)) {
 			ObjectPropertiesPanel popUp = new ObjectPropertiesPanel();
 			formData = popUp.getProperties();
-			addComponent();
-		}
-		else if (componentType.equals(ComponentType.COLLISION)) {
-			CollisionFormPanel popUp = new CollisionFormPanel(componentIdMap.keySet().toArray());
+			this.idCounter = 1;
+			componentNames.add(formData.getElementName());
+			// addComponent();
+		} else if (componentType.equals(ComponentType.COLLISION)) {
+			CollisionFormPanel popUp = new CollisionFormPanel(componentNames.toArray());
 			colliderData = popUp.getProperties();
 			addCollider();
+
+			System.out.println("Colliders list " + Arrays.toString(colliders.toArray()));
 		}
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 
-		 selectedComponent = component.getObjectProperties();
+		int x = arg0.getX();
+		int y = arg0.getY();
 
-		if (selectedComponent != null) {
+		// AbstractComp
+		// selectedComponent.setX(x);
+		// selectedComponent.setY(y);
 
-			int x = arg0.getX();
-			int y = arg0.getY();
-			selectedComponent.setX(x);
-			selectedComponent.setY(y);
+		addComponent(x, y);
 
-//			ComponentType componentType = selectedComponent.getComponentType();
-//			System.out.println(componentType);
-//			AbstractComponent abstractComponent = component;
-			/*
-			 * selected.setComponentType(formPanelSelected.getComponentType());
-			 * selected.setObjectListType(formPanelSelected.getObjectListType()); //
-			 * System.out.println("Game maker controller can collect = " +
-			 * formPanelSelected.getObjectListType());
-			 * selected.setHeight(formPanelSelected.getHeight());
-			 * selected.setWidth(formPanelSelected.getWidth());
-			 * selected.setVelX(formPanelSelected.getVelX());
-			 * selected.setVelY(formPanelSelected.getVelY());
-			 * selected.setCanCollect(formPanelSelected.getCanCollect());
-			 */
-//			switch (componentType) {
-//			case BALL: {
-//				abstractComponent = new Ball(selectedComponent);
-//				break;
-//			}
-//			case BRICK: {
-//				// System.out.println( selected.getObjectListType() + " Brick set as
-//				// collectible");
-//				abstractComponent = new Brick(selectedComponent);
-//				break;
-//			}
-//			case PADDLE: {
-//				abstractComponent = new Paddle(selectedComponent);
-//				break;
-//			}
-//			case FIRE: {
-//				abstractComponent = new Fire(selectedComponent);
-//				break;
-//			}
-//			case BACKGROUND: {
-//				// windowFrame.createSetBackgroundButton();
-//			}
-//
-//			default:
-//				System.out.println("Error: Invalid Component");
-//			}
+		// ComponentType componentType = selectedComponent.getComponentType();
+		// System.out.println(componentType);
+		// AbstractComponent abstractComponent = component;
+		/*
+		 * selected.setComponentType(formPanelSelected.getComponentType());
+		 * selected.setObjectListType(formPanelSelected.getObjectListType()); //
+		 * System.out.println("Game maker controller can collect = " +
+		 * formPanelSelected.getObjectListType());
+		 * selected.setHeight(formPanelSelected.getHeight());
+		 * selected.setWidth(formPanelSelected.getWidth());
+		 * selected.setVelX(formPanelSelected.getVelX());
+		 * selected.setVelY(formPanelSelected.getVelY());
+		 * selected.setCanCollect(formPanelSelected.getCanCollect());
+		 */
+		// switch (componentType) {
+		// case BALL: {
+		// abstractComponent = new Ball(selectedComponent);
+		// break;
+		// }
+		// case BRICK: {
+		// // System.out.println( selected.getObjectListType() + " Brick set as
+		// // collectible");
+		// abstractComponent = new Brick(selectedComponent);
+		// break;
+		// }
+		// case PADDLE: {
+		// abstractComponent = new Paddle(selectedComponent);
+		// break;
+		// }
+		// case FIRE: {
+		// abstractComponent = new Fire(selectedComponent);
+		// break;
+		// }
+		// case BACKGROUND: {
+		// // windowFrame.createSetBackgroundButton();
+		// }
+		//
+		// default:
+		// System.out.println("Error: Invalid Component");
+		// }
 
-//			if (component.getObjectProperties().getObjectListType() == ObjectListType.COLLECTIBLE) {
-//				// set behavior to the object to visibility
-//				System.out.println("visisbility");
-//
-//				Visibility visibility = new Visibility(selectedComponent);
-//				// component.setActionBehavior(visibility);
-//			}
-//
-//			if (component.getObjectProperties().getObjectListType() == ObjectListType.EVENT
-//					|| component.getObjectProperties().getObjectListType() == ObjectListType.ACTION) {
-//				// set behavior to move
-//
-//				Move move = new Move(selectedComponent);
-//				// component.setActionBehavior(move);
-//			}
+		// if (component.getObjectProperties().getObjectListType() ==
+		// ObjectListType.COLLECTIBLE) {
+		// // set behavior to the object to visibility
+		// System.out.println("visisbility");
+		//
+		// Visibility visibility = new Visibility(selectedComponent);
+		// // component.setActionBehavior(visibility);
+		// }
+		//
+		// if (component.getObjectProperties().getObjectListType() ==
+		// ObjectListType.EVENT
+		// || component.getObjectProperties().getObjectListType() ==
+		// ObjectListType.ACTION) {
+		// // set behavior to move
+		//
+		// Move move = new Move(selectedComponent);
+		// // component.setActionBehavior(move);
+		// }
 
-//			System.out.println(" comp typ  " + component.getObjectProperties().getObjectListType());
-			windowFrame.getGamePanel().addComponent(component);
-			windowFrame.draw(null);
-		}
+		// System.out.println(" comp typ " +
+		// component.getObjectProperties().getObjectListType());
+		windowFrame.getGamePanel().addComponent(component);
+		windowFrame.draw(null);
+
 	}
 
 	@Override
@@ -358,14 +391,14 @@ public class GameMakerController implements ActionListener, MouseListener {
 		// TODO Auto-generated method stub
 
 	}
-	
-	public List<Command> getComponentListForKeys(int key){
-		if(keyActionMap.containsKey(key)) {
+
+	public List<Command> getComponentListForKeys(int key) {
+		if (keyActionMap.containsKey(key)) {
 			return keyActionMap.get(key);
 		}
 		return null;
 	}
-	
+
 	public AbstractComponent getComponent() {
 		return component;
 	}
@@ -413,11 +446,11 @@ public class GameMakerController implements ActionListener, MouseListener {
 	public void setKeyActionMap(HashMap<Integer, List<Command>> keyActionMap) {
 		this.keyActionMap = keyActionMap;
 	}
-	
+
 	public void setGamePlayController(GamePlayController gamePlayController) {
 		this.gamePlayController = gamePlayController;
 	}
-	
+
 	public GamePlayController getGamePlayController() {
 		return this.gamePlayController;
 	}
