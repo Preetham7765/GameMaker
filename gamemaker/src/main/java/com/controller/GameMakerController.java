@@ -94,9 +94,10 @@ public class GameMakerController implements ActionListener, MouseListener {
 			}
 		}
 
-		if(formData.getTimeActionArray() != null) {
-			timeComponents.add(component);
-			//			 System.out.println("Added "+ component.getComponentName() + " to time array");
+		else if(formData.getTimeActionArray() != null) {
+			 timeComponents.add(component);
+//			 System.out.println("Added "+ component.getComponentName() + " to time array");
+
 		}
 
 	}
@@ -183,9 +184,15 @@ public class GameMakerController implements ActionListener, MouseListener {
 			if (!fileName.isEmpty()) {
 				FileOutputStream fileOut = new FileOutputStream(fileName);
 				ObjectOutputStream out = new ObjectOutputStream(fileOut);
-
 				windowFrame.save(out);
 				// out.writeObject(commandQueue);
+				
+				out.writeObject(allComponents);// remove this if you need to remove all components in future
+				out.writeObject(timeComponents);
+				out.writeObject(componentIdMap);
+				out.writeObject(colliders);
+				out.writeObject(keyActionMap);
+				
 				out.close();
 				fileOut.close();
 			}
@@ -195,7 +202,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 	}
 
-	public void load() {
+	public void load() throws ClassNotFoundException {
 		// pause();
 		// commandQueue.clear();
 		try {
@@ -210,6 +217,14 @@ public class GameMakerController implements ActionListener, MouseListener {
 				// Deque<Command> loadCmdQueue = (Deque<Command>) in.readObject();
 				// commandQueue.addAll(loadCmdQueue);
 				// initCommands();
+				
+//				.writeObject(allComponents);// remove this if you need to remove all components in future
+				allComponents = (ArrayList<AbstractComponent>)in.readObject();
+				timeComponents = (ArrayList<AbstractComponent>)in.readObject();
+				componentIdMap = (HashMap<String,AbstractComponent>)in.readObject();
+				colliders = (ArrayList<Collider>)in.readObject();
+				keyActionMap = (HashMap<Integer, List<Command>>)in.readObject();
+				
 				in.close();
 				fileIn.close();
 			}
@@ -240,7 +255,12 @@ public class GameMakerController implements ActionListener, MouseListener {
 		}
 
 		else if (componentType.equals(ComponentType.LOAD)) {
-			load();
+			try {
+				load();
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
 		else if (componentType.equals(ComponentType.ELEMENT)) {

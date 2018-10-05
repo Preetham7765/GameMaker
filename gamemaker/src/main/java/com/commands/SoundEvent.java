@@ -10,6 +10,7 @@ import javax.sound.sampled.Clip;
 
 public class SoundEvent implements Command{
 	
+	private static final long serialVersionUID = 6016040911690654749L;
 	private String filePath;
 	private Clip clip;
 	

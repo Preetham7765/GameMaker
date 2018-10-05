@@ -4,7 +4,8 @@ package com.commands;
 
 public class ScoreCommand implements Command {
 
-//	private ScoreBoard scoreBoard;
+	private static final long serialVersionUID = -8955725810338038703L;
+	//	private ScoreBoard scoreBoard;
 	protected int oldScore; 
 	
 	public int getOldScore() {

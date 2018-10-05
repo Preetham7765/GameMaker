@@ -4,6 +4,10 @@ import com.infrastructure.AbstractComponent;
 
 public class ExplodeCommand implements Command{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1805728381304220674L;
 	private AbstractComponent component;
 	
 	public ExplodeCommand(AbstractComponent component) {
