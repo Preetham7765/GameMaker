@@ -57,4 +57,9 @@ public interface Constants {
 
 	public final static String COLOR = "Color";
 	public final static String BACKGOUND = "Background";
+	public final static String MOVEMENT = "Movement";
+	public final static String IMAGE = "Image";
+	
+	public final static String COLOR_SEL = "Select Color";
+	public final static String IMAGE_SEL = "Browse Image";
 }

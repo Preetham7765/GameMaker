@@ -26,6 +26,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
 import com.infrastructure.Constants;
@@ -66,6 +67,7 @@ public class ObjectPropertiesPanel extends JPanel {
 	private	JComboBox spaceCombo;
 
 	private ButtonGroup radioGroup;
+	private ButtonGroup radioGroup2;
 
 	Object[] keyActions = { Constants.SELECT_KEY, Constants.MOVE_LEFT, Constants.MOVE_RIGHT, Constants.MOVE_UP,
 			Constants.MOVE_DOWN, Constants.EXPLODE , Constants.FIRE};
@@ -74,6 +76,14 @@ public class ObjectPropertiesPanel extends JPanel {
 	private JButton color;
 	private JButton background;
 	private JLabel backgroundLocation;
+
+	private JLabel bg;
+	private JLabel movement;
+	
+	private JRadioButton addColor;
+	private JRadioButton addImage;
+	
+	File selectedFile =null;
 
 	private void createFormElements() {
 
@@ -89,9 +99,12 @@ public class ObjectPropertiesPanel extends JPanel {
 		elementTypes=new JComboBox(elements);
 		colorPanel=new JPanel();
 		colorPanel.setPreferredSize(new Dimension(20,20));
-		color=new JButton(Constants.COLOR);
-		background=new JButton(Constants.BACKGOUND);
+		color=new JButton(Constants.COLOR_SEL);
+		background=new JButton(Constants.IMAGE_SEL);
 		backgroundLocation=new JLabel(formData.getBackgroundLocation());
+		bg=new JLabel(Constants.BACKGOUND);
+		movement=new JLabel(Constants.MOVEMENT);
+		
 
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 		colorPanel.setBorder(blackline);
@@ -116,6 +129,10 @@ public class ObjectPropertiesPanel extends JPanel {
 		spaceCombo = new JComboBox(keyActions);
 
 		radioGroup = new ButtonGroup();
+		radioGroup2 = new ButtonGroup();
+		
+		addColor = new JRadioButton(Constants.COLOR);
+		addImage = new JRadioButton(Constants.IMAGE);		
 	}
 
 	public ObjectPropertiesPanel() {
@@ -191,76 +208,85 @@ public class ObjectPropertiesPanel extends JPanel {
 		c.gridx = 0;
 		c.gridy = 3;
 		properties.add(collectible,c);
-
+		
 		c.gridx = 0;
 		c.gridy = 4;
+		c.gridwidth = 4;
+		Border blackline = BorderFactory.createLineBorder(Color.black);
+		movement.setHorizontalAlignment(SwingConstants.CENTER);
+		movement.setBorder(blackline);	
+		properties.add(movement,c);
+		
+		c.gridx = 0;
+		c.gridy = 5;
+		c.gridwidth = 1;
 		properties.add(keyDependent,c);
 
 		c.gridx = 3;
-		c.gridy = 4;
+		c.gridy = 5;
 		properties.add(timeDependent,c);
 
 		radioGroup.add(keyDependent);
 		radioGroup.add(timeDependent);
 
 		c.gridx = 0;
-		c.gridy = 5;
+		c.gridy = 6;
 		properties.add(left,c);
 
 		c.gridx = 1;
-		c.gridy = 5;
+		c.gridy = 6;
 		properties.add(leftCombo,c);
 
 		c.gridx = 0;
-		c.gridy = 6;
+		c.gridy = 7;
 		properties.add(right,c);
 
 		c.gridx = 1;
-		c.gridy = 6;
+		c.gridy = 7;
 		properties.add(rightCombo,c);
 
 		c.gridx = 0;
-		c.gridy = 7;
+		c.gridy = 8;
 		properties.add(up,c);
 
 		c.gridx = 1;
-		c.gridy = 7;
+		c.gridy = 8;
 		properties.add(upCombo,c);
 
 		c.gridx = 0;
-		c.gridy = 8;
+		c.gridy = 9;
 		properties.add(down,c);
 
 		c.gridx = 1;
-		c.gridy = 8;
+		c.gridy = 9;
 		properties.add(downCombo,c);
 
 		c.gridx = 0;
-		c.gridy = 9;
+		c.gridy = 10;
 		properties.add(space,c);
 
 		c.gridx = 1;
-		c.gridy = 9;
+		c.gridy = 10;
 		properties.add(spaceCombo,c);
 
 		c.gridx = 3;
-		c.gridy = 5;
+		c.gridy = 6;
 		properties.add(leftMove,c);
 
 		c.gridx = 3;
-		c.gridy = 6;
+		c.gridy = 7;
 		properties.add(rightMove,c);
 
 		c.gridx = 3;
-		c.gridy = 7;
+		c.gridy = 8;
 		properties.add(upMove,c);
 
 		c.gridx = 3;
-		c.gridy = 8;
+		c.gridy = 9;
 		properties.add(downMove,c);
 
 		c.gridx = 3;
-		c.gridy = 9;
+		c.gridy = 10;
 		properties.add(freeMove,c);
 
 		disableKeyElements();
@@ -300,7 +326,21 @@ public class ObjectPropertiesPanel extends JPanel {
 		});
 
 		c.gridx = 0;
-		c.gridy = 10;
+		c.gridy = 11;
+		c.gridwidth = 4;
+		//Border blackline = BorderFactory.createLineBorder(Color.black);
+		bg.setHorizontalAlignment(SwingConstants.CENTER);
+		bg.setBorder(blackline);	
+		properties.add(bg,c);
+
+		c.gridx = 0;
+		c.gridy = 12;
+		c.gridwidth = 1;
+		disableColor();
+		properties.add(addColor,c);
+		
+		c.gridx = 1;
+		c.gridy = 12;
 		properties.add(color,c);
 
 		color.addActionListener(new ActionListener() {
@@ -316,17 +356,48 @@ public class ObjectPropertiesPanel extends JPanel {
 			}
 		});
 
-		c.gridx = 1;
-		c.gridy = 10;
+		c.gridx = 2;
+		c.gridy = 12;
 		properties.add(colorPanel,c);
 
 		c.gridx = 0;
-		c.gridy = 11;
+		c.gridy = 13;
+		disableImage();
+		properties.add(addImage,c);
+		
+		radioGroup2.add(addColor);
+		radioGroup2.add(addImage);
+		
+		addColor.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(addColor.isSelected())
+				{
+					enableColor();
+					disableImage();
+				}
+				
+			}
+		});
+		
+		addImage.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				disableColor();
+				enableImage();
+				
+			}
+		});
+		
+		c.gridx = 1;
+		c.gridy = 13;
 		properties.add(background,c);
 
-		c.gridx = 1;
-		c.gridy = 11;
-		c.gridwidth = 4;
+		c.gridx = 2;
+		c.gridy = 13;
+		c.gridwidth = 3;
 		properties.add(backgroundLocation,c);
 
 		background.addActionListener(new ActionListener() {
@@ -339,8 +410,8 @@ public class ObjectPropertiesPanel extends JPanel {
 				int result = fileChooser.showOpenDialog(background);
 				if (result == JFileChooser.APPROVE_OPTION) 
 				{
-					File selectedFile = fileChooser.getSelectedFile();
-					backgroundLocation.setText(selectedFile.getPath());
+					selectedFile = fileChooser.getSelectedFile();
+					backgroundLocation.setText(selectedFile.getName());
 				}
 			}
 		});
@@ -362,6 +433,30 @@ public class ObjectPropertiesPanel extends JPanel {
 
 		this.add(addPropertiesPanel(), c);		
 
+	}
+	
+	public void enableColor()
+	{
+		color.setEnabled(true);
+		colorPanel.setEnabled(true);
+	}
+	
+	public void disableColor()
+	{
+		color.setEnabled(false);
+		colorPanel.setEnabled(false);
+	}
+	
+	public void enableImage()
+	{
+		background.setEnabled(true);
+		backgroundLocation.setEnabled(true);
+	}
+	
+	public void disableImage()
+	{
+		background.setEnabled(false);
+		backgroundLocation.setEnabled(false);
 	}
 
 	public void disableKeyElements()
@@ -446,7 +541,8 @@ public class ObjectPropertiesPanel extends JPanel {
 			formData.setKeyActionMap(keyActionMap);
 			formData.setTimeActionArray(timeActionArray);
 			formData.setColor(colorPanel.getBackground());
-			formData.setBackgroundLocation(backgroundLocation.getText());
+			if(selectedFile!=null && selectedFile.getPath()!=null && !"".equalsIgnoreCase(selectedFile.getPath()))
+				formData.setBackgroundLocation(selectedFile.getPath());
 		}
 		return formData;
 	}
