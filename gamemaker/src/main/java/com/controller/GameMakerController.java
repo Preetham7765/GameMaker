@@ -68,6 +68,10 @@ public class GameMakerController implements ActionListener, MouseListener {
 		componentIdMap = new HashMap<>();
 		this.gameTimer = gameTimer;
 		this.collision = new Collision();
+		initBounds("TOP WALL", 0, 1, Constants.GAME_PANEL_WIDTH, 2);
+		initBounds("LEFT WALL", 1, 0, 2, Constants.GAME_PANEL_HEIGHT);
+		initBounds("BOTTOM WALL", 0, Constants.GAME_PANEL_HEIGHT-2, Constants.GAME_PANEL_WIDTH, 2);
+		initBounds("RIGHT WALL", Constants.GAME_PANEL_WIDTH-2, 0, 2, Constants.GAME_PANEL_HEIGHT);
 	}
 
 	//Helper method to segregate components based on their movement type, actions and controls 
@@ -91,7 +95,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 		
 		if(formData.getTimeActionArray() != null) {
 			 timeComponents.add(component);
-			 System.out.println("Added "+component.getComponentName() + " to time array");
+//			 System.out.println("Added "+ component.getComponentName() + " to time array");
 		}
 		
 	}
@@ -101,7 +105,24 @@ public class GameMakerController implements ActionListener, MouseListener {
 		AbstractComponent primaryComponent = componentIdMap.get(colliderData.getPrimaryElement());
 		AbstractComponent secondaryComponent = componentIdMap.get(colliderData.getSecondaryElement());
 		Collider collider = new Collider(primaryComponent, secondaryComponent, colliderData.getPrimaryAct(), colliderData.getSecondaryAct(),collision);
+		System.out.println("Collider add with name: "+ primaryComponent.getComponentName() + " and "+ colliderData.getSecondaryElement() );
 		colliders.add(collider);
+	}
+	
+	public void initBounds(String name, int x, int y, int width, int height) {
+		ObjectProperties objectProperties = new ObjectProperties();
+		AbstractComponent component = new AbstractComponent(objectProperties);
+		component.setX(x);
+		component.setY(y);
+		component.setWidth(width);
+		component.setHeight(height);
+		component.setVisbility(true);
+		component.setColor(Color.BLACK);
+		component.setDrawable(new DrawRectColor());
+		component.setComponentName(name);
+		componentIdMap.put(name, component);
+		windowFrame.getGamePanel().addComponent(component);
+		windowFrame.draw(null);
 	}
 	
 	//Helper method to make command for component based on movement type
