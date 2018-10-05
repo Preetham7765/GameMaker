@@ -4,6 +4,7 @@ import com.infrastructure.AbstractComponent;
 
 public class MoveLeftCommand implements Command{
 	
+	private static final long serialVersionUID = 7442203211517097152L;
 	private AbstractComponent abstractComponent;
 	
 	public MoveLeftCommand(AbstractComponent abstractComponent) {

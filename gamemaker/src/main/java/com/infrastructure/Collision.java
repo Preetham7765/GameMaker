@@ -4,8 +4,13 @@ import java.awt.Rectangle;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.RectangularShape;
+import java.io.Serializable;
 
-public class Collision {
+public class Collision implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6L;
 	private AbstractComponent primaryComponent;
 	private AbstractComponent secondaryComponent;
 	private String primaryCompAction;
@@ -18,7 +23,7 @@ public class Collision {
 	public boolean checkIntersectionBetweenElements(AbstractComponent component1, AbstractComponent component2) {
 
 		RectangularShape shape1 = getDims(component1);
-		RectangularShape shape2 = getDims(component2);		
+		RectangularShape shape2 = getDims(component2);
 		 
 		Area areaA = new Area(shape1);
 		areaA.intersect(new Area(shape2));
@@ -154,8 +159,6 @@ public class Collision {
 		public void setElement(AbstractComponent component) {
 			this.component = component;
 		}
-		
-		
 		
 	}
 	
