@@ -26,6 +26,7 @@ public class CollisionFormPanel extends JPanel{
 	private JComboBox secondaryAction;
 	
 	private JButton addSound;
+	private JButton addCollision;
 	 
 	private int result;
 	
@@ -53,6 +54,7 @@ public class CollisionFormPanel extends JPanel{
 		secondaryAction = new JComboBox(data);
 		
 		addSound = new JButton("Add Sound");
+		addCollision = new JButton("Add Sound");
 	}
 	
 	/*private void addElements() {
@@ -104,6 +106,10 @@ public class CollisionFormPanel extends JPanel{
 		c.gridx = 0;
 		c.gridy = 4;
 		collision.add(addSound,c);
+		
+		c.gridx = 2;
+		c.gridy = 4;
+		collision.add(addCollision,c);
 		
 		return collision;
 	}
