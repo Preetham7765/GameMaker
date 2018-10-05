@@ -42,6 +42,7 @@ public class ObjectPropertiesPanel extends JPanel {
 	private JTextField widthField;
 	private JTextField heightField;
 	private JCheckBox collectible;
+	private JCheckBox rotateable;
 	private JRadioButton keyDependent;
 	private JRadioButton timeDependent;
 	private JComboBox elementTypes;
@@ -93,6 +94,7 @@ public class ObjectPropertiesPanel extends JPanel {
 		widthField = new JTextField(Integer.toString(formData.getWidth()), 7);
 		heightField = new JTextField(Integer.toString(formData.getHeight()), 7);
 		collectible = new JCheckBox(Constants.COLLECTIBLE);
+		rotateable = new JCheckBox(Constants.ROTATEABLE);
 		keyDependent = new JRadioButton(Constants.KEY_DEPENDENT);
 		timeDependent = new JRadioButton(Constants.TIME_DEPENDENT);		
 		Object[] elements=ElementType.values();
@@ -208,6 +210,10 @@ public class ObjectPropertiesPanel extends JPanel {
 		c.gridx = 0;
 		c.gridy = 3;
 		properties.add(collectible,c);
+		
+		c.gridx = 1;
+		c.gridy = 3;
+		properties.add(rotateable,c);
 		
 		c.gridx = 0;
 		c.gridy = 4;
@@ -541,6 +547,7 @@ public class ObjectPropertiesPanel extends JPanel {
 			formData.setKeyActionMap(keyActionMap);
 			formData.setTimeActionArray(timeActionArray);
 			formData.setColor(colorPanel.getBackground());
+			formData.setRotateable(rotateable.isSelected());
 			if(selectedFile!=null && selectedFile.getPath()!=null && !"".equalsIgnoreCase(selectedFile.getPath()))
 				formData.setBackgroundLocation(selectedFile.getPath());
 		}

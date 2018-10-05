@@ -67,42 +67,47 @@ public class CollisionFormPanel extends JPanel{
 		collision.setLayout(gridbag);
 		c.insets = new Insets(5, 5, 5, 5);
 		c.anchor = GridBagConstraints.WEST;
-		c.fill = GridBagConstraints.HORIZONTAL;
+		c.fill = GridBagConstraints.NONE;
+		c.gridwidth=1;
 		
 		c.gridx = 0;
 		c.gridy = 0;
 		collision.add(new JLabel(Constants.PRIMARY_ELE),c);
+		
+		c.gridx = 1;
+		c.gridy = 0;
+		collision.add(new JLabel(Constants.SECONDARY_ELE),c);
+		
+		c.gridx = 2;
+		c.gridy = 0;
+		collision.add(new JLabel(Constants.PRIMARY_ACT),c);
+		
+		c.gridx = 3;
+		c.gridy = 0;
+		collision.add(new JLabel(Constants.SECONDARY_ACT),c);
+		
+		c.gridx = 4;
+		c.gridy = 0;
+		collision.add(new JLabel(Constants.SOUND),c);
 		
 		c.gridx = 0;
 		c.gridy = 1;
 		collision.add(primaryElement,c);
 		
 		c.gridx = 1;
-		c.gridy = 0;
-		collision.add(new JLabel(Constants.SECONDARY_ELE),c);
-		
-		c.gridx = 1;
 		c.gridy = 1;
 		collision.add(secondaryElement,c);
 		
-		c.gridx = 0;
-		c.gridy = 2;
-		collision.add(new JLabel(Constants.PRIMARY_ACT),c);
-		
-		c.gridx = 0;
-		c.gridy = 3;
+		c.gridx = 2;
+		c.gridy = 1;
 		collision.add(primaryAction,c);
 		
-		c.gridx = 1;
-		c.gridy = 2;
-		collision.add(new JLabel(Constants.SECONDARY_ACT),c);
-		
-		c.gridx = 1;
-		c.gridy = 3;
+		c.gridx = 3;
+		c.gridy = 1;
 		collision.add(secondaryAction,c);
 		
-		c.gridx = 0;
-		c.gridy = 4;
+		c.gridx = 4;
+		c.gridy = 1;
 		collision.add(addSound,c);
 		
 		return collision;

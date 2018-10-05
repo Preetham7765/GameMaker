@@ -16,6 +16,7 @@ public class FormView {
 	private int width;
 	private int height;
 	private boolean collectible;
+	private boolean rotateable;
 	private int actionType;
 	private Color color;
 	private String backgroundLocation;
@@ -109,6 +110,14 @@ public class FormView {
 
 	public void setCollectible(boolean collectible) {
 		this.collectible = collectible;
+	}
+
+	public boolean isRotateable() {
+		return rotateable;
+	}
+
+	public void setRotateable(boolean rotateable) {
+		this.rotateable = rotateable;
 	}
 
 	public int getActionType() {
