@@ -55,4 +55,6 @@ public interface Constants {
 	public final static String PRIMARY_ACT = "Primary Action";
 	public final static String SECONDARY_ACT = "Secondary Action";
 
+	public final static String COLOR = "Color";
+	public final static String BACKGOUND = "Background";
 }

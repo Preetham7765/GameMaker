@@ -1,7 +1,5 @@
 package com.controller;
 
-import java.awt.Graphics;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -12,7 +10,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,25 +17,21 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import com.commands.ChangeVelXCommand;
 import com.commands.ChangeVelYCommand;
-import com.commands.ClockTickCommand;
 import com.commands.CollectedCommand;
 import com.commands.Command;
 import com.commands.MoveCommand;
 import com.components.Clock;
 import com.infrastructure.AbstractComponent;
 import com.infrastructure.Collision;
-import com.infrastructure.ComponentType;
+import com.infrastructure.Constants;
+import com.infrastructure.Direction;
 import com.infrastructure.ObjectListType;
 import com.infrastructure.Observer;
 import com.observable.GameTimer;
 import com.view.WindowFrame;
-
-import com.infrastructure.Constants;
-import com.infrastructure.Direction;
 
 public class GamePlayController implements Observer, KeyListener, ActionListener {
 	

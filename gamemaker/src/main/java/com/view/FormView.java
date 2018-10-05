@@ -1,5 +1,6 @@
 package com.view;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -16,8 +17,26 @@ public class FormView {
 	private int height;
 	private boolean collectible;
 	private int actionType;
+	private Color color;
+	private String backgroundLocation;
 	private Map<Integer, String> keyActionMap;
 	private ArrayList<String> timeActionArray;
+
+	public String getBackgroundLocation() {
+		return backgroundLocation;
+	}
+
+	public void setBackgroundLocation(String backgroundLocation) {
+		this.backgroundLocation = backgroundLocation;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
 
 	public String getElementName() {
 		return elementName;
