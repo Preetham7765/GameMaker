@@ -127,6 +127,12 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 //			this.windowFrame.draw(null);
 //		}
 		
+		/*
+		 * 
+		 * get all colliders.
+		 * -> for every collider execute   
+		 */
+		
 		for(Collider collider : gameMakerController.getColliders()) {
 			collider.execute();
 		}

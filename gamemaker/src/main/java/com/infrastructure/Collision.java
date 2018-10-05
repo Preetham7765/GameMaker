@@ -18,7 +18,7 @@ public class Collision {
 	public boolean checkIntersectionBetweenElements(AbstractComponent component1, AbstractComponent component2) {
 
 		RectangularShape shape1 = getDims(component1);
-		RectangularShape shape2 = getDims(component2);		
+		RectangularShape shape2 = getDims(component2);
 		 
 		Area areaA = new Area(shape1);
 		areaA.intersect(new Area(shape2));
@@ -154,8 +154,6 @@ public class Collision {
 		public void setElement(AbstractComponent component) {
 			this.component = component;
 		}
-		
-		
 		
 	}
 	
