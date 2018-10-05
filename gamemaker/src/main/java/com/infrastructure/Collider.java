@@ -36,7 +36,7 @@ public class Collider implements Serializable {
 	public void execute() {
 		
 		if(primaryComponent.getVisibility() && secondaryComponent.getVisibility() && collision.checkIntersectionBetweenElements(primaryComponent, secondaryComponent)) {
-		
+			System.out.println("Inside component check");
 			if(eventList != null) {
 				for(Command eventCommand : eventList) {
 					eventCommand.execute();
@@ -62,6 +62,7 @@ public class Collider implements Serializable {
 			return new MoveCommand(component);
 		}
 		if(collisionType == CollisionType.EXPLODE) {
+			System.out.println("explod return");
 			return new ExplodeCommand(component);
 		}
 		return new NullCommand(component);
