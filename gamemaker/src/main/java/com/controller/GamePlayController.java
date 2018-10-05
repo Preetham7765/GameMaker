@@ -25,6 +25,7 @@ import com.commands.Command;
 import com.commands.MoveCommand;
 import com.components.Clock;
 import com.infrastructure.AbstractComponent;
+import com.infrastructure.Collider;
 import com.infrastructure.Collision;
 import com.infrastructure.Constants;
 import com.infrastructure.Direction;
@@ -118,6 +119,10 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 //			checkCollisionDetection();
 //			this.windowFrame.draw(null);
 //		}
+		
+		for(Collider collider : gameMakerController.getColliders()) {
+			collider.execute();
+		}
 		
 		List<AbstractComponent> timeComponents = gameMakerController.getTimeComponents();
 		for(AbstractComponent component : timeComponents) {
@@ -265,6 +270,14 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 //		else if (e.getKeyCode() == KeyEvent.VK_DOWN) //  && canMoveRight(this, Constants.getPaddleRightOffset())
 //			commandQueue.addFirst(new MoveCommand(this.gameCharacter, 0, -curY));
 		
+		int key = e.getKeyCode();
+		
+		List<Command> keyComponents = gameMakerController.getComponentListForKeys(key);
+		if(keyComponents != null) {
+			for(Command command : keyComponents) {
+				command.execute();
+			}
+		}
 	}
 
 	@Override

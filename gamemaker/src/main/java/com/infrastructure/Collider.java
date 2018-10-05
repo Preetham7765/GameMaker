@@ -33,30 +33,27 @@ public class Collider implements Serializable {
 		//this.eventList = eventList;
 	}
 	
-	public void execute(GamePlayController controller) {
+	public void execute() {
 		
 		if(primaryComponent.getVisibility() && secondaryComponent.getVisibility() && collision.checkIntersectionBetweenElements(primaryComponent, secondaryComponent)) {
-		
+			System.out.println("Inside component check");
 			if(eventList != null) {
 				for(Command eventCommand : eventList) {
 					eventCommand.execute();
-					controller.addCommand(eventCommand);
 				}
 			}
 			Command command = getCollisionAction(primaryComponent, primaryCollisionType);
 			if (primaryCollisionType == CollisionType.BOUNCE) {
-				Direction direction = collision.checkIntersectionBetweenComponents(primaryComponent, secondaryComponent);
-				changeDirectionsOnCollision(primaryComponent, direction,controller);
+				Direction direction = collision.checkCollisionBetweenAbstractComponents(primaryComponent, secondaryComponent);
+				changeDirectionsOnCollision(primaryComponent, direction);
 			}
 			command.execute();
-			controller.addCommand(command);
 			command = getCollisionAction(secondaryComponent, secondaryCollisionType);
 			if (secondaryCollisionType == CollisionType.BOUNCE) {
-				Direction direction = collision.checkIntersectionBetweenComponents(secondaryComponent, primaryComponent);
-				changeDirectionsOnCollision(secondaryComponent, direction,controller);
+				Direction direction = collision.checkCollisionBetweenAbstractComponents(secondaryComponent, primaryComponent);
+				changeDirectionsOnCollision(secondaryComponent, direction);
 			}
 			command.execute();
-			controller.addCommand(command);
 		}
 	}
 	
@@ -65,12 +62,13 @@ public class Collider implements Serializable {
 			return new MoveCommand(component);
 		}
 		if(collisionType == CollisionType.EXPLODE) {
+			System.out.println("explod return");
 			return new ExplodeCommand(component);
 		}
 		return new NullCommand(component);
 	}
 	
-	public void changeDirectionsOnCollision(AbstractComponent component, Direction direction,GamePlayController controller) {
+	public void changeDirectionsOnCollision(AbstractComponent component, Direction direction) {
 		Command changeVelXCommand = null;
 		Command changeVelYCommand = null;
 		if(direction == Direction.X) {
@@ -85,11 +83,9 @@ public class Collider implements Serializable {
 		}
 		if(changeVelXCommand != null) {
 			changeVelXCommand.execute();
-			controller.addCommand(changeVelXCommand);
 		}
 		if(changeVelYCommand != null) {
 			changeVelYCommand.execute();
-			controller.addCommand(changeVelYCommand);
 		}
 	}
 
