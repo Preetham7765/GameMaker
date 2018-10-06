@@ -11,8 +11,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -145,6 +147,15 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 			}
 			new MoveCommand(component).execute();
 		}
+		
+		for(AbstractComponent component : gameMakerController.getAllComponents()) {
+			if(component.getVisibility()) {
+				break;
+			}
+			gameOver();
+			
+		}
+		
 		windowFrame.draw(null);
 	}
 	

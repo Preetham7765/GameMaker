@@ -17,7 +17,8 @@ public class AbstractComponent implements IComposite, Serializable {
 	private String image;
 	private Color color;
 	private ComponentShape shape;
-	
+	private boolean isCollectible;
+
 	public AbstractComponent() {}
 	
 	public String getComponentName() {
@@ -187,6 +188,13 @@ public class AbstractComponent implements IComposite, Serializable {
 		
 	}
 
+	public boolean isCollectible() {
+		return isCollectible;
+	}
+
+	public void setCollectible(boolean isCollectible) {
+		this.isCollectible = isCollectible;
+	}
 	/*@Override
 	public void save(ObjectOutputStream op) {
 		try {

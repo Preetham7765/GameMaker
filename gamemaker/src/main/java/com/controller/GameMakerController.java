@@ -60,6 +60,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 	private GameTimer gameTimer;
 	private GamePlayController gamePlayController;
 	private Collision collision;
+	private int score;
 
 	public GameMakerController(WindowFrame windowFrame, GameTimer gameTimer) {
 		this.windowFrame = windowFrame;
@@ -81,7 +82,6 @@ public class GameMakerController implements ActionListener, MouseListener {
 	public void addComponent() {
 		component = createAbstractComponent();
 		componentIdMap.put(component.getComponentName(), component);
-		allComponents.add(component);	//Might not be needed as we have it in componentIdMap through which we can iterate
 		if(formData.getKeyActionMap() != null) {
 			for(Map.Entry<Integer, String> entry : formData.getKeyActionMap().entrySet()) {
 				Integer key = entry.getKey();
@@ -94,6 +94,11 @@ public class GameMakerController implements ActionListener, MouseListener {
 					keyActionMap.get(key).add(command);
 				}
 			}
+		}
+		
+		if(formData.isCollectible()) {
+			component.setCollectible(true);
+			allComponents.add(component);
 		}
 		
 		if(formData.isRotateable())
@@ -447,5 +452,13 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 	public void setRotatorList(ArrayList<AbstractComponent> rotatorList) {
 		this.rotatorList = rotatorList;
+	}
+	
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
 	}
 }
