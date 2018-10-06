@@ -10,13 +10,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 
+import com.commands.ChangeDirection;
 import com.commands.Command;
 import com.commands.MoveDownCommand;
 import com.commands.MoveLeftCommand;
@@ -27,6 +30,7 @@ import com.infrastructure.Collider;
 import com.infrastructure.Collision;
 import com.infrastructure.ComponentType;
 import com.infrastructure.Constants;
+import com.infrastructure.Direction;
 import com.infrastructure.ElementType;
 import com.infrastructure.ObjectProperties;
 import com.observable.GameTimer;
@@ -46,7 +50,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 	private ColliderData colliderData;
 	private AbstractComponent component;
 	private ArrayList<AbstractComponent> allComponents;
-	private ArrayList<AbstractComponent> timeComponents;
+	private List<AbstractComponent> timeComponents;
 	private ArrayList<Collider> colliders;
 	private ArrayList<String> componentNames;
 	private HashMap<String, AbstractComponent> componentIdMap;
@@ -55,17 +59,21 @@ public class GameMakerController implements ActionListener, MouseListener {
 	private GamePlayController gamePlayController;
 	private Collision collision;
 	private int idCounter;
+	private Direction[] directions = {Direction.LEFT, Direction.RIGHT, Direction.UP, Direction.DOWN};
+	private Random random;
 
 	public GameMakerController(WindowFrame windowFrame, GameTimer gameTimer) {
 		this.windowFrame = windowFrame;
 		this.allComponents = new ArrayList<>();
 		this.timeComponents = new ArrayList<>();
+//		this.timeComponents = new HashMap<>();
 		this.colliders = new ArrayList<>();
 		this.keyActionMap = new HashMap<>();
 		this.componentIdMap = new HashMap<>();
 		this.componentNames = new ArrayList<>();
 		this.gameTimer = gameTimer;
 		this.collision = new Collision();
+		this.random = new Random();
 		initBounds("TOP WALL", 0, 1, Constants.GAME_PANEL_WIDTH, 2);
 		initBounds("LEFT WALL", 1, 0, 2, Constants.GAME_PANEL_HEIGHT);
 		initBounds("BOTTOM WALL", 0, Constants.GAME_PANEL_HEIGHT - 2, Constants.GAME_PANEL_WIDTH, 2);
@@ -94,7 +102,16 @@ public class GameMakerController implements ActionListener, MouseListener {
 				}
 			}
 		} else if (formData.getTimeActionArray() != null) {
+			
+			if(formData.getTimeActionArray().contains(Constants.FREE)) {
+				component.setDirection(Direction.FREE);
+				timeComponents.add(component);
+				return;
+			}
+			System.out.println("Calling change direction");
+			new ChangeDirection(component).execute();
 			timeComponents.add(component);
+			System.out.println(Arrays.toString(formData.getTimeActionArray().toArray()));
 			// System.out.println("Added "+ component.getComponentName() + " to time
 			// array");
 		}
@@ -217,7 +234,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 				// .writeObject(allComponents);// remove this if you need to remove all
 				// components in future
 				allComponents = (ArrayList<AbstractComponent>) in.readObject();
-				timeComponents = (ArrayList<AbstractComponent>) in.readObject();
+				timeComponents = (List<AbstractComponent>) in.readObject();
 				componentIdMap = (HashMap<String, AbstractComponent>) in.readObject();
 				colliders = (ArrayList<Collider>) in.readObject();
 				keyActionMap = (HashMap<Integer, List<Command>>) in.readObject();
@@ -415,11 +432,11 @@ public class GameMakerController implements ActionListener, MouseListener {
 		this.allComponents = allComponents;
 	}
 
-	public ArrayList<AbstractComponent> getTimeComponents() {
+	public List<AbstractComponent> getTimeComponents() {
 		return timeComponents;
 	}
 
-	public void setTimeComponents(ArrayList<AbstractComponent> timeComponents) {
+	public void setTimeComponents(List<AbstractComponent> timeComponents) {
 		this.timeComponents = timeComponents;
 	}
 

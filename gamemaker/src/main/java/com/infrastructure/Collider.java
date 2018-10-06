@@ -2,7 +2,9 @@ package com.infrastructure;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Random;
 
+import com.commands.ChangeDirection;
 import com.commands.ChangeVelXCommand;
 import com.commands.ChangeVelYCommand;
 import com.commands.Command;
@@ -20,6 +22,8 @@ public class Collider implements Serializable {
 	private CollisionType secondaryCollisionType;
 	private Collision collision;
 	private ArrayList<Command> eventList;
+	private Random random;
+	
 
 	public Collider(AbstractComponent primaryComponent, AbstractComponent secondaryComponent,
 			CollisionType primaryCollisionType, CollisionType secondaryCollisionType, Collision collision) {
@@ -28,6 +32,7 @@ public class Collider implements Serializable {
 		this.primaryCollisionType = primaryCollisionType;
 		this.secondaryCollisionType = secondaryCollisionType;
 		this.collision = collision;
+		random = new Random();
 		// this.eventList = eventList;
 	}
 
@@ -46,6 +51,9 @@ public class Collider implements Serializable {
 				Direction direction = collision.checkCollisionBetweenAbstractComponents(primaryComponent,
 						secondaryComponent);
 				changeDirectionsOnCollision(primaryComponent, direction);
+			}
+			else if(primaryCollisionType == CollisionType.CHANGE_DIRECTION) {
+				changeDirectionRandom(primaryComponent);
 			}
 			command.execute();
 			command = getCollisionAction(secondaryComponent, secondaryCollisionType);
@@ -88,6 +96,11 @@ public class Collider implements Serializable {
 		if (changeVelYCommand != null) {
 			changeVelYCommand.execute();
 		}
+	}
+	
+	private void changeDirectionRandom(AbstractComponent component) {
+		new ChangeDirection(component).execute();
+		
 	}
 
 	public AbstractComponent getPrimaryComponent() {

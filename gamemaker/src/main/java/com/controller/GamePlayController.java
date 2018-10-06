@@ -1,7 +1,5 @@
 package com.controller;
 
-import java.awt.Graphics;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -12,19 +10,25 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
+import com.commands.ChangeDirection;
+import com.commands.ChangeDirectionToDown;
+import com.commands.ChangeDirectionToLeft;
+import com.commands.ChangeDirectionToRight;
+import com.commands.ChangeDirectionToUp;
 import com.commands.ChangeVelXCommand;
 import com.commands.ChangeVelYCommand;
-import com.commands.ClockTickCommand;
 import com.commands.CollectedCommand;
 import com.commands.Command;
 import com.commands.MoveCommand;
@@ -32,14 +36,12 @@ import com.components.Clock;
 import com.infrastructure.AbstractComponent;
 import com.infrastructure.Collider;
 import com.infrastructure.Collision;
-import com.infrastructure.ComponentType;
+import com.infrastructure.Constants;
+import com.infrastructure.Direction;
 import com.infrastructure.ObjectListType;
 import com.infrastructure.Observer;
 import com.observable.GameTimer;
 import com.view.WindowFrame;
-
-import com.infrastructure.Constants;
-import com.infrastructure.Direction;
 
 public class GamePlayController implements Observer, KeyListener, ActionListener {
 	
@@ -55,6 +57,8 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 	private boolean gameOver = false;
 	private GameMakerController gameMakerController;
 	private Collision collisionChecker;
+	private Random random;
+	private Direction[] directions = {Direction.LEFT, Direction.RIGHT, Direction.UP, Direction.DOWN};
 	
 	public GamePlayController(WindowFrame windowFrame, GameTimer gameTimer, GameMakerController gameMakerController) {
 		this.gameTimer = gameTimer;
@@ -62,6 +66,7 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 		this.windowFrame = windowFrame;
 		this.gameMakerController = gameMakerController;
 		collisionChecker = new Collision();
+		random = new Random();
 //		loadComponentList();
 		
 //		this.windowFrame.getMainPanel().addKeyListener(this);
@@ -140,14 +145,18 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 		List<AbstractComponent> timeComponents = gameMakerController.getTimeComponents();
 		for(AbstractComponent component : timeComponents) {
 			Direction changedDirection = collisionChecker.checkCollisionBetweenAbstractComponentAndBounds(component);
-			if(changedDirection == Direction.X || changedDirection == Direction.BOTH) {
+			if(component.getDirection() == Direction.FREE && changedDirection == Direction.X || changedDirection == Direction.BOTH) {
 				new ChangeVelXCommand(component).execute();
 			}
-			if(changedDirection == Direction.Y || changedDirection == Direction.BOTH) {
+			else if(component.getDirection() == Direction.FREE && changedDirection == Direction.Y || changedDirection == Direction.BOTH) {
 				new ChangeVelYCommand(component).execute();
+			}
+			else if (changedDirection != Direction.NONE) {	
+				new ChangeDirection(component).execute();
 			}
 			new MoveCommand(component).execute();
 		}
+		
 		windowFrame.draw(null);
 	}
 	

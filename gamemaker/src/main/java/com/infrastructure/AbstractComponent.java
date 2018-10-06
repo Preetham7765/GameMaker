@@ -17,6 +17,7 @@ public class AbstractComponent implements IComposite, Serializable {
 	private BufferedImage image;
 	private Color color;
 	private ComponentShape shape;
+	private Direction direction;
 	
 	public AbstractComponent() {}
 	
@@ -167,6 +168,14 @@ public class AbstractComponent implements IComposite, Serializable {
 
 	public int getRightCoordinates() {
 		return getX() + getWidth();
+	}
+
+	public Direction getDirection() {
+		return direction;
+	}
+
+	public void setDirection(Direction direction) {
+		this.direction = direction;
 	}
 
 	@Override
