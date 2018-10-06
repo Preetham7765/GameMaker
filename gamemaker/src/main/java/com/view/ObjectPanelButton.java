@@ -10,17 +10,17 @@ import com.infrastructure.ComponentType;
 public class ObjectPanelButton extends JButton {
 
 	//	private String name;
-	//	private WindowFrame windowFrame
+	private WindowFrame windowFrame;
 
 	public ObjectPanelButton(ComponentType componentType, Color yellow) {
 
 		setVisible(true);
 		setAlignmentX(CENTER_ALIGNMENT);
 		setAlignmentY(CENTER_ALIGNMENT);
-		
+
 		if (componentType == ComponentType.ELEMENT)
 			setText("ELEMENT");
-		
+
 		if (componentType == ComponentType.COLLISION)
 			setText("Collision");
 
@@ -38,7 +38,7 @@ public class ObjectPanelButton extends JButton {
 
 		if (componentType == ComponentType.FIRE)
 			setText("Fire");
-*/
+		 */
 		// added by cbrahme
 		if (componentType == ComponentType.STATIC)
 			setText("Static Component");
@@ -58,7 +58,7 @@ public class ObjectPanelButton extends JButton {
 	}
 
 	public void setBackground() {
-		//		String imagePath = windowFrame.getFormPanel().fileExplorer();
-		//		windowFrame.getGamePanel().setImage(imagePath);
+		//windowFrame.getGamePanel().setImgPath(imgPath);
+		//windowFrame.getGamePanel().setImage(imagePath);
 	}
 }
