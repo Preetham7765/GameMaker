@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import com.behavior.Move;
 import com.behavior.Visibility;
+import com.commands.BulletCommand;
 import com.commands.Command;
 import com.commands.MoveDownCommand;
 import com.commands.MoveLeftCommand;
@@ -53,6 +54,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 	private AbstractComponent component;
 	private ArrayList<AbstractComponent> allComponents;
 	private	ArrayList<AbstractComponent> timeComponents;
+	private ArrayList<AbstractComponent> bullets;
 	private ArrayList<Collider> colliders;
 	private HashMap<String, AbstractComponent> componentIdMap;
 	private HashMap<Integer, List<Command>> keyActionMap;
@@ -80,12 +82,14 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 	//Helper method to segregate components based on their movement type, actions and controls 
 	public void addComponent() {
+		Command command;
 		component = createAbstractComponent();
 		componentIdMap.put(component.getComponentName(), component);
 		if(formData.getKeyActionMap() != null) {
 			for(Map.Entry<Integer, String> entry : formData.getKeyActionMap().entrySet()) {
+				System.out.println("entry : "+entry);
 				Integer key = entry.getKey();
-				Command command = createCommand(entry.getValue(), component);
+				command = createCommand(entry.getValue(), component);
 				if(keyActionMap.containsKey(key)) {
 					keyActionMap.get(key).add(command);
 				}
@@ -108,9 +112,24 @@ public class GameMakerController implements ActionListener, MouseListener {
 			if(!formData.isRotateable())
 				timeComponents.add(component);
 		}
-
+		System.out.println("keyActionMap :: "+keyActionMap.toString());
 	}
 
+	public AbstractComponent addBullets(AbstractComponent component) {
+		System.out.println("addBullets ------");
+		AbstractComponent bulletComponent = new AbstractComponent();
+		bulletComponent.setX(component.getX()+(component.getWidth()/2));
+		bulletComponent.setY(component.getY());
+		bulletComponent.setVelX(0);//change later
+		bulletComponent.setVelY(10);//change later
+		bulletComponent.setColor(Color.BLACK);
+		bulletComponent.setWidth(2);//change later
+		bulletComponent.setHeight(7);//change later
+		bulletComponent.setComponentName("Bullet");//change later
+		bulletComponent.setVisbility(true);
+		bulletComponent.setDrawable(new DrawRectColor());
+		return bulletComponent;
+	}
 	//Creates collider type by getting ColliderData from View
 	public void addCollider() {
 		AbstractComponent primaryComponent = componentIdMap.get(colliderData.getPrimaryElement());
@@ -138,6 +157,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 	//Helper method to make command for component based on movement type
 	public Command createCommand(String commandType, AbstractComponent component) {
+		System.out.println("createCommand --> commandType -- "+commandType);
 		switch(commandType) {
 		case Constants.MOVE_DOWN:
 			return new MoveDownCommand(component);
@@ -147,6 +167,8 @@ public class GameMakerController implements ActionListener, MouseListener {
 			return new MoveLeftCommand(component);
 		case Constants.MOVE_RIGHT:
 			return new MoveRightCommand(component);
+		case Constants.FIRE:
+			return new BulletCommand(component);
 		default:
 			return null;
 		}
@@ -195,13 +217,13 @@ public class GameMakerController implements ActionListener, MouseListener {
 				ObjectOutputStream out = new ObjectOutputStream(fileOut);
 				windowFrame.save(out);
 				// out.writeObject(commandQueue);
-				
+
 				out.writeObject(allComponents);// remove this if you need to remove all components in future
 				out.writeObject(timeComponents);
 				out.writeObject(componentIdMap);
 				out.writeObject(colliders);
 				out.writeObject(keyActionMap);
-				
+
 				out.close();
 				fileOut.close();
 			}
@@ -226,14 +248,14 @@ public class GameMakerController implements ActionListener, MouseListener {
 				// Deque<Command> loadCmdQueue = (Deque<Command>) in.readObject();
 				// commandQueue.addAll(loadCmdQueue);
 				// initCommands();
-				
-//				.writeObject(allComponents);// remove this if you need to remove all components in future
+
+				//				.writeObject(allComponents);// remove this if you need to remove all components in future
 				allComponents = (ArrayList<AbstractComponent>)in.readObject();
 				timeComponents = (ArrayList<AbstractComponent>)in.readObject();
 				componentIdMap = (HashMap<String,AbstractComponent>)in.readObject();
 				colliders = (ArrayList<Collider>)in.readObject();
 				keyActionMap = (HashMap<Integer, List<Command>>)in.readObject();
-				
+
 				in.close();
 				fileIn.close();
 			}
