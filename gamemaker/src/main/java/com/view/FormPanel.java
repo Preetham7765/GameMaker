@@ -5,9 +5,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -16,8 +17,6 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -35,19 +34,18 @@ public class FormPanel extends JPanel implements IComposite, IAddActionListener 
 	private List<ObjectPanelButton> objectButtons; // should we need it lets see?
 	private String backgroundPath;
 	private GameMakerController controller;
-	// private WindowFrame windowFrame;
+	GridBagConstraints c = new GridBagConstraints();
 
 	public FormPanel(WindowFrame window) {
 		super();
-		// this.windowFrame = window;
 		this.objectButtons = new ArrayList<>();
 		this.active = new ObjectProperties();
-		setBorder(BorderFactory.createLineBorder(Color.red));
+		setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setMaximumSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
 		setMinimumSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
 		setPreferredSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
-		setBackground(Color.BLACK);
+		//setBackground( new Color(0xFFFFCC));
 	}
 
 	public ObjectProperties getActive() {
@@ -58,87 +56,102 @@ public class FormPanel extends JPanel implements IComposite, IAddActionListener 
 		this.active = selected;
 	}
 
-	public void createButtons() {
+	public void initializeFormPanel() {
 
-		JLabel backgroundText = new JLabel(Constants.CHOOSE_BG);
-		backgroundText.setForeground(Color.red);
-		backgroundText.setFont(new Font("Helvetica", Font.BOLD, 20));
-		this.add(Box.createRigidArea(new Dimension(10, 50)));
-		this.add(backgroundText);
-		createSetBackgroundButton();
-
-		JLabel select_object = new JLabel("Select any object to add to GamePanel");
-		select_object.setForeground(Color.red);
-		select_object.setFont(new Font("Helvetica", Font.BOLD, 15));
-		this.add(Box.createRigidArea(new Dimension(10, 50)));
-		this.add(select_object);
+		GridBagLayout gridbag = new GridBagLayout();
+		this.setLayout(gridbag);
+		c.insets = new Insets(20, 20, 20, 20);
+		c.anchor = GridBagConstraints.NORTHWEST;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		//c.weightx=1;
 		
-		this.add(createButton());
-		this.add(createCollisionButton());
+		c.gridx=0;
+		c.gridy=0;
+		c.gridwidth=2;
+		JLabel designGame=new JLabel("DESIGNER");
+		designGame.setFont(new Font("Helvetica", Font.BOLD,20));
+		designGame.setHorizontalAlignment(JLabel.CENTER);
+		this.add(designGame, c);
+		
+		c.gridwidth=1;
+		c.gridx=0;
+		c.gridy=1;
+		this.add(createSetBackgroundButton(), c);
 
-		JLabel gameFunc = new JLabel("Game Options:");
-		gameFunc.setForeground(Color.red);
-		gameFunc.setFont(new Font("Helvetica", Font.BOLD, 15));
-		this.add(Box.createRigidArea(new Dimension(10, 50)));
-		this.add(gameFunc);
-		createLoadButton();
-		createSaveButton();
-		createPlayButton();
+		c.gridx=0;
+		c.gridy=2;
+		this.add(createButton(),c);
+		
+		c.gridx=1;
+		c.gridy=2;
+		this.add(createCollisionButton(),c);
+		
+		c.gridx=0;
+		c.gridy=3;
+		c.gridwidth=2;
+		JLabel playGame=new JLabel("PLAYER");
+		playGame.setFont(new Font("Helvetica", Font.BOLD,20));
+		playGame.setHorizontalAlignment(JLabel.CENTER);
+		this.add(playGame, c);
+
+		c.gridx=0;
+		c.gridy=4;
+		c.gridwidth=1;
+		this.add(createLoadButton(),c);
+		
+		c.gridx=0;
+		c.gridy=5;
+		this.add(createSaveButton(),c);
+		
+		c.gridx=0;
+		c.gridy=6;
+		this.add(createPlayButton(),c);
 	}
 
 	public ObjectProperties getActiveObjectProperties() {
 		return active;
 	}
 
-	public void createSetBackgroundButton() {
-		ObjectPanelButton setBackgroundButton = new ObjectPanelButton(ComponentType.BACKGROUND, null);
-		this.add(Box.createRigidArea(new Dimension(30, 30)));
-		this.add(setBackgroundButton);
-		/*setBackgroundButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				backgroundPath=fileExplorer();
-			}
-		});*/
-		this.objectButtons.add(setBackgroundButton);
-	}
-	
-	private ObjectPanelButton createButton() {
-		ObjectPanelButton button = new ObjectPanelButton(ComponentType.ELEMENT, Color.YELLOW);
-		this.add(Box.createRigidArea(new Dimension(30, 30)));
+	public ObjectPanelButton createSetBackgroundButton() {
+		ObjectPanelButton button = new ObjectPanelButton(ComponentType.BACKGROUND, null);
 		this.objectButtons.add(button);
+		button.setPreferredSize(new Dimension(150, 50));
 		return button;
 	}
-	
+
+	private ObjectPanelButton createButton() {
+		ObjectPanelButton button = new ObjectPanelButton(ComponentType.ELEMENT, Color.YELLOW);
+		this.objectButtons.add(button);
+		button.setPreferredSize(new Dimension(150, 50));
+		return button;
+	}
+
 	private ObjectPanelButton createCollisionButton() {
 		ObjectPanelButton collisionButton = new ObjectPanelButton(ComponentType.COLLISION, Color.YELLOW);
-		
-		this.add(Box.createRigidArea(new Dimension(30, 30)));
 		this.objectButtons.add(collisionButton);
+		collisionButton.setPreferredSize(new Dimension(150, 50));
 		return collisionButton;
 	}
 
-	private void createLoadButton() {
+	private ObjectPanelButton createLoadButton() {
 		ObjectPanelButton loadButton = new ObjectPanelButton(ComponentType.LOAD, Color.CYAN);
-		this.add(Box.createRigidArea(new Dimension(30, 30)));
-		this.add(loadButton);
+		loadButton.setPreferredSize(new Dimension(150, 50));
 		this.objectButtons.add(loadButton);
+		return loadButton;
 	}
 
-	private void createSaveButton() {
+	private ObjectPanelButton createSaveButton() {
 		ObjectPanelButton saveButton = new ObjectPanelButton(ComponentType.SAVE, Color.BLUE);
-		this.add(Box.createRigidArea(new Dimension(30, 30)));
-		this.add(saveButton);
+		saveButton.setPreferredSize(new Dimension(150, 50));
 		this.objectButtons.add(saveButton);
+		return saveButton;
 	}
 
-	private void createPlayButton() {
+	private ObjectPanelButton createPlayButton() {
 		ObjectPanelButton playButton = new ObjectPanelButton(ComponentType.PLAY, Color.GREEN);
-		this.add(Box.createRigidArea(new Dimension(30, 30)));
-		this.add(playButton);
+		playButton.setPreferredSize(new Dimension(150, 50));
 		this.objectButtons.add(playButton);
+		return playButton;
 	}
 
 	public void draw(Graphics g) {

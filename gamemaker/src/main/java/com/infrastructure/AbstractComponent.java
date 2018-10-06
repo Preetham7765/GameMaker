@@ -169,7 +169,7 @@ public class AbstractComponent implements IComposite, Serializable {
 
 	@Override
 	public void draw(Graphics g) {
-		if (getVisibility())
+		if (getVisibility() && drawable!=null)
 			drawable.draw(this, g);
 	}
 

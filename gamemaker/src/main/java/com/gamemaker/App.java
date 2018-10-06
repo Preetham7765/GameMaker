@@ -29,7 +29,7 @@ public class App {
 		GameTimer gameTimer = new GameTimer();
 		gameTimer.startTimer();
 
-		String[] gameChoice = { "Game Maker", "Game Play" };
+		/*String[] gameChoice = { "Game Maker", "Game Play" };
 
 		JPanel game = new JPanel();
 		game.setLayout(new BoxLayout(game, BoxLayout.Y_AXIS));
@@ -39,9 +39,10 @@ public class App {
 		int result = JOptionPane.showConfirmDialog(null, game, "Choose Now:", JOptionPane.OK_CANCEL_OPTION);
 
 		// get the selected item:
-		String selectType = (String) typeList.getSelectedItem();
+		String selectType = (String) typeList.getSelectedItem();*/
 
-		if (selectType == "Game Maker" && result == JOptionPane.OK_OPTION) {
+		//if (selectType == "Game Maker" && result == JOptionPane.OK_OPTION)
+		{
 
 			WindowFrame windowFrame = new WindowFrame();
 
@@ -68,7 +69,7 @@ public class App {
 			System.out.println("Game maker controller created");
 
 			gmController.setGamePlayController(gpController);
-			formPanel.createButtons();
+			formPanel.initializeFormPanel();
 
 			gamePanel.addControllerListener(gmController);
 
@@ -77,7 +78,7 @@ public class App {
 			windowFrame.setVisible(true);
 			windowFrame.pack();
 
-		} else if (selectType == "Game Play" && result == JOptionPane.OK_OPTION) {
+		} /*else if (selectType == "Game Play" && result == JOptionPane.OK_OPTION) {
 			ObjectProperties objectProperties = new ObjectProperties();
 			objectProperties.setX(20);
 			objectProperties.setY(50);
@@ -106,7 +107,7 @@ public class App {
 			windowFrame.setGamePanel(gamePanel);
 			windowFrame.setVisible(true);
 			windowFrame.pack();
-		}
+		}*/
 	}
 
 	public static void main(String[] args) {
