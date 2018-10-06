@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,11 +16,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import java.util.Map.Entry;
 import java.util.Random;
 
 import com.commands.BulletCommand;
 import com.commands.ChangeDirection;
+
+
+import javax.swing.JFileChooser;
+
 import com.commands.Command;
 import com.commands.MoveDownCommand;
 import com.commands.MoveLeftCommand;
@@ -267,11 +273,6 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 				windowFrame.load(in);
 
-				// commandQueue.clear();
-				// Deque<Command> loadCmdQueue = (Deque<Command>) in.readObject();
-				// commandQueue.addAll(loadCmdQueue);
-				// initCommands();
-				//.writeObject(allComponents);// remove this if you need to remove all components in future
 				allComponents = (ArrayList<AbstractComponent>)in.readObject();
 				timeComponents = (ArrayList<AbstractComponent>)in.readObject();
 				componentIdMap = (HashMap<String,AbstractComponent>)in.readObject();
@@ -308,7 +309,11 @@ public class GameMakerController implements ActionListener, MouseListener {
 		ComponentType componentType = ComponentType.valueOf(e.getActionCommand().toUpperCase());
 
 		if (componentType.equals(ComponentType.BACKGROUND)) {
-			// setBackground();
+			
+			//JPanel panel = new JPanel(new ImageIcon("images/background.png").getImage());
+			windowFrame.getGamePanel().setImgPath(fileExplorer());
+			windowFrame.getGamePanel().repaint();
+			//windowFrame.getContentPane()	
 		}
 
 		else if (componentType.equals(ComponentType.PLAY)) {
@@ -446,6 +451,22 @@ public class GameMakerController implements ActionListener, MouseListener {
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
+
+	}
+	
+	public String fileExplorer() {
+		JFileChooser chooser = new JFileChooser();
+		chooser.setCurrentDirectory(new File("."));
+		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		int returnVal = chooser.showOpenDialog(windowFrame.getGamePanel());
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			File file = chooser.getSelectedFile();
+			String path = file.getAbsolutePath();
+			System.out.println("path = " + path);
+			return path;
+		}
+		System.out.println("Return NULL");
+		return null;
 
 	}
 

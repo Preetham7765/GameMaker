@@ -21,8 +21,9 @@ import com.view.StaticPanel;
 import com.view.WindowFrame;
 
 public class App {
-	
+
 	public static Logger logger = LogManager.getLogger(App.class);
+
 	public static void makeGame() {
 
 		GameTimer gameTimer = new GameTimer();
@@ -49,32 +50,28 @@ public class App {
 			windowFrame.addComponent(mainPanel);
 
 			FormPanel formPanel = new FormPanel(windowFrame);
-			// windowFrame.setFormPanel(formPanel);
 			System.out.println("FormPanel is created");
 			mainPanel.addComponent(formPanel);
+
+			System.out.println(formPanel.getBackground());
 
 			System.out.println("Form panel added to mainpanel");
 
 			GamePanel gamePanel = new GamePanel();
 			mainPanel.addComponent(gamePanel);
-			 windowFrame.setGamePanel(gamePanel);
+			windowFrame.setGamePanel(gamePanel);
 
 			GameMakerController gmController = new GameMakerController(windowFrame, gameTimer);
 			System.out.println("Game maker controller created");
 
-			// windowFrame.setFormPanel(formPanel);
-//			windowFrame.setGamePanel(gamePanel);
-
 			GamePlayController gpController = new GamePlayController(windowFrame, gameTimer, gmController);
 			System.out.println("Game maker controller created");
-
-			// gamePanel.addControllerListener(gmController);
 
 			gmController.setGamePlayController(gpController);
 			formPanel.createButtons();
 
 			gamePanel.addControllerListener(gmController);
-			
+
 			windowFrame.addActionListener(gmController);
 
 			windowFrame.setVisible(true);
@@ -92,9 +89,12 @@ public class App {
 
 			StaticPanel staticPanel = new StaticPanel(windowFrame);
 			Clock clock = new Clock(objectProperties);
-			try {
+			try 
+			{
 				staticPanel.addComponent(clock);
-			} catch (Exception e) {
+			} 
+			catch (Exception e)
+			{
 				e.printStackTrace();
 			}
 
@@ -103,27 +103,16 @@ public class App {
 			GamePanel gamePanel = new GamePanel();
 			mainPanel.addComponent(gamePanel);
 			mainPanel.addComponent(staticPanel);
-//			windowFrame.setMainPanel(mainPanel);
 			windowFrame.setGamePanel(gamePanel);
-			// windowFrame.setStaticPanel(staticPanel);
-//			GamePlayController gpController = new GamePlayController(windowFrame, gameTimer);
-//			mainPanel.addKeyListener(gpController);
-//			mainPanel.requestFocus();
-//			staticPanel.createButtons(gpController);
-
 			windowFrame.setVisible(true);
 			windowFrame.pack();
-
 		}
-
 	}
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
-
 			public void run() {
 				makeGame();
-				//
 			}
 		});
 	}
