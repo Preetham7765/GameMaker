@@ -18,6 +18,7 @@ public class AbstractComponent implements IComposite, Serializable {
 	private Color color;
 	private ComponentShape shape;
 	private boolean isCollectible;
+	private boolean canFire;
 
 	public AbstractComponent() {}
 	
@@ -158,6 +159,14 @@ public class AbstractComponent implements IComposite, Serializable {
 		this.objectProperties.setVisibility(visibility);
 	}
 	
+	public boolean isCanFire() {
+		return canFire;
+	}
+
+	public void setCanFire(boolean canFire) {
+		this.canFire = canFire;
+	}
+
 	public Rectangle getBounds() {
 		return new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 	}	
