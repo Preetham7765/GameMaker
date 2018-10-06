@@ -174,7 +174,7 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 	}
 
 	private void checkCollisionDetection() {
-		if (!gameOver) { 
+		if (!gameOver) {  
 	//		Collision with action objects
 			System.out.println("Size of collectible list = " + collectibleList.size());
 			System.out.println("Size of actionList list = " + actionList.size());

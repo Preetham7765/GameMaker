@@ -1,11 +1,11 @@
 package com.controller;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,24 +15,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import com.behavior.Move;
-import com.behavior.Visibility;
+
+import javax.swing.JFileChooser;
+
 import com.commands.Command;
 import com.commands.MoveDownCommand;
 import com.commands.MoveLeftCommand;
 import com.commands.MoveRightCommand;
 import com.commands.MoveUpCommand;
-import com.components.Ball;
-import com.components.Brick;
-import com.components.Fire;
-import com.components.Paddle;
 import com.infrastructure.AbstractComponent;
 import com.infrastructure.Collider;
 import com.infrastructure.Collision;
 import com.infrastructure.ComponentType;
 import com.infrastructure.Constants;
 import com.infrastructure.ElementType;
-import com.infrastructure.ObjectListType;
 import com.infrastructure.ObjectProperties;
 import com.observable.GameTimer;
 import com.strategy.DrawOvalColor;
@@ -212,11 +208,6 @@ public class GameMakerController implements ActionListener, MouseListener {
 				ObjectInputStream in = new ObjectInputStream(fileIn);
 
 				windowFrame.load(in);
-
-				// commandQueue.clear();
-				// Deque<Command> loadCmdQueue = (Deque<Command>) in.readObject();
-				// commandQueue.addAll(loadCmdQueue);
-				// initCommands();
 				
 //				.writeObject(allComponents);// remove this if you need to remove all components in future
 				allComponents = (ArrayList<AbstractComponent>)in.readObject();
@@ -240,14 +231,17 @@ public class GameMakerController implements ActionListener, MouseListener {
 		ComponentType componentType = ComponentType.valueOf(e.getActionCommand().toUpperCase());
 
 		if (componentType.equals(ComponentType.BACKGROUND)) {
-			// setBackground();
+			
+			//JPanel panel = new JPanel(new ImageIcon("images/background.png").getImage());
+			windowFrame.getGamePanel().setImgPath(fileExplorer());
+			windowFrame.getGamePanel().repaint();
+			//windowFrame.getContentPane()	
 		}
 
 		else if (componentType.equals(ComponentType.PLAY)) {
 			gameTimer.registerObserver(gamePlayController);
 			windowFrame.getGamePanel().addKeyListener(gamePlayController);
 			windowFrame.getGamePanel().requestFocus();
-			//			System.out.println("Gameplayer registered");
 		}
 
 		else if (componentType.equals(ComponentType.SAVE)) {
@@ -278,73 +272,17 @@ public class GameMakerController implements ActionListener, MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 
-		selectedComponent = component.getObjectProperties();
+  System.out.println("hiiiiiiiiiiiiiii");
+  selectedComponent = component.getObjectProperties();
 
 		if (selectedComponent != null) {
-
+			 System.out.println("okkkkkkkkkkkkk");
 			int x = arg0.getX();
 			int y = arg0.getY();
 			selectedComponent.setX(x);
 			selectedComponent.setY(y);
 
-			//			ComponentType componentType = selectedComponent.getComponentType();
-			//			System.out.println(componentType);
-			//			AbstractComponent abstractComponent = component;
-			/*
-			 * selected.setComponentType(formPanelSelected.getComponentType());
-			 * selected.setObjectListType(formPanelSelected.getObjectListType()); //
-			 * System.out.println("Game maker controller can collect = " +
-			 * formPanelSelected.getObjectListType());
-			 * selected.setHeight(formPanelSelected.getHeight());
-			 * selected.setWidth(formPanelSelected.getWidth());
-			 * selected.setVelX(formPanelSelected.getVelX());
-			 * selected.setVelY(formPanelSelected.getVelY());
-			 * selected.setCanCollect(formPanelSelected.getCanCollect());
-			 */
-			//			switch (componentType) {
-			//			case BALL: {
-			//				abstractComponent = new Ball(selectedComponent);
-			//				break;
-			//			}
-			//			case BRICK: {
-			//				// System.out.println( selected.getObjectListType() + " Brick set as
-			//				// collectible");
-			//				abstractComponent = new Brick(selectedComponent);
-			//				break;
-			//			}
-			//			case PADDLE: {
-			//				abstractComponent = new Paddle(selectedComponent);
-			//				break;
-			//			}
-			//			case FIRE: {
-			//				abstractComponent = new Fire(selectedComponent);
-			//				break;
-			//			}
-			//			case BACKGROUND: {
-			//				// windowFrame.createSetBackgroundButton();
-			//			}
-			//
-			//			default:
-			//				System.out.println("Error: Invalid Component");
-			//			}
 
-			//			if (component.getObjectProperties().getObjectListType() == ObjectListType.COLLECTIBLE) {
-			//				// set behavior to the object to visibility
-			//				System.out.println("visisbility");
-			//
-			//				Visibility visibility = new Visibility(selectedComponent);
-			//				// component.setActionBehavior(visibility);
-			//			}
-			//
-			//			if (component.getObjectProperties().getObjectListType() == ObjectListType.EVENT
-			//					|| component.getObjectProperties().getObjectListType() == ObjectListType.ACTION) {
-			//				// set behavior to move
-			//
-			//				Move move = new Move(selectedComponent);
-			//				// component.setActionBehavior(move);
-			//			}
-
-			//			System.out.println(" comp typ  " + component.getObjectProperties().getObjectListType());
 			windowFrame.getGamePanel().addComponent(component);
 			windowFrame.draw(null);
 		}
@@ -371,6 +309,22 @@ public class GameMakerController implements ActionListener, MouseListener {
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
+
+	}
+	
+	public String fileExplorer() {
+		JFileChooser chooser = new JFileChooser();
+		chooser.setCurrentDirectory(new File("."));
+		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		int returnVal = chooser.showOpenDialog(windowFrame.getGamePanel());
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			File file = chooser.getSelectedFile();
+			String path = file.getAbsolutePath();
+			System.out.println("path = " + path);
+			return path;
+		}
+		System.out.println("Return NULL");
+		return null;
 
 	}
 
