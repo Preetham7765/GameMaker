@@ -5,8 +5,6 @@ package com.behavior;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.mockito.Mockito;
-import static org.mockito.Mockito.*;
 
 import com.commands.*;
 import com.infrastructure.*;
