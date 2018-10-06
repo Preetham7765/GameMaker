@@ -11,6 +11,8 @@ import com.commands.Command;
 import com.commands.ExplodeCommand;
 import com.commands.MoveCommand;
 import com.commands.NullCommand;
+import com.commands.ReappearLeftCommand;
+import com.commands.ReappearRightCommand;
 
 //import org.apache.log4j.Logger;
 
@@ -37,15 +39,8 @@ public class Collider implements Serializable {
 	}
 
 	public void execute() {
-
-		if (primaryComponent.getVisibility() && secondaryComponent.getVisibility()
-				&& collision.checkIntersectionBetweenElements(primaryComponent, secondaryComponent)) {
-			System.out.println("Inside component check");
-			if (eventList != null) {
-				for (Command eventCommand : eventList) {
-					eventCommand.execute();
-				}
-			}
+		
+		if(primaryComponent.getVisibility() && secondaryComponent.getVisibility() && collision.checkIntersectionBetweenElements(primaryComponent, secondaryComponent)) {
 			Command command = getCollisionAction(primaryComponent, primaryCollisionType);
 			if (primaryCollisionType == CollisionType.BOUNCE) {
 				Direction direction = collision.checkCollisionBetweenAbstractComponents(primaryComponent,
@@ -74,6 +69,14 @@ public class Collider implements Serializable {
 			System.out.println("explod return");
 			return new ExplodeCommand(component);
 		}
+		if(collisionType == CollisionType.REAPPEAR_LEFT) {
+			System.out.println("Reappear left");
+			return new ReappearLeftCommand(component);
+		}
+		if(collisionType == CollisionType.REAPPEAR_RIGHT) {
+			System.out.println("Reappear Right");
+			return new ReappearRightCommand(component);
+		}	
 		return new NullCommand(component);
 	}
 

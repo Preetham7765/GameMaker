@@ -23,6 +23,7 @@ public interface Constants {
 	public final static int TIMER_COUNT = 25;
 	
 	public final static String COLLECTIBLE = "Collectible";
+	public final static String ROTATEABLE = "Rotateable";
 	public final static String KEY_DEPENDENT = "Move using Keys";
 	public final static String TIME_DEPENDENT = "Move with Time";
 	public final static String ADD_ELEMENT = "Add Element";
@@ -50,9 +51,17 @@ public interface Constants {
 	public final static String FIRE = "Fire";
 	
 	public final static String COLLISION = "Add Collision";
-	public final static String PRIMARY_ELE = "Primary Element";
-	public final static String SECONDARY_ELE = "Secondary Element";
-	public final static String PRIMARY_ACT = "Primary Action";
-	public final static String SECONDARY_ACT = "Secondary Action";
+	public final static String PRIMARY_ELE = "Element One";
+	public final static String SECONDARY_ELE = "Element Two";
+	public final static String PRIMARY_ACT = "Element One Action";
+	public final static String SECONDARY_ACT = "Element Two Action";
+	public final static String SOUND = "Sound";
 
+	public final static String COLOR = "Color";
+	public final static String BACKGOUND = "Background";
+	public final static String MOVEMENT = "Movement";
+	public final static String IMAGE = "Image";
+	
+	public final static String COLOR_SEL = "Select Color";
+	public final static String IMAGE_SEL = "Browse Image";
 }
