@@ -22,10 +22,7 @@
 				<version>2.22.0</version>
 				<configuration>
 					<includes>
-						<!-- <include>CommandsTests.java</include>
-						<include>GameTests.java</include>
-						<include>GameOverTests.java</include>
-						<include>ComponentsTests.java</include> -->
+						<include>**/*Test.java</include>
 					</includes>
 				</configuration>
 			</plugin>

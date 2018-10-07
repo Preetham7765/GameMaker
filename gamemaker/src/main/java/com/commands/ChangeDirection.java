@@ -25,7 +25,6 @@ public class ChangeDirection implements Command{
 		
 		Direction oldDirection = component.getDirection();
 		int index = Arrays.asList(directions).indexOf(oldDirection);
-		System.out.println("index: " + index);
 		while(index == Arrays.asList(directions).indexOf(oldDirection) || index == -1) {
 			index = random.nextInt(directions.length);
 		}	

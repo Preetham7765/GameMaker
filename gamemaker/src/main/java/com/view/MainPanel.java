@@ -12,14 +12,16 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
-import com.infrastructure.AbstractComponent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.infrastructure.IAddActionListener;
 import com.infrastructure.IComposite;
 import com.infrastructure.ObjectProperties;
 
 @SuppressWarnings("serial")
 public class MainPanel extends JPanel implements IComposite, IAddActionListener {
-
+	protected static Logger logger = LogManager.getLogger(MainPanel.class);
 	private ArrayList<IComposite> compositeList;
 
 	public MainPanel() {
@@ -29,6 +31,7 @@ public class MainPanel extends JPanel implements IComposite, IAddActionListener 
 		setLayout(new FlowLayout());
 		setFocusable(true);
 		requestFocusInWindow();
+		logger.debug("MainPanel constructed");
 	}
 
 	public void draw(Graphics g) {
@@ -89,9 +92,9 @@ public class MainPanel extends JPanel implements IComposite, IAddActionListener 
 
 	@Override
 	public void addActionListener(ActionListener listener) {
-		for(IComposite composite : compositeList) {
-			if(composite instanceof IAddActionListener)
-				((IAddActionListener)composite).addActionListener(listener);
-		}	
+		for (IComposite composite : compositeList) {
+			if (composite instanceof IAddActionListener)
+				((IAddActionListener) composite).addActionListener(listener);
+		}
 	}
 }

@@ -1,26 +1,31 @@
 
 package com.view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.controller.GameMakerController;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.infrastructure.ComponentType;
 import com.infrastructure.Constants;
 import com.infrastructure.IAddActionListener;
@@ -30,10 +35,11 @@ import com.infrastructure.ObjectProperties;
 @SuppressWarnings("serial")
 public class FormPanel extends JPanel implements IComposite, IAddActionListener {
 
+	protected static Logger logger = LogManager.getLogger(FormPanel.class);
+
 	private ObjectProperties active;
 	private List<ObjectPanelButton> objectButtons; // should we need it lets see?
 	private String backgroundPath;
-	private GameMakerController controller;
 	GridBagConstraints c = new GridBagConstraints();
 
 	public FormPanel(WindowFrame window) {
@@ -45,7 +51,8 @@ public class FormPanel extends JPanel implements IComposite, IAddActionListener 
 		setMaximumSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
 		setMinimumSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
 		setPreferredSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
-		//setBackground( new Color(0xFFFFCC));
+
+		logger.debug("FormPanel constructed");
 	}
 
 	public ObjectProperties getActive() {
@@ -56,56 +63,83 @@ public class FormPanel extends JPanel implements IComposite, IAddActionListener 
 		this.active = selected;
 	}
 
+	public BufferedImage resize(BufferedImage img, int width, int height) {
+		Image tmp = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2d = resized.createGraphics();
+		g2d.drawImage(tmp, 0, 0, null);
+		g2d.dispose();
+
+		return resized;
+	}
+
 	public void initializeFormPanel() {
 
+		this.setLayout(new BorderLayout());
+
+		JPanel designer = new JPanel();
+
 		GridBagLayout gridbag = new GridBagLayout();
-		this.setLayout(gridbag);
-		c.insets = new Insets(20, 20, 20, 20);
+		designer.setLayout(gridbag);
+		c.insets = new Insets(10, 10, 10, 10);
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.fill = GridBagConstraints.HORIZONTAL;
-		//c.weightx=1;
-		
-		c.gridx=0;
-		c.gridy=0;
-		c.gridwidth=2;
-		JLabel designGame=new JLabel("DESIGNER");
-		designGame.setFont(new Font("Helvetica", Font.BOLD,20));
+
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 2;
+		JLabel designGame = new JLabel(Constants.DESIGNER);
+		designGame.setFont(new Font(Constants.HELVETICA, Font.BOLD, 20));
 		designGame.setHorizontalAlignment(JLabel.CENTER);
-		this.add(designGame, c);
-		
-		c.gridwidth=1;
-		c.gridx=0;
-		c.gridy=1;
-		this.add(createSetBackgroundButton(), c);
+		designer.add(designGame, c);
 
-		c.gridx=0;
-		c.gridy=2;
-		this.add(createButton(),c);
-		
-		c.gridx=1;
-		c.gridy=2;
-		this.add(createCollisionButton(),c);
-		
-		c.gridx=0;
-		c.gridy=3;
-		c.gridwidth=2;
-		JLabel playGame=new JLabel("PLAYER");
-		playGame.setFont(new Font("Helvetica", Font.BOLD,20));
+		c.gridwidth = 1;
+		c.gridx = 0;
+		c.gridy = 1;
+		designer.add(createSetBackgroundButton(), c);
+
+		c.gridx = 0;
+		c.gridy = 2;
+		designer.add(createButton(), c);
+
+		c.gridx = 0;
+		c.gridy = 3;
+		designer.add(createCollisionButton(), c);
+
+		this.add(designer, BorderLayout.NORTH);
+
+		JPanel player = new JPanel();
+		player.setLayout(gridbag);
+		c.insets = new Insets(10, 10, 10, 10);
+		c.anchor = GridBagConstraints.NORTHWEST;
+		c.fill = GridBagConstraints.HORIZONTAL;
+
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 2;
+		JLabel playGame = new JLabel(Constants.PLAYER);
+		playGame.setFont(new Font(Constants.HELVETICA, Font.BOLD, 20));
 		playGame.setHorizontalAlignment(JLabel.CENTER);
-		this.add(playGame, c);
+		player.add(playGame, c);
 
-		c.gridx=0;
-		c.gridy=4;
-		c.gridwidth=1;
-		this.add(createLoadButton(),c);
-		
-		c.gridx=0;
-		c.gridy=5;
-		this.add(createSaveButton(),c);
-		
-		c.gridx=0;
-		c.gridy=6;
-		this.add(createPlayButton(),c);
+		c.gridx = 0;
+		c.gridy = 1;
+		c.gridwidth = 1;
+		player.add(createLoadButton(), c);
+
+		c.gridx = 0;
+		c.gridy = 2;
+		player.add(createSaveButton(), c);
+
+		c.gridx = 0;
+		c.gridy = 3;
+		player.add(createPlayButton(), c);
+
+		c.gridx = 0;
+		c.gridy = 4;
+		player.add(createPauseButton(), c);
+
+		this.add(player, BorderLayout.CENTER);
 	}
 
 	public ObjectProperties getActiveObjectProperties() {
@@ -152,6 +186,13 @@ public class FormPanel extends JPanel implements IComposite, IAddActionListener 
 		playButton.setPreferredSize(new Dimension(150, 50));
 		this.objectButtons.add(playButton);
 		return playButton;
+	}
+
+	private ObjectPanelButton createPauseButton() {
+		ObjectPanelButton button = new ObjectPanelButton(ComponentType.PAUSE, Color.GREEN);
+		button.setPreferredSize(new Dimension(150, 50));
+		this.objectButtons.add(button);
+		return button;
 	}
 
 	public void draw(Graphics g) {

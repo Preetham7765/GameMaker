@@ -6,10 +6,14 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.RectangularShape;
 import java.io.Serializable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.controller.GameMakerController;
+
 public class Collision implements Serializable {
-	/**
-	 * 
-	 */
+	
+	protected static Logger logger = LogManager.getLogger(Collision.class);
 	private static final long serialVersionUID = 6L;
 	private AbstractComponent primaryComponent;
 	private AbstractComponent secondaryComponent;

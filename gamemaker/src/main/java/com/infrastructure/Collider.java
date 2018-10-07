@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.commands.ChangeDirection;
 import com.commands.ChangeVelXCommand;
 import com.commands.ChangeVelYCommand;
@@ -14,10 +17,8 @@ import com.commands.NullCommand;
 import com.commands.ReappearLeftCommand;
 import com.commands.ReappearRightCommand;
 
-//import org.apache.log4j.Logger;
-
 public class Collider implements Serializable {
-	// protected static final Logger logger = Logger.getLogger(Collider.class);
+    protected static Logger logger = LogManager.getLogger(Collider.class);
 	private AbstractComponent primaryComponent;
 	private AbstractComponent secondaryComponent;
 	private CollisionType primaryCollisionType;
@@ -41,8 +42,6 @@ public class Collider implements Serializable {
 	public void execute() {
 		
 		if(primaryComponent.getVisibility() && secondaryComponent.getVisibility() && collision.checkIntersectionBetweenElements(primaryComponent, secondaryComponent)) {
-			System.out.println("primary X and primary Y: " + primaryComponent.getX() + " " +  primaryComponent.getY());
-			System.out.println("secondary X and primary Y: " + secondaryComponent.getX() + " " + secondaryComponent.getY());
 			Command command = getCollisionAction(primaryComponent, primaryCollisionType);
 			if (primaryCollisionType == CollisionType.BOUNCE) {
 				Direction direction = collision.checkCollisionBetweenAbstractComponents(primaryComponent,
@@ -72,15 +71,12 @@ public class Collider implements Serializable {
 			return new MoveCommand(component);
 		}
 		if (collisionType == CollisionType.EXPLODE) {
-			System.out.println("explod return");
 			return new ExplodeCommand(component);
 		}
 		if(collisionType == CollisionType.REAPPEAR_LEFT) {
-			System.out.println("Reappear left");
 			return new ReappearLeftCommand(component);
 		}
 		if(collisionType == CollisionType.REAPPEAR_RIGHT) {
-			System.out.println("Reappear Right");
 			return new ReappearRightCommand(component);
 		}	
 		return new NullCommand(component);

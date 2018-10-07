@@ -4,9 +4,13 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.infrastructure.ElementType;
 
 public class FormView {
+	protected static Logger logger = LogManager.getLogger(FormView.class);
 	private ElementType elementType;
 	private String elementName;
 	private int x;
@@ -17,6 +21,7 @@ public class FormView {
 	private int height;
 	private boolean collectible;
 	private boolean rotateable;
+	private boolean fire;
 	private int actionType;
 	private Color color;
 	private String backgroundLocation;
@@ -118,6 +123,14 @@ public class FormView {
 
 	public void setRotateable(boolean rotateable) {
 		this.rotateable = rotateable;
+	}
+
+	public boolean isFire() {
+		return fire;
+	}
+
+	public void setFire(boolean fire) {
+		this.fire = fire;
 	}
 
 	public int getActionType() {
