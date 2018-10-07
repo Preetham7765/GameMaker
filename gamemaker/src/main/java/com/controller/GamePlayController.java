@@ -130,6 +130,7 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 		}
 		
 		if(gameMakerController.getTotalCollectibles() != 0) {
+			collectiblesCollected =0;
 			for (AbstractComponent collectible : gameMakerController.getCollectibles()) {
 				if(!collectible.getVisibility()) {
 					System.out.println("One collectible Down :) :) :) ");
@@ -165,6 +166,7 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 	}
 
 	private void gameOver() {
+		gameTimer.stopTimer();
 		JPanel myPanel = new JPanel();
 		myPanel.add(new JLabel("Game Over"));
 		int result1 = JOptionPane.showConfirmDialog(null, myPanel, 
