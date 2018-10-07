@@ -4,9 +4,13 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.infrastructure.ElementType;
 
 public class FormView {
+	protected static Logger logger = LogManager.getLogger(FormView.class);
 	private ElementType elementType;
 	private String elementName;
 	private int x;

@@ -50,7 +50,7 @@ public interface Constants {
 	public final static String EXPLODE = "Explode";
 	public final static String FIRE = "Fire";
 	
-	public final static String COLLISION = "Add Collision";
+	public final static String ADD_COLLISION = "Add Collision";
 	public final static String PRIMARY_ELE = "Element One";
 	public final static String SECONDARY_ELE = "Element Two";
 	public final static String PRIMARY_ACT = "Element One Action";
@@ -66,4 +66,20 @@ public interface Constants {
 	public final static String IMAGE_SEL = "Browse Image";
 	
 	public final static String CHOOSE_BG = "Choose Game Background :";
+	
+	public final static String DESIGNER = "DESIGNER";
+	public final static String PLAYER = "PLAYER";
+	public final static String HELVETICA = "Helvetica";
+	
+	public final static String OK = "OK";
+	
+	public final static String ELEMENT = "Element";
+	public final static String COLLISION = "Collision";
+	public final static String BACKGROUND = "Background";
+	public final static String SAVE = "Save";
+	public final static String LOAD = "Load";
+	public final static String PLAY = "Play";
+	public final static String PAUSE = "Pause";
+	
+	public final static String CHOOSE_COLOR = "Choose Color";
 }

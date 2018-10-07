@@ -13,6 +13,9 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.components.Clock;
 import com.controller.GamePlayController;
 import com.infrastructure.AbstractComponent;
@@ -23,9 +26,9 @@ import com.infrastructure.ObjectProperties;
 import com.infrastructure.StaticPanelButton; 
 
 public class StaticPanel extends JPanel implements IComposite{
-
+	protected static Logger logger = LogManager.getLogger(StaticPanel.class);
 	private WindowFrame windowFrame;
-	public ObjectProperties selected = new ObjectProperties();
+	private ObjectProperties selected = new ObjectProperties();
 	private ArrayList<AbstractComponent> compositeList;
 	private GamePlayController gamePlayController;
 	
@@ -39,9 +42,7 @@ public class StaticPanel extends JPanel implements IComposite{
 		setMaximumSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
 		setMinimumSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
 		setPreferredSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
-		//setBackground(Color.BLACK);
-		
-		
+		logger.debug("StaticPanel constructed");
 	}
 	
 	public void createButtons(GamePlayController gamePlayController) {
