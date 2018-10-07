@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,7 +55,7 @@ class AbstractComponentTest {
 	}
 
 	@Test
-	void velocityTest() {
+	void velocityTest() {		
 		assertEquals(5, component.getVelX());
 		assertEquals(5, component.getVelY());
 	}
@@ -92,5 +93,11 @@ class AbstractComponentTest {
 	void colorTest() {
 		component.setColor(Color.BLACK);
 		assertEquals(Color.BLACK, component.getColor());
-	}	
+	}
+	
+	void collectibleTest() {
+		component.setCollectible(true);
+		assertEquals(true, component.isCollectible());
+	}
+	
 }
