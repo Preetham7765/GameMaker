@@ -34,13 +34,15 @@ public class Collider implements Serializable {
 		this.primaryCollisionType = primaryCollisionType;
 		this.secondaryCollisionType = secondaryCollisionType;
 		this.collision = collision;
-		random = new Random();
+		random = new Random();	
 		// this.eventList = eventList;
 	}
 
 	public void execute() {
 		
 		if(primaryComponent.getVisibility() && secondaryComponent.getVisibility() && collision.checkIntersectionBetweenElements(primaryComponent, secondaryComponent)) {
+			System.out.println("primary X and primary Y: " + primaryComponent.getX() + " " +  primaryComponent.getY());
+			System.out.println("secondary X and primary Y: " + secondaryComponent.getX() + " " + secondaryComponent.getY());
 			Command command = getCollisionAction(primaryComponent, primaryCollisionType);
 			if (primaryCollisionType == CollisionType.BOUNCE) {
 				Direction direction = collision.checkCollisionBetweenAbstractComponents(primaryComponent,
@@ -48,6 +50,8 @@ public class Collider implements Serializable {
 				changeDirectionsOnCollision(primaryComponent, direction);
 			}
 			else if(primaryCollisionType == CollisionType.CHANGE_DIRECTION) {
+//				primaryComponent.setX(primaryComponent.getX() - primaryComponent.getVelX());
+//				primaryComponent.setY(primaryComponent.getY() - primaryComponent.getVelY());
 				changeDirectionRandom(primaryComponent);
 			}
 			command.execute();
@@ -56,6 +60,10 @@ public class Collider implements Serializable {
 				Direction direction = collision.checkCollisionBetweenAbstractComponents(secondaryComponent,
 						primaryComponent);
 				changeDirectionsOnCollision(secondaryComponent, direction);
+			}
+			else if(secondaryCollisionType == CollisionType.CHANGE_DIRECTION) {
+
+				changeDirectionRandom(secondaryComponent);
 			}
 			command.execute();
 		}

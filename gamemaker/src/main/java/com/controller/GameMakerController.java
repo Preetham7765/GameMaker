@@ -357,68 +357,6 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 		addComponent(x, y);
 
-		// ComponentType componentType = selectedComponent.getComponentType();
-		// System.out.println(componentType);
-		// AbstractComponent abstractComponent = component;
-		/*
-		 * selected.setComponentType(formPanelSelected.getComponentType());
-		 * selected.setObjectListType(formPanelSelected.getObjectListType()); //
-		 * System.out.println("Game maker controller can collect = " +
-		 * formPanelSelected.getObjectListType());
-		 * selected.setHeight(formPanelSelected.getHeight());
-		 * selected.setWidth(formPanelSelected.getWidth());
-		 * selected.setVelX(formPanelSelected.getVelX());
-		 * selected.setVelY(formPanelSelected.getVelY());
-		 * selected.setCanCollect(formPanelSelected.getCanCollect());
-		 */
-		// switch (componentType) {
-		// case BALL: {
-		// abstractComponent = new Ball(selectedComponent);
-		// break;
-		// }
-		// case BRICK: {
-		// // System.out.println( selected.getObjectListType() + " Brick set as
-		// // collectible");
-		// abstractComponent = new Brick(selectedComponent);
-		// break;
-		// }
-		// case PADDLE: {
-		// abstractComponent = new Paddle(selectedComponent);
-		// break;
-		// }
-		// case FIRE: {
-		// abstractComponent = new Fire(selectedComponent);
-		// break;
-		// }
-		// case BACKGROUND: {
-		// // windowFrame.createSetBackgroundButton();
-		// }
-		//
-		// default:
-		// System.out.println("Error: Invalid Component");
-		// }
-
-		// if (component.getObjectProperties().getObjectListType() ==
-		// ObjectListType.COLLECTIBLE) {
-		// // set behavior to the object to visibility
-		// System.out.println("visisbility");
-		//
-		// Visibility visibility = new Visibility(selectedComponent);
-		// // component.setActionBehavior(visibility);
-		// }
-		//
-		// if (component.getObjectProperties().getObjectListType() ==
-		// ObjectListType.EVENT
-		// || component.getObjectProperties().getObjectListType() ==
-		// ObjectListType.ACTION) {
-		// // set behavior to move
-		//
-		// Move move = new Move(selectedComponent);
-		// // component.setActionBehavior(move);
-		// }
-
-		// System.out.println(" comp typ " +
-		// component.getObjectProperties().getObjectListType());
 		windowFrame.getGamePanel().addComponent(component);
 		windowFrame.draw(null);
 

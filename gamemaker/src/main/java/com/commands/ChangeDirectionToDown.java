@@ -19,11 +19,11 @@ public class ChangeDirectionToDown implements Command{
 		int velX = abstractComponent.getVelX();
 		int velY = abstractComponent.getVelY();
 		
-		if(velX != 0) {
-			abstractComponent.setVelY(Math.abs(velX));
+		if(velY != 0) {
+			abstractComponent.setVelY(Math.abs(velY));
 		}
 		else {
-			abstractComponent.setVelY(Math.abs(velY));
+			abstractComponent.setVelY(Math.abs(velX));
 		}
 		abstractComponent.setVelX(0);
 	}
