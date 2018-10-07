@@ -3,37 +3,42 @@ package com.components;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import com.infrastructure.AbstractComponent;
+import com.infrastructure.ComponentType;
 import com.infrastructure.Direction;
 import com.infrastructure.Drawable;
 import com.infrastructure.ObjectProperties;
 import com.strategy.DrawRectColor;
 
 class AbstractComponentTest {
-
+	
+	@Mock
 	ObjectProperties objectProperties;
+	
+	@InjectMocks
 	AbstractComponent component;
 
 	@BeforeEach
 	void setup() {
-		objectProperties = new ObjectProperties();
-		component = Mockito.mock(AbstractComponent.class);
+		MockitoAnnotations.initMocks(this);
+		when(objectProperties.getX()).thenReturn(100);
+		when(objectProperties.getY()).thenReturn(100);
+		when(objectProperties.getVelX()).thenReturn(5);
+		when(objectProperties.getVelY()).thenReturn(5);
+		when(objectProperties.getWidth()).thenReturn(20);
+		when(objectProperties.getHeight()).thenReturn(20);
 		component.setObjectProperties(objectProperties);
-
-		when(component.getX()).thenReturn(100);
-		when(component.getY()).thenReturn(100);
-		when(component.getVelX()).thenReturn(5);
-		when(component.getVelY()).thenReturn(5);
-		when(component.getWidth()).thenReturn(20);
-		when(component.getHeight()).thenReturn(20);
 	}
 
 	@Test
@@ -56,25 +61,36 @@ class AbstractComponentTest {
 
 	@Test
 	void visibilityTest() {
-		when(component.getVisibility()).thenReturn(false);
+		component.setVisbility(false);
 		assertEquals(false, component.getVisibility());
 	}
 
 	@Test
 	void directionTest() {
-		when(component.getDirection()).thenReturn(Direction.FREE);
+		component.setDirection(Direction.FREE);
 		assertEquals(Direction.FREE, component.getDirection());
 	}
 
 	@Test
-	void drawTest() {
-//		Drawable drawable = mock(DrawRectColor.class);
-//		ArgumentCaptor<AbstractComponent> argument = ArgumentCaptor.forClass(AbstractComponent.class);
-//		Mockito.doNothing().when(drawable).draw(argument.capture(), any(Graphics.class));
-//		when(component.getDirection()).thenReturn(Direction.BOTH);
-//		drawable.draw(component, any(Graphics.class));
-//		verify(drawable).draw(argument.capture(), null);
-//		assertEquals(component, argument.getValue());
+	void imageTest() {
+		component.setImage("image path");
+		assertEquals("image path", component.getImage());
 	}
 
+	@Test
+	void componentNameTest() {
+		component.setComponentName("component_name");
+		assertEquals("component_name", component.getComponentName());
+	}
+	
+	@Test
+	void objectPropertiesTest() {
+		assertEquals(objectProperties, component.getObjectProperties());
+	}
+	
+	@Test
+	void colorTest() {
+		component.setColor(Color.BLACK);
+		assertEquals(Color.BLACK, component.getColor());
+	}	
 }
