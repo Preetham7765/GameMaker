@@ -10,76 +10,73 @@ public interface Constants {
 	
 	//---------------------------/components/Fire.java-------------------------
 	
-	public static final String fireImagePath = "./icons/fire.png";
-
-	public final static int FRAME_WIDTH = 1300;
-	public final static int  FRAME_HEIGHT = 900;
-	public final static int  FORM_PANEL_HEIGHT = 900;
-	public final static int  FORM_PANEL_WIDTH = 400;
-	public final static int  GAME_PANEL_WIDTH = 900;
-	public final static int  GAME_PANEL_HEIGHT = 900;
+	public static final int FRAME_WIDTH = 1300;
+	public static final int  FRAME_HEIGHT = 900;
+	public static final int  FORM_PANEL_HEIGHT = 900;
+	public static final int  FORM_PANEL_WIDTH = 400;
+	public static final int  GAME_PANEL_WIDTH = 900;
+	public static final int  GAME_PANEL_HEIGHT = 900;
 	
 	//----------------------------/observable/GameTimer.java/------------------
-	public final static int TIMER_COUNT = 25;
+	public static final int TIMER_COUNT = 25;
 	
-	public final static String COLLECTIBLE = "Collectible";
-	public final static String ROTATEABLE = "Rotateable";
-	public final static String KEY_DEPENDENT = "Move using Keys";
-	public final static String TIME_DEPENDENT = "Move with Time";
-	public final static String ADD_ELEMENT = "Add Element";
-	public final static String VEL_X = "Velocity X";
-	public final static String VEL_Y = "Velocity Y";
-	public final static String WIDTH = "Width";
-	public final static String HEIGHT = "Height";
-	public final static String ELEMENT_TYPE = "Element Type";
-	public final static String ELEMENT_NAME = "Element Name";
-	//public final static String COLLECTIBLE = "Collectible";
+	public static final String COLLECTIBLE = "Collectible";
+	public static final String ROTATEABLE = "Rotateable";
+	public static final String KEY_DEPENDENT = "Move using Keys";
+	public static final String TIME_DEPENDENT = "Move with Time";
+	public static final String ADD_ELEMENT = "Add Element";
+	public static final String VEL_X = "Velocity X";
+	public static final String VEL_Y = "Velocity Y";
+	public static final String WIDTH = "Width";
+	public static final String HEIGHT = "Height";
+	public static final String ELEMENT_TYPE = "Element Type";
+	public static final String ELEMENT_NAME = "Element Name";
 	
-	public final static String LEFT_KEY = "Left";
-	public final static String RIGHT_KEY = "Right";
-	public final static String UP_KEY = "Up";
-	public final static String DOWN_KEY = "Down";
-	public final static String SPACE = "Space";
-	public final static String FREE = "Move freely";
+	public static final String LEFT_KEY = "Left";
+	public static final String RIGHT_KEY = "Right";
+	public static final String UP_KEY = "Up";
+	public static final String DOWN_KEY = "Down";
+	public static final String SPACE = "Space";
+	public static final String FREE = "Move freely";
 	
-	public final static String SELECT_KEY = "Select Key";
-	public final static String MOVE_LEFT = "Move Left";
-	public final static String MOVE_RIGHT = "Move Right";
-	public final static String MOVE_UP = "Move Up";
-	public final static String MOVE_DOWN = "Move Down";
-	public final static String EXPLODE = "Explode";
-	public final static String FIRE = "Fire";
+	public static final String SELECT_KEY = "Select Key";
+	public static final String MOVE_LEFT = "Move Left";
+	public static final String MOVE_RIGHT = "Move Right";
+	public static final String MOVE_UP = "Move Up";
+	public static final String MOVE_DOWN = "Move Down";
+	public static final String EXPLODE = "Explode";
+	public static final String FIRE = "Fire";
 	
-	public final static String ADD_COLLISION = "Add Collision";
-	public final static String PRIMARY_ELE = "Element One";
-	public final static String SECONDARY_ELE = "Element Two";
-	public final static String PRIMARY_ACT = "Element One Action";
-	public final static String SECONDARY_ACT = "Element Two Action";
-	public final static String SOUND = "Sound";
+	public static final String ADD_COLLISION = "Add Collision";
+	public static final String PRIMARY_ELE = "Element One";
+	public static final String SECONDARY_ELE = "Element Two";
+	public static final String PRIMARY_ACT = "Element One Action";
+	public static final String SECONDARY_ACT = "Element Two Action";
+	public static final String SOUND = "Sound";
 
-	public final static String COLOR = "Color";
-	public final static String BACKGOUND = "Background";
-	public final static String MOVEMENT = "Movement";
-	public final static String IMAGE = "Image";
+	public static final String COLOR = "Color";
+	public static final String BACKGOUND = "Background";
+	public static final String MOVEMENT = "Movement";
+	public static final String IMAGE = "Image";
 	
-	public final static String COLOR_SEL = "Select Color";
-	public final static String IMAGE_SEL = "Browse Image";
+	public static final String COLOR_SEL = "Select Color";
+	public static final String IMAGE_SEL = "Browse Image";
 	
-	public final static String CHOOSE_BG = "Choose Game Background :";
+	public static final String CHOOSE_BG = "Choose Game Background :";
 	
-	public final static String DESIGNER = "DESIGNER";
-	public final static String PLAYER = "PLAYER";
-	public final static String HELVETICA = "Helvetica";
+	public static final String DESIGNER = "DESIGNER";
+	public static final String PLAYER = "PLAYER";
+	public static final String HELVETICA = "Helvetica";
 	
-	public final static String OK = "OK";
+	public static final String OK = "OK";
 	
-	public final static String ELEMENT = "Element";
-	public final static String COLLISION = "Collision";
-	public final static String BACKGROUND = "Background";
-	public final static String SAVE = "Save";
-	public final static String LOAD = "Load";
-	public final static String PLAY = "Play";
-	public final static String PAUSE = "Pause";
+	public static final String ELEMENT = "Element";
+	public static final String COLLISION = "Collision";
+	public static final String BACKGROUND = "Background";
+	public static final String SAVE = "Save";
+	public static final String LOAD = "Load";
+	public static final String PLAY = "Play";
+	public static final String PAUSE = "Pause";
 	
-	public final static String CHOOSE_COLOR = "Choose Color";
+	public static final String CHOOSE_COLOR = "Choose Color";
 }
