@@ -112,7 +112,7 @@ public class ObjectPropertiesPanel extends JPanel {
 
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 		colorPanel.setBorder(blackline);
-		colorPanel.setBackground(Color.BLACK);
+		colorPanel.setBackground(Color.BLACK); 
 
 		left = new JCheckBox(Constants.LEFT_KEY);
 		right = new JCheckBox(Constants.RIGHT_KEY);
@@ -414,7 +414,7 @@ public class ObjectPropertiesPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+				//fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
 				int result = fileChooser.showOpenDialog(background);
 				if (result == JFileChooser.APPROVE_OPTION) 
 				{

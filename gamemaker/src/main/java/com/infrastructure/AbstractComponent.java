@@ -3,13 +3,12 @@ package com.infrastructure;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class AbstractComponent implements IComposite, Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 	private String componentName;
 	private ObjectProperties objectProperties;
@@ -17,11 +16,13 @@ public class AbstractComponent implements IComposite, Serializable {
 	private String image;
 	private Color color;
 	private ComponentShape shape;
+	private Direction direction;
 	private boolean isCollectible;
 	private boolean canFire;
 
-	public AbstractComponent() {}
-	
+	public AbstractComponent() {
+	}
+
 	public String getComponentName() {
 		return componentName;
 	}
@@ -69,9 +70,8 @@ public class AbstractComponent implements IComposite, Serializable {
 	public void setObjectProperties(ObjectProperties objectProperties) {
 		this.objectProperties = objectProperties;
 	}
-	
-	public AbstractComponent(ObjectProperties objectProperties)
-	{
+
+	public AbstractComponent(ObjectProperties objectProperties) {
 		this.objectProperties = new ObjectProperties();
 		this.objectProperties.setX(objectProperties.getX());
 		this.objectProperties.setY(objectProperties.getY());
@@ -84,25 +84,21 @@ public class AbstractComponent implements IComposite, Serializable {
 		this.objectProperties.setCanCollect(objectProperties.getCanCollect());
 	}
 
-	
 	public int getX() {
 		return this.objectProperties.getX();
 	}
 
-
 	public void setX(int x) {
 		this.objectProperties.setX(x);
 	}
-	
+
 	public int getY() {
 		return this.objectProperties.getY();
 	}
 
-
 	public void setY(int y) {
 		this.objectProperties.setY(y);
 	}
-
 
 	public int getVelX() {
 		return this.objectProperties.getVelX();
@@ -112,11 +108,9 @@ public class AbstractComponent implements IComposite, Serializable {
 		this.objectProperties.setVelX(velX);
 	}
 
-
 	public int getVelY() {
 		return this.objectProperties.getVelY();
 	}
-
 
 	public void setVelY(int velY) {
 		this.objectProperties.setVelY(velY);
@@ -126,51 +120,38 @@ public class AbstractComponent implements IComposite, Serializable {
 		return this.objectProperties.getWidth();
 	}
 
-
 	public void setWidth(int width) {
 		this.objectProperties.setWidth(width);
 	}
-
 
 	public int getHeight() {
 		return this.objectProperties.getHeight();
 	}
 
-
 	public boolean getCanCollect() {
 		return this.objectProperties.getCanCollect();
 	}
-	
+
 	public void setcanCollect(boolean canCollect) {
 		this.objectProperties.setCanCollect(canCollect);
 	}
-	
+
 	public void setHeight(int height) {
 		this.objectProperties.setHeight(height);
 	}
-	
-	public boolean getVisibility()
-	{
+
+	public boolean getVisibility() {
 		return this.objectProperties.isVisibility();
 	}
-	
-	public void setVisbility(boolean visibility)
-	{
-		this.objectProperties.setVisibility(visibility);
-	}
-	
-	public boolean isCanFire() {
-		return canFire;
-	}
 
-	public void setCanFire(boolean canFire) {
-		this.canFire = canFire;
+	public void setVisbility(boolean visibility) {
+		this.objectProperties.setVisibility(visibility);
 	}
 
 	public Rectangle getBounds() {
 		return new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
-	}	
-	
+	}
+
 	public int getBottomCoordinates() {
 		return getY() + getHeight();
 	}
@@ -179,22 +160,12 @@ public class AbstractComponent implements IComposite, Serializable {
 		return getX() + getWidth();
 	}
 
-	@Override
-	public void draw(Graphics g) {
-		if(getVisibility())
-			drawable.draw(this, g);
+	public Direction getDirection() {
+		return direction;
 	}
 
-	@Override
-	public void save(ObjectOutputStream op) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void load(ObjectInputStream ip) {
-		// TODO Auto-generated method stub
-		
+	public void setDirection(Direction direction) {
+		this.direction = direction;
 	}
 
 	public boolean isCollectible() {
@@ -204,21 +175,31 @@ public class AbstractComponent implements IComposite, Serializable {
 	public void setCollectible(boolean isCollectible) {
 		this.isCollectible = isCollectible;
 	}
-	/*@Override
+
+	public boolean isCanFire() {
+		return canFire;
+	}
+
+	public void setCanFire(boolean canFire) {
+		this.canFire = canFire;
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		if (getVisibility() && drawable != null)
+			drawable.draw(this, g);
+	}
+
+	@Override
 	public void save(ObjectOutputStream op) {
-		try {
-			op.writeObject(this);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public void load(ObjectInputStream ip) {
 		// TODO Auto-generated method stub
-		
-	}*/
-	
+
+	}
 
 }
-
