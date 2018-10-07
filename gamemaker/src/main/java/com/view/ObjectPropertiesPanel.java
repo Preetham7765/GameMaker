@@ -536,6 +536,7 @@ public class ObjectPropertiesPanel extends JPanel {
 			}
 			formData.setKeyActionMap(keyActionMap);
 			formData.setTimeActionArray(timeActionArray);
+			
 			formData.setColor(colorPanel.getBackground());
 			formData.setRotateable(rotateable.isSelected());
 			formData.setFire(fire.isSelected());
