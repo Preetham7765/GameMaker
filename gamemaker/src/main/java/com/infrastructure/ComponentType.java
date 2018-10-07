@@ -13,5 +13,6 @@ public enum ComponentType {
 	PLAY,
 	ELEMENT,
 	STATIC,
-	COLLISION;
+	COLLISION,
+	PAUSE;
 }
