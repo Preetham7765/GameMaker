@@ -95,12 +95,12 @@ public class GameMakerController implements ActionListener, MouseListener {
 	public void addComponent(int x, int y) {
 		Command command;
 		component = createAbstractComponent();
-		
+
 		if (component != null) {
 			component.setX(x);
 			component.setY(y);
 			componentIdMap.put(component.getComponentName(), component);
-			allComponents.add(component); 
+			allComponents.add(component);
 			if (formData.getKeyActionMap() != null) {
 				for (Map.Entry<Integer, String> entry : formData.getKeyActionMap().entrySet()) {
 					Integer key = entry.getKey();
@@ -112,14 +112,15 @@ public class GameMakerController implements ActionListener, MouseListener {
 						keyActionMap.get(key).add(command);
 					}
 				}
+				component.setPlayerObject(true);
 			} else if (formData.getTimeActionArray() != null) {
 
 				if (formData.getTimeActionArray().contains(Constants.FREE)) {
 					component.setDirection(Direction.FREE);
-					
+
 				} else if ((formData.getTimeActionArray()).size() == 4) {
 					new ChangeDirection(component).execute();
-					
+
 				}
 				if (!formData.isRotateable())
 					timeComponents.add(component);
@@ -134,6 +135,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 		if (formData.isRotateable())
 			rotatorList.add(component);
+
 	}
 
 	public void addCollider() {
@@ -176,8 +178,6 @@ public class GameMakerController implements ActionListener, MouseListener {
 			return new MoveLeftCommand(component);
 		case Constants.MOVE_RIGHT:
 			return new MoveRightCommand(component);
-		case Constants.FIRE:
-			return new BulletCommand(component);
 		default:
 			return null;
 		}
@@ -286,14 +286,14 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 				windowFrame.load(in);
 
-				allComponents = (ArrayList<AbstractComponent>)in.readObject();
-				timeComponents = (ArrayList<AbstractComponent>)in.readObject();
-				componentIdMap = (HashMap<String,AbstractComponent>)in.readObject();
-				colliders = (ArrayList<Collider>)in.readObject();
-				keyActionMap = (HashMap<Integer, List<Command>>)in.readObject();
-				componentNames=(ArrayList<String>)in.readObject();
-				collectibles = (ArrayList<AbstractComponent>)in.readObject();
-				fireComponents = (ArrayList<AbstractComponent>)in.readObject();
+				allComponents = (ArrayList<AbstractComponent>) in.readObject();
+				timeComponents = (ArrayList<AbstractComponent>) in.readObject();
+				componentIdMap = (HashMap<String, AbstractComponent>) in.readObject();
+				colliders = (ArrayList<Collider>) in.readObject();
+				keyActionMap = (HashMap<Integer, List<Command>>) in.readObject();
+				componentNames = (ArrayList<String>) in.readObject();
+				collectibles = (ArrayList<AbstractComponent>) in.readObject();
+				fireComponents = (ArrayList<AbstractComponent>) in.readObject();
 
 				in.close();
 				fileIn.close();
@@ -309,7 +309,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 		List<AbstractComponent> components = new ArrayList<>();
 
 		for (Entry<String, AbstractComponent> component : componentIdMap.entrySet()) {
-			
+
 			if (component.getKey().startsWith(name + "_")) {
 				components.add(component.getValue());
 			}
@@ -359,8 +359,8 @@ public class GameMakerController implements ActionListener, MouseListener {
 			componentNames.add(formData.getElementName());
 			// addComponent();
 		} else if (componentType.equals(ComponentType.COLLISION)) {
-			CollisionFormPanel popUp = new CollisionFormPanel(componentNames.toArray(),colliders);
-			
+			CollisionFormPanel popUp = new CollisionFormPanel(componentNames.toArray(), colliders);
+
 			colliderData = popUp.getProperties();
 			addCollider();
 
@@ -373,15 +373,15 @@ public class GameMakerController implements ActionListener, MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 
-			int x = arg0.getX();
-			int y = arg0.getY();
-//			selectedComponent.setX(x);
-//			selectedComponent.setY(y);
-			
-			addComponent(x,y);
+		int x = arg0.getX();
+		int y = arg0.getY();
+		//			selectedComponent.setX(x);
+		//			selectedComponent.setY(y);
 
-			windowFrame.getGamePanel().addComponent(component);
-			windowFrame.draw(null);
+		addComponent(x, y);
+
+		windowFrame.getGamePanel().addComponent(component);
+		windowFrame.draw(null);
 	}
 
 	@Override
