@@ -348,13 +348,19 @@ public class GameMakerController implements ActionListener, MouseListener {
 			this.idCounter = 1;
 			componentNames.add(formData.getElementName());
 			// addComponent();
+
 		} else if (componentType.equals(ComponentType.COLLISION)) {
 			CollisionFormPanel popUp = new CollisionFormPanel(componentNames.toArray(),colliders);
 			System.out.println("vrishali "+colliders);
+
 			colliderData = popUp.getProperties();
 			addCollider();
 
 			System.out.println("Colliders list " + Arrays.toString(colliders.toArray()));
+		}
+		else if(componentType.equals(ComponentType.PAUSE)) {
+			gameTimer.removeObserver(gamePlayController);
+			windowFrame.getGamePanel().removeKeyListener(gamePlayController);
 		}
 	}
 
