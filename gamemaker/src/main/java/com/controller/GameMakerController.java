@@ -12,14 +12,15 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Random;
 
 import javax.swing.JFileChooser;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.commands.BulletCommand;
 import com.commands.ChangeDirection;
@@ -49,8 +50,8 @@ import com.view.WindowFrame;
 
 public class GameMakerController implements ActionListener, MouseListener {
 
+	protected static Logger logger = LogManager.getLogger(GameMakerController.class);
 	private WindowFrame windowFrame;
-	private ObjectProperties selectedComponent;
 	private FormView formData;
 	private ColliderData colliderData;
 	private AbstractComponent component;
@@ -70,8 +71,6 @@ public class GameMakerController implements ActionListener, MouseListener {
 	private int score;
 	private int totalCollectibles = 0;
 	private int idCounter;
-	private Direction[] directions = { Direction.LEFT, Direction.RIGHT, Direction.UP, Direction.DOWN };
-	private Random random;
 
 	public GameMakerController(WindowFrame windowFrame, GameTimer gameTimer) {
 		this.windowFrame = windowFrame;
@@ -87,15 +86,12 @@ public class GameMakerController implements ActionListener, MouseListener {
 		componentNames = new ArrayList<>();
 		this.gameTimer = gameTimer;
 		this.collision = new Collision();
-		this.random = new Random();
 		initBounds("TOPWALL", 0, 1, Constants.GAME_PANEL_WIDTH, 2);
 		initBounds("LEFTWALL", 1, 0, 2, Constants.GAME_PANEL_HEIGHT);
 		initBounds("BOTTOMWALL", 0, Constants.GAME_PANEL_HEIGHT, Constants.GAME_PANEL_WIDTH, 2);
 		initBounds("RIGHTWALL", Constants.GAME_PANEL_WIDTH, 0, 2, Constants.GAME_PANEL_HEIGHT);
 	}
 
-	// Helper method to segregate components based on their movement type, actions
-	// and controls
 	public void addComponent(int x, int y) {
 		Command command;
 		component = createAbstractComponent();
@@ -104,8 +100,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 			component.setX(x);
 			component.setY(y);
 			componentIdMap.put(component.getComponentName(), component);
-			allComponents.add(component); // Might not be needed as we have it in componentIdMap through which we can
-			// iterate
+			allComponents.add(component); 
 			if (formData.getKeyActionMap() != null) {
 				for (Map.Entry<Integer, String> entry : formData.getKeyActionMap().entrySet()) {
 					Integer key = entry.getKey();
@@ -121,11 +116,10 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 				if (formData.getTimeActionArray().contains(Constants.FREE)) {
 					component.setDirection(Direction.FREE);
-					// timeComponents.add(component);
-					// return;
+					
 				} else if ((formData.getTimeActionArray()).size() == 4) {
 					new ChangeDirection(component).execute();
-					// timeComponents.add(component);
+					
 				}
 				if (!formData.isRotateable())
 					timeComponents.add(component);
@@ -142,7 +136,6 @@ public class GameMakerController implements ActionListener, MouseListener {
 			rotatorList.add(component);
 	}
 
-	// Creates collider type by getting ColliderData from View
 	public void addCollider() {
 
 		List<AbstractComponent> primaryComponents = getComponentByName(colliderData.getPrimaryElement());
@@ -173,7 +166,6 @@ public class GameMakerController implements ActionListener, MouseListener {
 		windowFrame.draw(null);
 	}
 
-	// Helper method to make command for component based on movement type
 	public Command createCommand(String commandType, AbstractComponent component) {
 		switch (commandType) {
 		case Constants.MOVE_DOWN:
@@ -271,12 +263,14 @@ public class GameMakerController implements ActionListener, MouseListener {
 				out.writeObject(colliders);
 				out.writeObject(keyActionMap);
 				out.writeObject(componentNames);
+				out.writeObject(collectibles);
+				out.writeObject(fireComponents);
 
 				out.close();
 				fileOut.close();
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 
 	}
@@ -298,12 +292,14 @@ public class GameMakerController implements ActionListener, MouseListener {
 				colliders = (ArrayList<Collider>)in.readObject();
 				keyActionMap = (HashMap<Integer, List<Command>>)in.readObject();
 				componentNames=(ArrayList<String>)in.readObject();
+				collectibles = (ArrayList<AbstractComponent>)in.readObject();
+				fireComponents = (ArrayList<AbstractComponent>)in.readObject();
 
 				in.close();
 				fileIn.close();
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		windowFrame.draw(null);
 	}
@@ -423,7 +419,6 @@ public class GameMakerController implements ActionListener, MouseListener {
 			System.out.println("path = " + path);
 			return path;
 		}
-		System.out.println("Return NULL");
 		return null;
 
 	}

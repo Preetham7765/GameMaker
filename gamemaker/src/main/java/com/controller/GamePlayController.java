@@ -18,6 +18,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.commands.ChangeDirection;
 import com.commands.ChangeVelXCommand;
 import com.commands.ChangeVelYCommand;
@@ -33,6 +36,8 @@ import com.view.WindowFrame;
 
 public class GamePlayController implements Observer, KeyListener, ActionListener {
 
+	protected static Logger logger = LogManager.getLogger(GamePlayController.class);
+	
 	private ArrayList<AbstractComponent> actionList;
 	private AbstractComponent gameCharacter;
 	private ArrayList<AbstractComponent> collectibleList;
@@ -87,7 +92,7 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 			}
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -156,7 +161,7 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		windowFrame.draw(null);
 	}
