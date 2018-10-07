@@ -65,7 +65,6 @@ public class ObjectPropertiesPanel extends JPanel {
 	private JComboBox rightCombo;
 	private	JComboBox upCombo;
 	private	JComboBox downCombo;
-	private	JComboBox spaceCombo;
 
 	private ButtonGroup radioGroup;
 	private ButtonGroup radioGroup2;
@@ -129,7 +128,6 @@ public class ObjectPropertiesPanel extends JPanel {
 		rightCombo = new JComboBox(keyActions);
 		upCombo = new JComboBox(keyActions);
 		downCombo = new JComboBox(keyActions);
-		spaceCombo = new JComboBox(keyActions);
 
 		radioGroup = new ButtonGroup();
 		radioGroup2 = new ButtonGroup();
@@ -216,7 +214,6 @@ public class ObjectPropertiesPanel extends JPanel {
 		c.gridy = 3;
 		properties.add(rotateable,c);
 		
-		//chaitrali
 		c.gridx = 2;
 		c.gridy = 3;
 		properties.add(fire,c);
@@ -272,10 +269,6 @@ public class ObjectPropertiesPanel extends JPanel {
 		c.gridx = 1;
 		c.gridy = 9;
 		properties.add(downCombo,c);
-
-		c.gridx = 1;
-		c.gridy = 10;
-		properties.add(spaceCombo,c);
 
 		c.gridx = 3;
 		c.gridy = 6;
@@ -477,7 +470,6 @@ public class ObjectPropertiesPanel extends JPanel {
 		rightCombo.setEnabled(false);
 		upCombo.setEnabled(false);
 		downCombo.setEnabled(false);
-		spaceCombo.setEnabled(false);
 	}
 
 	public void enableKeyElements()
@@ -490,7 +482,6 @@ public class ObjectPropertiesPanel extends JPanel {
 		rightCombo.setEnabled(true);
 		upCombo.setEnabled(true);
 		downCombo.setEnabled(true);
-		spaceCombo.setEnabled(true);
 	}
 
 	public void enableTimeElements()

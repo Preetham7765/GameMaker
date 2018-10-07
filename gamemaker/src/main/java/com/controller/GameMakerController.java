@@ -175,7 +175,6 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 	// Helper method to make command for component based on movement type
 	public Command createCommand(String commandType, AbstractComponent component) {
-		System.out.println("createCommand --> commandType -- " + commandType);
 		switch (commandType) {
 		case Constants.MOVE_DOWN:
 			return new MoveDownCommand(component);
@@ -229,7 +228,6 @@ public class GameMakerController implements ActionListener, MouseListener {
 	}
 
 	public void createBullet(AbstractComponent parentComponent) {
-		System.out.println("-- createBullet --");
 		ObjectProperties objectProperties = new ObjectProperties();
 		AbstractComponent bullet = new AbstractComponent(objectProperties);
 		bullet.setX(parentComponent.getX() + (int) (parentComponent.getWidth() / 2));
@@ -248,7 +246,6 @@ public class GameMakerController implements ActionListener, MouseListener {
 	}
 
 	public void addBulletstoColliders(AbstractComponent bullet) {
-		System.out.println("-- addBulletstoColliders --");
 		for (AbstractComponent component : allComponents) {
 			if (component.isCollectible()) {
 				Collider collider = new Collider(bullet, component, CollisionType.EXPLODE, CollisionType.EXPLODE,
@@ -273,6 +270,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 				out.writeObject(componentIdMap);
 				out.writeObject(colliders);
 				out.writeObject(keyActionMap);
+				out.writeObject(componentNames);
 
 				out.close();
 				fileOut.close();
@@ -294,11 +292,12 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 				windowFrame.load(in);
 
-				allComponents = (ArrayList<AbstractComponent>) in.readObject();
-				timeComponents = (ArrayList<AbstractComponent>) in.readObject();
-				componentIdMap = (HashMap<String, AbstractComponent>) in.readObject();
-				colliders = (ArrayList<Collider>) in.readObject();
-				keyActionMap = (HashMap<Integer, List<Command>>) in.readObject();
+				allComponents = (ArrayList<AbstractComponent>)in.readObject();
+				timeComponents = (ArrayList<AbstractComponent>)in.readObject();
+				componentIdMap = (HashMap<String,AbstractComponent>)in.readObject();
+				colliders = (ArrayList<Collider>)in.readObject();
+				keyActionMap = (HashMap<Integer, List<Command>>)in.readObject();
+				componentNames=(ArrayList<String>)in.readObject();
 
 				in.close();
 				fileIn.close();
@@ -314,8 +313,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 		List<AbstractComponent> components = new ArrayList<>();
 
 		for (Entry<String, AbstractComponent> component : componentIdMap.entrySet()) {
-			System.out.println("Key name and component name:" + component.getKey() + " "
-					+ component.getValue().getComponentName());
+			
 			if (component.getKey().startsWith(name + "_")) {
 				components.add(component.getValue());
 			}
@@ -365,11 +363,11 @@ public class GameMakerController implements ActionListener, MouseListener {
 			componentNames.add(formData.getElementName());
 			// addComponent();
 		} else if (componentType.equals(ComponentType.COLLISION)) {
-			CollisionFormPanel popUp = new CollisionFormPanel(componentNames.toArray());
+			CollisionFormPanel popUp = new CollisionFormPanel(componentNames.toArray(),colliders);
+			
 			colliderData = popUp.getProperties();
 			addCollider();
 
-			System.out.println("Colliders list " + Arrays.toString(colliders.toArray()));
 		} else if (componentType.equals(ComponentType.PAUSE)) {
 			gameTimer.removeObserver(gamePlayController);
 			windowFrame.getGamePanel().removeKeyListener(gamePlayController);
