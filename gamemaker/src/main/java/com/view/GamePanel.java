@@ -1,13 +1,10 @@
 package com.view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -18,23 +15,19 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JFileChooser;
 import javax.swing.JPanel;
-import javax.swing.JSplitPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.controller.GameMakerController;
 import com.infrastructure.AbstractComponent;
 import com.infrastructure.Constants;
-import com.infrastructure.IAddActionListener;
 import com.infrastructure.IComposite;
-import com.infrastructure.IPanel;
 
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements IComposite {
 
 	private ArrayList<AbstractComponent> compositeList;
-	private BufferedImage image;
+	//private BufferedImage image;
+	private String imgPath;
 
 	public GamePanel() {
 		compositeList = new ArrayList<>();
@@ -44,7 +37,7 @@ public class GamePanel extends JPanel implements IComposite {
 		setMinimumSize(new Dimension(Constants.GAME_PANEL_WIDTH, Constants.GAME_PANEL_HEIGHT));
 		setPreferredSize(new Dimension(Constants.GAME_PANEL_WIDTH, Constants.GAME_PANEL_HEIGHT));
 	}
-
+	
 	public ArrayList<AbstractComponent> getComponentList() {
 		return (this.compositeList);
 	}
@@ -56,8 +49,23 @@ public class GamePanel extends JPanel implements IComposite {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		if (image != null) {
-			g.drawImage(image, 0, 0, this);
+		
+		if (imgPath != null && !"".equalsIgnoreCase(imgPath)) 
+		{
+			BufferedImage img=null;
+			try
+			{
+				img = ImageIO.read(new File(imgPath));
+				img=resize(img,Constants.GAME_PANEL_WIDTH,Constants.GAME_PANEL_HEIGHT);
+				//img=resize(img,200,200);
+				//System.out.println("print "+img);
+			} 
+			catch (IOException e) 
+			{
+				//add logger here
+			}
+			g.drawImage(img, 0, 0, this);
+			
 		}
 		for (AbstractComponent composite : compositeList) {
 			if (composite.getVisibility())
@@ -66,7 +74,7 @@ public class GamePanel extends JPanel implements IComposite {
 	}
 
 	public void draw(Graphics g) {
-		// revalidate();
+		//revalidate();
 		repaint();
 	}
 
@@ -78,7 +86,7 @@ public class GamePanel extends JPanel implements IComposite {
 		compositeList.remove(abstractComponent);
 	}
 
-	public void setImage(String path) {
+	/*public void setImage(String path) {
 		try {
 			image = ImageIO.read(new File(path));
 			image = resize(image, Constants.GAME_PANEL_WIDTH, Constants.GAME_PANEL_HEIGHT);
@@ -87,7 +95,7 @@ public class GamePanel extends JPanel implements IComposite {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	public BufferedImage resize(BufferedImage img, int width, int height) {
 		Image tmp = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
@@ -107,6 +115,7 @@ public class GamePanel extends JPanel implements IComposite {
 		 */
 		try {
 			op.writeObject(compositeList);
+			op.writeObject(imgPath);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -117,6 +126,7 @@ public class GamePanel extends JPanel implements IComposite {
 	public void load(ObjectInputStream ip) {
 		try {
 			compositeList = (ArrayList<AbstractComponent>) ip.readObject();
+			imgPath=(String)ip.readObject();
 		} catch (java.lang.ClassNotFoundException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -130,6 +140,14 @@ public class GamePanel extends JPanel implements IComposite {
 		 * try { Ball obj = (Ball)ip.readObject(); return obj; } catch
 		 * (ClassNotFoundException | IOException e) { log.error(e.getMessage()); }
 		 */
+	}
+
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
 	}
 	
 }

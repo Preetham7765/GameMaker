@@ -64,4 +64,6 @@ public interface Constants {
 	
 	public final static String COLOR_SEL = "Select Color";
 	public final static String IMAGE_SEL = "Browse Image";
+	
+	public final static String CHOOSE_BG = "Choose Game Background :";
 }

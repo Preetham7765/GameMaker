@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,11 +16,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import java.util.Map.Entry;
 import java.util.Random;
 
 import com.commands.BulletCommand;
 import com.commands.ChangeDirection;
+
+
+import javax.swing.JFileChooser;
+
 import com.commands.Command;
 import com.commands.MoveDownCommand;
 import com.commands.MoveLeftCommand;
@@ -88,51 +94,54 @@ public class GameMakerController implements ActionListener, MouseListener {
 	public void addComponent(int x, int y) {
 		Command command;
 		component = createAbstractComponent();
-		component.setX(x);
-		component.setY(y);
-		componentIdMap.put(component.getComponentName(), component);
-		allComponents.add(component); // Might not be needed as we have it in componentIdMap through which we can
-										// iterate
-		if (formData.getKeyActionMap() != null) {
-			for (Map.Entry<Integer, String> entry : formData.getKeyActionMap().entrySet()) {
-				Integer key = entry.getKey();
-				command = createCommand(entry.getValue(), component);
-				if (keyActionMap.containsKey(key)) {
-					keyActionMap.get(key).add(command);
-				} else {
-					keyActionMap.put(key, new ArrayList<Command>());
-					keyActionMap.get(key).add(command);
+		if(component!=null)
+		{
+			component.setX(x);
+			component.setY(y);
+			componentIdMap.put(component.getComponentName(), component);
+			allComponents.add(component); // Might not be needed as we have it in componentIdMap through which we can
+			// iterate
+			if (formData.getKeyActionMap() != null) {
+				for (Map.Entry<Integer, String> entry : formData.getKeyActionMap().entrySet()) {
+					Integer key = entry.getKey();
+					command = createCommand(entry.getValue(), component);
+					if (keyActionMap.containsKey(key)) {
+						keyActionMap.get(key).add(command);
+					} else {
+						keyActionMap.put(key, new ArrayList<Command>());
+						keyActionMap.get(key).add(command);
+					}
 				}
-			}
-		} else if (formData.getTimeActionArray() != null) {
-			
-			if(formData.getTimeActionArray().contains(Constants.FREE)) {
-				component.setDirection(Direction.FREE);
-//				timeComponents.add(component);
-//				return;
-			}
-			else if((formData.getTimeActionArray()).size() == 4) {
+			} else if (formData.getTimeActionArray() != null) {
+
+				if(formData.getTimeActionArray().contains(Constants.FREE)) {
+					component.setDirection(Direction.FREE);
+					//				timeComponents.add(component);
+					//				return;
+				}
+				else if((formData.getTimeActionArray()).size() == 4) {
 					System.out.println("Calling change direction");
 					new ChangeDirection(component).execute();
 					System.out.println(Arrays.toString(formData.getTimeActionArray().toArray()));
-//					timeComponents.add(component);
-			// System.out.println("Added "+ component.getComponentName() + " to time
-			// array");
+					//					timeComponents.add(component);
+					// System.out.println("Added "+ component.getComponentName() + " to time
+					// array");
+				}
+				if(!formData.isRotateable())
+					timeComponents.add(component);
 			}
-			if(!formData.isRotateable())
-				timeComponents.add(component);
-		}
-		
-		
-		if(formData.isCollectible()) {
-			component.setCollectible(true);
-			allComponents.add(component);
-		}
-		
-		if(formData.isRotateable())
-			rotatorList.add(component);
 
-		System.out.println("keyActionMap :: "+keyActionMap.toString());
+
+			if(formData.isCollectible()) {
+				component.setCollectible(true);
+				allComponents.add(component);
+			}
+
+			if(formData.isRotateable())
+				rotatorList.add(component);
+
+			System.out.println("keyActionMap :: "+keyActionMap.toString());
+		}
 	}
 
 	public AbstractComponent addBullets(AbstractComponent component) {
@@ -205,29 +214,31 @@ public class GameMakerController implements ActionListener, MouseListener {
 		AbstractComponent component = new AbstractComponent(objectProperties);
 		// component.setX(formData.getX());
 		// component.setY(formData.getY());
-		component.setComponentName(formData.getElementName() + "_" + Integer.toString(idCounter));
-		component.setVelX(formData.getVelX());
-		component.setVelY(formData.getVelY());
-		component.setColor(formData.getColor());
-		component.setWidth(formData.getWidth());
-		component.setHeight(formData.getHeight());
-		component.setImage(formData.getBackgroundLocation());
-		component.setVisbility(true);
-		if(null!=component.getImage() && !component.getImage().equalsIgnoreCase("")){
-			component.setDrawable(new DrawOvalImage());
-		}
-		else{
-			if(formData.getElementType() == ElementType.CIRCLE) {
-				component.setDrawable(new DrawOvalColor());
+		if(formData!=null)
+		{
+			component.setComponentName(formData.getElementName() + "_" + Integer.toString(idCounter));
+			component.setVelX(formData.getVelX());
+			component.setVelY(formData.getVelY());
+			component.setColor(formData.getColor());
+			component.setWidth(formData.getWidth());
+			component.setHeight(formData.getHeight());
+			component.setImage(formData.getBackgroundLocation());
+			component.setVisbility(true);
+			if(null!=component.getImage() && !component.getImage().equalsIgnoreCase("")){
+				component.setDrawable(new DrawOvalImage());
 			}
-			else if(formData.getElementType() == ElementType.RECTANGLE)
-			{
-				component.setDrawable(new DrawRectColor());
+			else{
+				if(formData.getElementType() == ElementType.CIRCLE) {
+					component.setDrawable(new DrawOvalColor());
+				}
+				else if(formData.getElementType() == ElementType.RECTANGLE)
+				{
+					component.setDrawable(new DrawRectColor());
+				}
 			}
-		}
 
-		this.idCounter++;
-		
+			this.idCounter++;
+		}
 		return component;
 	}
 
@@ -267,11 +278,6 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 				windowFrame.load(in);
 
-				// commandQueue.clear();
-				// Deque<Command> loadCmdQueue = (Deque<Command>) in.readObject();
-				// commandQueue.addAll(loadCmdQueue);
-				// initCommands();
-				//.writeObject(allComponents);// remove this if you need to remove all components in future
 				allComponents = (ArrayList<AbstractComponent>)in.readObject();
 				timeComponents = (ArrayList<AbstractComponent>)in.readObject();
 				componentIdMap = (HashMap<String,AbstractComponent>)in.readObject();
@@ -290,7 +296,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 	private List<AbstractComponent> getComponentByName(String name) {
 
 		List<AbstractComponent> components = new ArrayList<>();
-		
+
 		for (Entry<String, AbstractComponent> component : componentIdMap.entrySet()) {
 			System.out.println("Key name and component name:" + component.getKey() +" "+ component.getValue().getComponentName());
 			if (component.getKey().startsWith(name + "_")) {
@@ -308,7 +314,11 @@ public class GameMakerController implements ActionListener, MouseListener {
 		ComponentType componentType = ComponentType.valueOf(e.getActionCommand().toUpperCase());
 
 		if (componentType.equals(ComponentType.BACKGROUND)) {
-			// setBackground();
+
+			//JPanel panel = new JPanel(new ImageIcon("images/background.png").getImage());
+			windowFrame.getGamePanel().setImgPath(fileExplorer());
+			windowFrame.getGamePanel().repaint();
+			//windowFrame.getContentPane()	
 		}
 
 		else if (componentType.equals(ComponentType.PLAY)) {
@@ -347,7 +357,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		
+
 		int x = arg0.getX();
 		int y = arg0.getY();
 
@@ -384,6 +394,22 @@ public class GameMakerController implements ActionListener, MouseListener {
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
+
+	}
+
+	public String fileExplorer() {
+		JFileChooser chooser = new JFileChooser();
+		chooser.setCurrentDirectory(new File("."));
+		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		int returnVal = chooser.showOpenDialog(windowFrame.getGamePanel());
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			File file = chooser.getSelectedFile();
+			String path = file.getAbsolutePath();
+			System.out.println("path = " + path);
+			return path;
+		}
+		System.out.println("Return NULL");
+		return null;
 
 	}
 
@@ -449,7 +475,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 	public GamePlayController getGamePlayController() {
 		return this.gamePlayController;
 	}
-	
+
 	public ArrayList<AbstractComponent> getRotatorList() {
 		return rotatorList;
 	}
@@ -457,7 +483,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 	public void setRotatorList(ArrayList<AbstractComponent> rotatorList) {
 		this.rotatorList = rotatorList;
 	}
-	
+
 	public int getScore() {
 		return score;
 	}
