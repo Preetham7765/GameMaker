@@ -18,6 +18,7 @@ public class AbstractComponent implements IComposite, Serializable {
 	private ComponentShape shape;
 	private Direction direction;
 	private boolean isCollectible;
+	private boolean canFire;
 
 	public AbstractComponent() {
 	}
@@ -167,9 +168,25 @@ public class AbstractComponent implements IComposite, Serializable {
 		this.direction = direction;
 	}
 
+	public boolean isCollectible() {
+		return isCollectible;
+	}
+
+	public void setCollectible(boolean isCollectible) {
+		this.isCollectible = isCollectible;
+	}
+
+	public boolean isCanFire() {
+		return canFire;
+	}
+
+	public void setCanFire(boolean canFire) {
+		this.canFire = canFire;
+	}
+
 	@Override
 	public void draw(Graphics g) {
-		if (getVisibility() && drawable!=null)
+		if (getVisibility() && drawable != null)
 			drawable.draw(this, g);
 	}
 
@@ -185,11 +202,4 @@ public class AbstractComponent implements IComposite, Serializable {
 
 	}
 
-	public boolean isCollectible() {
-		return isCollectible;
-	}
-
-	public void setCollectible(boolean isCollectible) {
-		this.isCollectible = isCollectible;
-	}
 }
