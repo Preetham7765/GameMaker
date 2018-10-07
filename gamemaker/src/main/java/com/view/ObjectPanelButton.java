@@ -4,10 +4,15 @@ import java.awt.Color;
 
 import javax.swing.JButton;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.infrastructure.ComponentType;
+import com.infrastructure.Constants;
 
 @SuppressWarnings("serial")
 public class ObjectPanelButton extends JButton {
+	protected static Logger logger = LogManager.getLogger(ObjectPanelButton.class);
 
 	public ObjectPanelButton(ComponentType componentType, Color yellow) {
 
@@ -16,31 +21,25 @@ public class ObjectPanelButton extends JButton {
 		setAlignmentY(CENTER_ALIGNMENT);
 
 		if (componentType == ComponentType.ELEMENT)
-			setText("Element");
+			setText(Constants.ELEMENT);
 
 		if (componentType == ComponentType.COLLISION)
-			setText("Collision");
-
-		// added by cbrahme
-		if (componentType == ComponentType.STATIC)
-			setText("Static Component");
+			setText(Constants.COLLISION);
 
 		if (componentType == ComponentType.BACKGROUND)
-			setText("Background");
+			setText(Constants.BACKGROUND);
 
 		if (componentType == ComponentType.SAVE)
-			setText("Save");
+			setText(Constants.SAVE);
 
 		if (componentType == ComponentType.LOAD)
-			setText("Load");
+			setText(Constants.LOAD);
 
 		if (componentType == ComponentType.PLAY)
-			setText("Play");
+			setText(Constants.PLAY);
 
-	}
+		if (componentType == ComponentType.PAUSE)
+			setText(Constants.PAUSE);
 
-	public void setBackground() {
-		//windowFrame.getGamePanel().setImgPath(imgPath);
-		//windowFrame.getGamePanel().setImage(imagePath);
 	}
 }
