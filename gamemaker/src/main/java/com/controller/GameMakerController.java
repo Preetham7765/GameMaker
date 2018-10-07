@@ -1,7 +1,6 @@
 package com.controller;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -15,18 +14,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import com.behavior.Move;
-import com.behavior.Visibility;
+
 import com.commands.BulletCommand;
 import com.commands.Command;
 import com.commands.MoveDownCommand;
 import com.commands.MoveLeftCommand;
 import com.commands.MoveRightCommand;
 import com.commands.MoveUpCommand;
-import com.components.Ball;
-import com.components.Brick;
-import com.components.Fire;
-import com.components.Paddle;
 import com.infrastructure.AbstractComponent;
 import com.infrastructure.Collider;
 import com.infrastructure.Collision;
@@ -34,7 +28,6 @@ import com.infrastructure.CollisionType;
 import com.infrastructure.ComponentType;
 import com.infrastructure.Constants;
 import com.infrastructure.ElementType;
-import com.infrastructure.ObjectListType;
 import com.infrastructure.ObjectProperties;
 import com.observable.GameTimer;
 import com.strategy.DrawOvalColor;
@@ -298,11 +291,9 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 		else if (componentType.equals(ComponentType.PLAY)) {
 			totalCollectibles = collectibles.size();
-			System.out.println("totalCollectibles --- "+totalCollectibles);
 			gameTimer.registerObserver(gamePlayController);
 			windowFrame.getGamePanel().addKeyListener(gamePlayController);
 			windowFrame.getGamePanel().requestFocus();
-			//			System.out.println("Gameplayer registered");
 		}
 
 		else if (componentType.equals(ComponentType.SAVE)) {

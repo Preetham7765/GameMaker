@@ -44,10 +44,8 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 	private ArrayList<AbstractComponent> compositeList;
 	private WindowFrame windowFrame;
 	private Deque<Command> commandQueue;
-	private Clock clock;
 	private int collectiblesCollected = 0;
 	private GameTimer gameTimer;
-	private boolean gameOver = false;
 	private GameMakerController gameMakerController;
 	private Collision collisionChecker;
 	
