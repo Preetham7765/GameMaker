@@ -47,6 +47,7 @@ public class ObjectPropertiesPanel extends JPanel {
 	private JTextField heightField;
 	private JCheckBox collectible;
 	private JCheckBox rotateable;
+	private JCheckBox fire;
 	private JRadioButton keyDependent;
 	private JRadioButton timeDependent;
 	private JComboBox elementTypes;
@@ -59,13 +60,11 @@ public class ObjectPropertiesPanel extends JPanel {
 	private JCheckBox right;
 	private JCheckBox up;
 	private JCheckBox down;
-	private JCheckBox space;
 	
 	private JComboBox leftCombo;
 	private JComboBox rightCombo;
 	private JComboBox upCombo;
 	private JComboBox downCombo;
-	private JComboBox spaceCombo;
 	
 	Object[] keyActions = { Constants.SELECT_KEY, Constants.MOVE_LEFT, Constants.MOVE_RIGHT, Constants.MOVE_UP,
 			Constants.MOVE_DOWN, Constants.EXPLODE, Constants.FIRE };
@@ -81,6 +80,7 @@ public class ObjectPropertiesPanel extends JPanel {
 	private ButtonGroup radioGroup2;
 
 	//Background properties
+
 	private JPanel colorPanel;
 	private JButton color;
 	private JButton background;
@@ -100,6 +100,7 @@ public class ObjectPropertiesPanel extends JPanel {
 		heightField = new JTextField(Integer.toString(formData.getHeight()), 7);
 		collectible = new JCheckBox(Constants.COLLECTIBLE);
 		rotateable = new JCheckBox(Constants.ROTATEABLE);
+		fire = new JCheckBox(Constants.FIRE);
 		keyDependent = new JRadioButton(Constants.KEY_DEPENDENT);
 		timeDependent = new JRadioButton(Constants.TIME_DEPENDENT);
 		Object[] elements = ElementType.values();
@@ -120,7 +121,6 @@ public class ObjectPropertiesPanel extends JPanel {
 		right = new JCheckBox(Constants.RIGHT_KEY);
 		up = new JCheckBox(Constants.UP_KEY);
 		down = new JCheckBox(Constants.DOWN_KEY);
-		space = new JCheckBox(Constants.SPACE);
 
 		leftMove = new JCheckBox(Constants.LEFT_KEY);
 		rightMove = new JCheckBox(Constants.RIGHT_KEY);
@@ -132,7 +132,6 @@ public class ObjectPropertiesPanel extends JPanel {
 		rightCombo = new JComboBox(keyActions);
 		upCombo = new JComboBox(keyActions);
 		downCombo = new JComboBox(keyActions);
-		spaceCombo = new JComboBox(keyActions);
 
 		radioGroup = new ButtonGroup();
 		radioGroup2 = new ButtonGroup();
@@ -215,7 +214,13 @@ public class ObjectPropertiesPanel extends JPanel {
 
 		c.gridx = 1;
 		c.gridy = 3;
+
 		properties.add(rotateable, c);
+
+		
+		c.gridx = 2;
+		c.gridy = 3;
+		properties.add(fire,c);
 
 		c.gridx = 0;
 		c.gridy = 4;
@@ -268,14 +273,6 @@ public class ObjectPropertiesPanel extends JPanel {
 		c.gridx = 1;
 		c.gridy = 9;
 		properties.add(downCombo, c);
-
-		c.gridx = 0;
-		c.gridy = 10;
-		properties.add(space, c);
-
-		c.gridx = 1;
-		c.gridy = 10;
-		properties.add(spaceCombo, c);
 
 		c.gridx = 3;
 		c.gridy = 6;
@@ -445,12 +442,10 @@ public class ObjectPropertiesPanel extends JPanel {
 		right.setEnabled(false);
 		up.setEnabled(false);
 		down.setEnabled(false);
-		space.setEnabled(false);
 		leftCombo.setEnabled(false);
 		rightCombo.setEnabled(false);
 		upCombo.setEnabled(false);
 		downCombo.setEnabled(false);
-		spaceCombo.setEnabled(false);
 	}
 
 	public void enableKeyElements() {
@@ -458,12 +453,10 @@ public class ObjectPropertiesPanel extends JPanel {
 		right.setEnabled(true);
 		up.setEnabled(true);
 		down.setEnabled(true);
-		space.setEnabled(true);
 		leftCombo.setEnabled(true);
 		rightCombo.setEnabled(true);
 		upCombo.setEnabled(true);
 		downCombo.setEnabled(true);
-		spaceCombo.setEnabled(true);
 	}
 
 	public void enableTimeElements() {
@@ -505,8 +498,7 @@ public class ObjectPropertiesPanel extends JPanel {
 					keyActionMap.put(KeyEvent.VK_UP, keyActions[upCombo.getSelectedIndex()].toString());
 				if (down.isSelected())
 					keyActionMap.put(KeyEvent.VK_DOWN, keyActions[downCombo.getSelectedIndex()].toString());
-				if (space.isSelected())
-					keyActionMap.put(KeyEvent.VK_SPACE, keyActions[spaceCombo.getSelectedIndex()].toString());
+				
 			}
 
 			if (timeDependent.isSelected()) {
@@ -524,13 +516,17 @@ public class ObjectPropertiesPanel extends JPanel {
 			}
 			formData.setKeyActionMap(keyActionMap);
 			formData.setTimeActionArray(timeActionArray);
+			
 			formData.setColor(colorPanel.getBackground());
 			formData.setRotateable(rotateable.isSelected());
-			if (selectedFile != null && selectedFile.getPath() != null && !"".equalsIgnoreCase(selectedFile.getPath()))
+
+			formData.setFire(fire.isSelected());
+			if(selectedFile!=null && selectedFile.getPath()!=null && !"".equalsIgnoreCase(selectedFile.getPath()))
 				formData.setBackgroundLocation(selectedFile.getPath());
 			
 			logger.debug("Form data populated");
 		}
+		
 		return formData;
 	}
 

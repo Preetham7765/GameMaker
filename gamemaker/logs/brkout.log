@@ -1,0 +1,7 @@
+[DEBUG] 2018-10-07 16:14:11.293 [AWT-EventQueue-0] MainPanel - MainPanel constructed
+[DEBUG] 2018-10-07 16:14:11.308 [AWT-EventQueue-0] FormPanel - FormPanel constructed
+[DEBUG] 2018-10-07 16:14:11.308 [AWT-EventQueue-0] GamePanel - GamePanel constructed
+[DEBUG] 2018-10-07 16:14:28.851 [AWT-EventQueue-0] CollisionFormPanel - CollisionFormPanel constructed
+[DEBUG] 2018-10-07 16:20:28.149 [AWT-EventQueue-0] MainPanel - MainPanel constructed
+[DEBUG] 2018-10-07 16:20:28.165 [AWT-EventQueue-0] FormPanel - FormPanel constructed
+[DEBUG] 2018-10-07 16:20:28.165 [AWT-EventQueue-0] GamePanel - GamePanel constructed
