@@ -1,8 +1,6 @@
 package com.infrastructure;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Random;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,15 +16,12 @@ import com.commands.ReappearLeftCommand;
 import com.commands.ReappearRightCommand;
 
 public class Collider implements Serializable {
-    protected static Logger logger = LogManager.getLogger(Collider.class);
+	protected static Logger logger = LogManager.getLogger(Collider.class);
 	private AbstractComponent primaryComponent;
 	private AbstractComponent secondaryComponent;
 	private CollisionType primaryCollisionType;
 	private CollisionType secondaryCollisionType;
 	private Collision collision;
-	private ArrayList<Command> eventList;
-	private Random random;
-	
 
 	public Collider(AbstractComponent primaryComponent, AbstractComponent secondaryComponent,
 			CollisionType primaryCollisionType, CollisionType secondaryCollisionType, Collision collision) {
@@ -35,20 +30,18 @@ public class Collider implements Serializable {
 		this.primaryCollisionType = primaryCollisionType;
 		this.secondaryCollisionType = secondaryCollisionType;
 		this.collision = collision;
-		random = new Random();	
-		// this.eventList = eventList;
 	}
 
 	public void execute() {
-		
-		if(primaryComponent.getVisibility() && secondaryComponent.getVisibility() && collision.checkIntersectionBetweenElements(primaryComponent, secondaryComponent)) {
+
+		if (primaryComponent.getVisibility() && secondaryComponent.getVisibility()
+				&& collision.checkIntersectionBetweenElements(primaryComponent, secondaryComponent)) {
 			Command command = getCollisionAction(primaryComponent, primaryCollisionType);
 			if (primaryCollisionType == CollisionType.BOUNCE) {
 				Direction direction = collision.checkCollisionBetweenAbstractComponents(primaryComponent,
 						secondaryComponent);
 				changeDirectionsOnCollision(primaryComponent, direction);
-			}
-			else if(primaryCollisionType == CollisionType.CHANGE_DIRECTION) {
+			} else if (primaryCollisionType == CollisionType.CHANGE_DIRECTION) {
 				changeDirectionRandom(primaryComponent);
 			}
 			command.execute();
@@ -57,8 +50,7 @@ public class Collider implements Serializable {
 				Direction direction = collision.checkCollisionBetweenAbstractComponents(secondaryComponent,
 						primaryComponent);
 				changeDirectionsOnCollision(secondaryComponent, direction);
-			}
-			else if(secondaryCollisionType == CollisionType.CHANGE_DIRECTION) {
+			} else if (secondaryCollisionType == CollisionType.CHANGE_DIRECTION) {
 
 				changeDirectionRandom(secondaryComponent);
 			}
@@ -73,12 +65,12 @@ public class Collider implements Serializable {
 		if (collisionType == CollisionType.EXPLODE) {
 			return new ExplodeCommand(component);
 		}
-		if(collisionType == CollisionType.REAPPEAR_LEFT) {
+		if (collisionType == CollisionType.REAPPEAR_LEFT) {
 			return new ReappearLeftCommand(component);
 		}
-		if(collisionType == CollisionType.REAPPEAR_RIGHT) {
+		if (collisionType == CollisionType.REAPPEAR_RIGHT) {
 			return new ReappearRightCommand(component);
-		}	
+		}
 		return new NullCommand(component);
 	}
 
@@ -102,10 +94,10 @@ public class Collider implements Serializable {
 			changeVelYCommand.execute();
 		}
 	}
-	
+
 	private void changeDirectionRandom(AbstractComponent component) {
 		new ChangeDirection(component).execute();
-		
+
 	}
 
 	public AbstractComponent getPrimaryComponent() {
@@ -142,9 +134,36 @@ public class Collider implements Serializable {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return (primaryComponent.getComponentName() + " " + secondaryComponent.getComponentName() + " "
 				+ primaryCollisionType + " " + secondaryCollisionType);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+		}
+
+		if (!(o instanceof Collider)) {
+			return false;
+		}
+
+		Collider c = (Collider) o;
+
+		// Compare the data members and return accordingly
+
+		String priCompThis = primaryComponent.getComponentName().substring(0,
+				primaryComponent.getComponentName().length() - 2);
+		String priCompObj = c.primaryComponent.getComponentName().substring(0,
+				c.primaryComponent.getComponentName().length() - 2);
+
+		String secCompThis = secondaryComponent.getComponentName().substring(0,
+				secondaryComponent.getComponentName().length() - 2);
+		String secCompObj = c.secondaryComponent.getComponentName().substring(0,
+				c.secondaryComponent.getComponentName().length() - 2);
+
+		return priCompThis.equals(priCompObj) && secCompThis.equals(secCompObj);
+
 	}
 
 }

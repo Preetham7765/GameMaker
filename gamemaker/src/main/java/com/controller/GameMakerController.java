@@ -13,17 +13,17 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Random;
+import java.util.Set;
 
 import javax.swing.JFileChooser;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.commands.BulletCommand;
 import com.commands.ChangeDirection;
 import com.commands.Command;
 import com.commands.MoveDownCommand;
@@ -103,7 +103,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 			component.setX(x);
 			component.setY(y);
 			componentIdMap.put(component.getComponentName(), component);
-			allComponents.add(component); 
+			allComponents.add(component);
 			if (formData.getKeyActionMap() != null) {
 				for (Map.Entry<Integer, String> entry : formData.getKeyActionMap().entrySet()) {
 					Integer key = entry.getKey();
@@ -163,6 +163,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 		component.setColor(Color.BLACK);
 		component.setDrawable(new DrawRectColor());
 		component.setComponentName(name);
+		component.setBaseName(name);
 		componentIdMap.put(name + "_", component);
 		componentNames.add(name);
 		windowFrame.getGamePanel().addComponent(component);
@@ -179,8 +180,6 @@ public class GameMakerController implements ActionListener, MouseListener {
 			return new MoveLeftCommand(component);
 		case Constants.MOVE_RIGHT:
 			return new MoveRightCommand(component);
-		case Constants.FIRE:
-			return new BulletCommand(component);
 		default:
 			return null;
 		}
@@ -194,6 +193,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 		// component.setY(formData.getY());
 		if (formData != null) {
 			component.setComponentName(formData.getElementName() + "_" + Integer.toString(idCounter));
+			component.setBaseName(formData.getElementName());
 			component.setVelX(formData.getVelX());
 			component.setVelY(formData.getVelY());
 			component.setColor(formData.getColor());
@@ -225,7 +225,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 	public void createBullet(AbstractComponent parentComponent) {
 		ObjectProperties objectProperties = new ObjectProperties();
 		AbstractComponent bullet = new AbstractComponent(objectProperties);
-		bullet.setX(parentComponent.getX() + (int) (parentComponent.getWidth() / 2));
+		bullet.setX(parentComponent.getX() + (parentComponent.getWidth() / 2));
 		bullet.setY(parentComponent.getY());
 		bullet.setVelX(0);
 		bullet.setVelY(10);
@@ -289,14 +289,14 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 				windowFrame.load(in);
 
-				allComponents = (ArrayList<AbstractComponent>)in.readObject();
-				timeComponents = (ArrayList<AbstractComponent>)in.readObject();
-				componentIdMap = (HashMap<String,AbstractComponent>)in.readObject();
-				colliders = (ArrayList<Collider>)in.readObject();
-				keyActionMap = (HashMap<Integer, List<Command>>)in.readObject();
-				componentNames=(ArrayList<String>)in.readObject();
-				collectibles = (ArrayList<AbstractComponent>)in.readObject();
-				fireComponents = (ArrayList<AbstractComponent>)in.readObject();
+				allComponents = (ArrayList<AbstractComponent>) in.readObject();
+				timeComponents = (ArrayList<AbstractComponent>) in.readObject();
+				componentIdMap = (HashMap<String, AbstractComponent>) in.readObject();
+				colliders = (ArrayList<Collider>) in.readObject();
+				keyActionMap = (HashMap<Integer, List<Command>>) in.readObject();
+				componentNames = (ArrayList<String>) in.readObject();
+				collectibles = (ArrayList<AbstractComponent>) in.readObject();
+				fireComponents = (ArrayList<AbstractComponent>) in.readObject();
 
 				in.close();
 				fileIn.close();
@@ -363,7 +363,14 @@ public class GameMakerController implements ActionListener, MouseListener {
 			componentNames.add(formData.getElementName());
 			// addComponent();
 		} else if (componentType.equals(ComponentType.COLLISION)) {
-			CollisionFormPanel popUp = new CollisionFormPanel(componentNames.toArray(),colliders);
+			Set<Collider> colliderDisplay = new HashSet<>();
+
+			for (int i = 1; i < colliders.size(); i++) {
+				colliderDisplay.add(colliders.get(0));
+			}
+
+			CollisionFormPanel popUp = new CollisionFormPanel(componentNames.toArray(), colliderDisplay);
+
 			colliderData = popUp.getProperties();
 			addCollider();
 

@@ -2,23 +2,14 @@ package com.strategy;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
-
 import java.io.Serializable;
-
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 
 import com.infrastructure.AbstractComponent;
 import com.infrastructure.Drawable;
 
-public class DrawOvalColor implements Drawable, Serializable{
+public class DrawOvalColor implements Drawable, Serializable {
 
 	private static final long serialVersionUID = 2L;
 

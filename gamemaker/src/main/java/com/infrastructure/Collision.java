@@ -9,8 +9,6 @@ import java.io.Serializable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.controller.GameMakerController;
-
 public class Collision implements Serializable {
 	
 	protected static Logger logger = LogManager.getLogger(Collision.class);

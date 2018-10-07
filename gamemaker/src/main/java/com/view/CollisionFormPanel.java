@@ -3,10 +3,10 @@ package com.view;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Set;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -21,7 +21,6 @@ import com.infrastructure.Constants;
 
 public class CollisionFormPanel extends JPanel {
 	protected static Logger logger = LogManager.getLogger(CollisionFormPanel.class);
-	private FormView formData;
 	private ColliderData colliderData;
 	private Object[] dataList;
 	private JComboBox primaryElement;
@@ -29,16 +28,13 @@ public class CollisionFormPanel extends JPanel {
 	private JComboBox primaryAction;
 	private JComboBox secondaryAction;
 
-	private JButton addSound;
-	private JButton addCollision;
-
 	private Object[] collisionData;
 
-	private ArrayList<Collider> collidersList;
+	private Set<Collider> collidersList;
 
 	private int result;
 
-	public CollisionFormPanel(Object[] dataList, ArrayList<Collider> colliders) {
+	public CollisionFormPanel(Object[] dataList, Set<Collider> colliders) {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.dataList = dataList;
 		this.collidersList = colliders;
@@ -48,7 +44,7 @@ public class CollisionFormPanel extends JPanel {
 		Object[] options = { Constants.OK };
 		result = JOptionPane.showOptionDialog(null, this, Constants.ADD_COLLISION, JOptionPane.OK_OPTION,
 				JOptionPane.PLAIN_MESSAGE, null, options, null);
-		
+
 		logger.debug("CollisionFormPanel constructed");
 	}
 
@@ -93,19 +89,22 @@ public class CollisionFormPanel extends JPanel {
 		int row = 1;
 
 		if (!collidersList.isEmpty()) {
-			for (i = 0; i < collidersList.size(); i++) {
-				Collider collider = collidersList.get(i);
+			
+			Iterator<Collider> itr = collidersList.iterator();
+			while (itr.hasNext()) 
+			 {
+				Collider collider = itr.next();
 
 				c.gridx = 0;
 				c.gridy = row;
 				JComboBox priEle = new JComboBox(dataList);
-				priEle.setSelectedItem(collider.getPrimaryComponent().getComponentName());
+				priEle.setSelectedItem(collider.getPrimaryComponent().getBaseName());
 				collision.add(priEle, c);
 
 				c.gridx = 1;
 				c.gridy = row;
 				JComboBox secEle = new JComboBox(dataList);
-				secEle.setSelectedItem(collider.getSecondaryComponent().getComponentName());
+				secEle.setSelectedItem(collider.getSecondaryComponent().getBaseName());
 				collision.add(secEle, c);
 
 				c.gridx = 2;
@@ -145,9 +144,9 @@ public class CollisionFormPanel extends JPanel {
 
 	public ColliderData getProperties() {
 		if (result == JOptionPane.OK_OPTION) {
-			
+
 			logger.debug("Collision added");
-			
+
 			colliderData.setPrimaryElement((String) primaryElement.getSelectedItem());
 			colliderData.setSecondaryElement((String) secondaryElement.getSelectedItem());
 			colliderData.setPrimaryAct((CollisionType) primaryAction.getSelectedItem());
