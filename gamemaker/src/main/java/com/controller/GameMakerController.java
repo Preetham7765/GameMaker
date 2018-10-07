@@ -257,6 +257,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 				out.writeObject(componentIdMap);
 				out.writeObject(colliders);
 				out.writeObject(keyActionMap);
+				out.writeObject(componentNames);
 
 				out.close();
 				fileOut.close();
@@ -283,6 +284,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 				componentIdMap = (HashMap<String,AbstractComponent>)in.readObject();
 				colliders = (ArrayList<Collider>)in.readObject();
 				keyActionMap = (HashMap<Integer, List<Command>>)in.readObject();
+				componentNames=(ArrayList<String>)in.readObject();
 
 				in.close();
 				fileIn.close();
@@ -347,7 +349,8 @@ public class GameMakerController implements ActionListener, MouseListener {
 			componentNames.add(formData.getElementName());
 			// addComponent();
 		} else if (componentType.equals(ComponentType.COLLISION)) {
-			CollisionFormPanel popUp = new CollisionFormPanel(componentNames.toArray());
+			CollisionFormPanel popUp = new CollisionFormPanel(componentNames.toArray(),colliders);
+			System.out.println("vrishali "+colliders);
 			colliderData = popUp.getProperties();
 			addCollider();
 
