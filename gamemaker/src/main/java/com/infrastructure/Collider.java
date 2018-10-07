@@ -50,8 +50,6 @@ public class Collider implements Serializable {
 				changeDirectionsOnCollision(primaryComponent, direction);
 			}
 			else if(primaryCollisionType == CollisionType.CHANGE_DIRECTION) {
-//				primaryComponent.setX(primaryComponent.getX() - primaryComponent.getVelX());
-//				primaryComponent.setY(primaryComponent.getY() - primaryComponent.getVelY());
 				changeDirectionRandom(primaryComponent);
 			}
 			command.execute();

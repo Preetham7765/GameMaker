@@ -19,6 +19,10 @@ public class ChangeDirection implements Command{
 
 	@Override
 	public void execute() {
+		
+		component.setX(component.getX() - component.getVelX());
+		component.setY(component.getY() - component.getVelY());
+		
 		Direction oldDirection = component.getDirection();
 		int index = Arrays.asList(directions).indexOf(oldDirection);
 		System.out.println("index: " + index);
