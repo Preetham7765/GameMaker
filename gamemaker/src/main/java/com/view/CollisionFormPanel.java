@@ -34,10 +34,10 @@ public class CollisionFormPanel extends JPanel {
 
 	private int result;
 
-	public CollisionFormPanel(Object[] dataList, Set<Collider> colliders) {
+	public CollisionFormPanel(Object[] dataList) {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.dataList = dataList;
-		this.collidersList = colliders;
+		//this.collidersList = colliders;
 		colliderData = new ColliderData();
 		createFormElements();
 		this.add(addCollisionPanel());
@@ -88,7 +88,7 @@ public class CollisionFormPanel extends JPanel {
 		int i = 0;
 		int row = 1;
 
-		if (!collidersList.isEmpty()) {
+		/*if (!collidersList.isEmpty()) {
 			
 			Iterator<Collider> itr = collidersList.iterator();
 			while (itr.hasNext()) 
@@ -121,7 +121,7 @@ public class CollisionFormPanel extends JPanel {
 
 				row++;
 			}
-		}
+		}*/
 
 		c.gridx = 0;
 		c.gridy = row;
