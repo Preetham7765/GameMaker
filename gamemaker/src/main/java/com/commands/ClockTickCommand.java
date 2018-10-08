@@ -1,21 +1,17 @@
 package com.commands;
 
 import com.components.Clock;
+import com.infrastructure.Constants;
 
 public class ClockTickCommand implements Command {
 
-	Clock clock;
-	int oldSeconds;
-	int oldMinutes;
+	private Clock clock;
 
 	/**
 	 * Store the current state then update
 	 */
 	public ClockTickCommand(Clock clock) {
 		this.clock = clock;		
-		oldSeconds = clock.getSeconds();
-		oldMinutes = clock.getMinutes();
-		execute();
 	}
 
 	/**
@@ -23,7 +19,7 @@ public class ClockTickCommand implements Command {
 	 */
 	@Override
 	public void execute() {
-		clock.performAction();
+		clock.setMilisecondsElapsed(clock.getMilisecondsElapsed() + Constants.TIMER_COUNT);
 	}
 
 	/**
@@ -31,12 +27,6 @@ public class ClockTickCommand implements Command {
 	 */
 	@Override
 	public void undo() {
-//		clock.setSeconds(oldSeconds);
-//		clock.setMinutes(oldMinutes);
+		clock.setMilisecondsElapsed(clock.getMilisecondsElapsed() - Constants.TIMER_COUNT);
 	}
-	
-//	public String save() {
-//		return "ClockTickCommand Seconds= " + oldSeconds +" Minutes= "+oldMinutes+" Count= "+oldCount;
-//	}
-
 }

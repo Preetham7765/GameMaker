@@ -4,6 +4,10 @@ import com.infrastructure.AbstractComponent;
 
 public class CollectedCommand implements Command {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3848015843967223091L;
 	private AbstractComponent abstractComponent;
 
 	public CollectedCommand(AbstractComponent abstractComponent) {
@@ -19,12 +23,12 @@ public class CollectedCommand implements Command {
 //				ScreenController.brickList.remove(i);
 //			}
 //		}
-		this.abstractComponent.performAction();
+		//this.abstractComponent.performAction();
 	}
 
 	@Override
 	public void undo() {
-		this.abstractComponent.performAction();
+		//this.abstractComponent.performAction();
 	}
 	
 //	public String save() {

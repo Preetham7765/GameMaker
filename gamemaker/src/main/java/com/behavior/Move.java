@@ -1,10 +1,10 @@
 package com.behavior;
 
-import com.infrastructure.ActionBehavior;
+//import com.infrastructure.ActionBehavior;
 import com.infrastructure.Constants;
 import com.infrastructure.ObjectProperties;
 
-public class Move implements ActionBehavior {
+public class Move{
 	
 	private ObjectProperties objectProperties;
 	
@@ -13,7 +13,7 @@ public class Move implements ActionBehavior {
 		this.objectProperties = objectProperties;
 	}
 
-	@Override
+	/*@Override
 	public void performAction() {
 
 //		System.out.println(objectProperties.getVelX() + " " + objectProperties.getVelY());
@@ -25,6 +25,6 @@ public class Move implements ActionBehavior {
 		objectProperties.setY(objectProperties.getVelY() + objectProperties.getY());
 						
 //		System.out.println(objectProperties.getVelX() + " " + objectProperties.getVelY());
-	}
+	}*/
 	
 }

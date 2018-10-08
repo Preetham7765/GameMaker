@@ -1,181 +1,209 @@
+
 package com.view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.util.HashMap;
-import java.io.File;
+import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
-import com.controller.GameMakerController;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.infrastructure.ComponentType;
-
-import com.infrastructure.AbstractComponent;
-
 import com.infrastructure.Constants;
+import com.infrastructure.IAddActionListener;
 import com.infrastructure.IComposite;
-import com.infrastructure.IPanel;
 import com.infrastructure.ObjectProperties;
 
 @SuppressWarnings("serial")
-public class FormPanel extends JPanel implements IComposite, IPanel {
-	
-	public ObjectProperties selected = new ObjectProperties();
-		
-	public ObjectProperties getSelected() {
-		return selected;
-	}
+public class FormPanel extends JPanel implements IComposite, IAddActionListener {
 
-	public void setSelected(ObjectProperties selected) {
-		this.selected = selected;
-	}
+	protected static Logger logger = LogManager.getLogger(FormPanel.class);
 
-	private GameMakerController controller;
-	private WindowFrame windowFrame;
-	
+	private ObjectProperties active;
+	private List<ObjectPanelButton> objectButtons; // should we need it lets see?
+	private String backgroundPath;
+	GridBagConstraints c = new GridBagConstraints();
+
 	public FormPanel(WindowFrame window) {
 		super();
-		this.windowFrame = window;
-		setBorder( BorderFactory.createLineBorder(Color.red));
+		this.objectButtons = new ArrayList<>();
+		this.active = new ObjectProperties();
+		setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setMaximumSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
 		setMinimumSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
-		setPreferredSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));	
-		setBackground(Color.BLACK);
-	}
-	
-	public String fileExplorer()
-	{
-		JFileChooser chooser = new JFileChooser();
-		chooser.setCurrentDirectory(new File("."));
-		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-		int returnVal = chooser.showOpenDialog(this);
-		if(returnVal == JFileChooser.APPROVE_OPTION) {
-			File file = chooser.getSelectedFile();
-			String path = file.getAbsolutePath();
-			System.out.println("path = " + path);
-			return path;
-		}
-		System.out.println("Return NULL");
-		return null;
-		
-	}
-	
+		setPreferredSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
 
-
-	public void createButtons() {
-
-		JLabel backgroundText = new JLabel("Choose your background");
-		backgroundText.setForeground(Color.red);
-		backgroundText.setFont(new Font("Helvetica", Font.BOLD, 20));
-		this.add(Box.createRigidArea(new Dimension(10, 50)));
-		this.add(backgroundText);
-		createSetBackgroundButton();
-
-		JLabel select_object = new JLabel("Select any object to add to GamePanel");
-		select_object.setForeground(Color.red);
-		select_object.setFont(new Font("Helvetica", Font.BOLD, 15));
-		this.add(Box.createRigidArea(new Dimension(10, 50)));
-		this.add(select_object);
-		createBallButton();
-		createBrickButton();
-		createPaddleButton();
-		createFireButton();
-		
-		JLabel gameFunc = new JLabel("Game Options:");
-		gameFunc.setForeground(Color.red);
-		gameFunc.setFont(new Font("Helvetica", Font.BOLD, 15));
-		this.add(Box.createRigidArea(new Dimension(10, 50)));
-		this.add(gameFunc);
-		createLoadButton();
-		createSaveButton();
-		createPlayButton();
-	}
-	
-	public void createSetBackgroundButton() {
-		ObjectPanelButton setBackgroundButton = new ObjectPanelButton(ComponentType.BACKGROUND, null, windowFrame);
-		this.add(Box.createRigidArea(new Dimension(30, 30)));
-		this.add(setBackgroundButton);
+		logger.debug("FormPanel constructed");
 	}
 
-	private void createFireButton() {
-		ObjectPanelButton fireButton = new ObjectPanelButton(ComponentType.FIRE, Color.YELLOW, windowFrame);
-		fireButton.setBackground(Color.yellow);
-		this.add(Box.createRigidArea(new Dimension(30, 30)));
-		this.add(fireButton);
+	public ObjectProperties getActive() {
+		return active;
 	}
 
-	private void createPaddleButton() {
-		ObjectPanelButton paddleButton = new ObjectPanelButton(ComponentType.PADDLE, Color.red, windowFrame );
-		paddleButton.setBackground(Color.red);
-		this.add(Box.createRigidArea(new Dimension(30, 30)));
-		this.add(paddleButton);
+	public void setSelected(ObjectProperties selected) {
+		this.active = selected;
 	}
 
-	private void createBrickButton() {
-		ObjectPanelButton brickButton = new ObjectPanelButton(ComponentType.BRICK, Color.blue, windowFrame);
-		brickButton.setBackground(Color.blue);
-		this.add(Box.createRigidArea(new Dimension(30, 30)));
-		this.add(brickButton);		
+	public BufferedImage resize(BufferedImage img, int width, int height) {
+		Image tmp = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2d = resized.createGraphics();
+		g2d.drawImage(tmp, 0, 0, null);
+		g2d.dispose();
+
+		return resized;
 	}
 
-	private void createBallButton() {
-		ObjectPanelButton ballButton = new ObjectPanelButton(ComponentType.BALL, Color.green, windowFrame);
-		ballButton.setBackground(Color.green);
-		this.add(Box.createRigidArea(new Dimension(30, 30)));
-		this.add(ballButton);				
+	public void initializeFormPanel() {
+
+		this.setLayout(new BorderLayout());
+
+		JPanel designer = new JPanel();
+
+		GridBagLayout gridbag = new GridBagLayout();
+		designer.setLayout(gridbag);
+		c.insets = new Insets(10, 10, 10, 10);
+		c.anchor = GridBagConstraints.NORTHWEST;
+		c.fill = GridBagConstraints.HORIZONTAL;
+
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 2;
+		JLabel designGame = new JLabel(Constants.DESIGNER);
+		designGame.setFont(new Font(Constants.HELVETICA, Font.BOLD, 20));
+		designGame.setHorizontalAlignment(JLabel.CENTER);
+		designer.add(designGame, c);
+
+		c.gridwidth = 1;
+		c.gridx = 0;
+		c.gridy = 1;
+		designer.add(createSetBackgroundButton(), c);
+
+		c.gridx = 0;
+		c.gridy = 2;
+		designer.add(createButton(), c);
+
+		c.gridx = 0;
+		c.gridy = 3;
+		designer.add(createCollisionButton(), c);
+
+		this.add(designer, BorderLayout.NORTH);
+
+		JPanel player = new JPanel();
+		player.setLayout(gridbag);
+		c.insets = new Insets(10, 10, 10, 10);
+		c.anchor = GridBagConstraints.NORTHWEST;
+		c.fill = GridBagConstraints.HORIZONTAL;
+
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 2;
+		JLabel playGame = new JLabel(Constants.PLAYER);
+		playGame.setFont(new Font(Constants.HELVETICA, Font.BOLD, 20));
+		playGame.setHorizontalAlignment(JLabel.CENTER);
+		player.add(playGame, c);
+
+		c.gridx = 0;
+		c.gridy = 1;
+		c.gridwidth = 1;
+		player.add(createLoadButton(), c);
+
+		c.gridx = 0;
+		c.gridy = 2;
+		player.add(createSaveButton(), c);
+
+		c.gridx = 0;
+		c.gridy = 3;
+		player.add(createPlayButton(), c);
+
+		c.gridx = 0;
+		c.gridy = 4;
+		player.add(createPauseButton(), c);
+
+		this.add(player, BorderLayout.CENTER);
 	}
-	
-	private void createLoadButton() {
-		ObjectPanelButton LoadButton = new ObjectPanelButton(ComponentType.LOAD, Color.CYAN, windowFrame);
-		this.add(Box.createRigidArea(new Dimension(30, 30)));
-		this.add(LoadButton);				
+
+	public ObjectProperties getActiveObjectProperties() {
+		return active;
 	}
-	
-	private void createSaveButton() {
-		ObjectPanelButton saveButton = new ObjectPanelButton(ComponentType.SAVE, Color.BLUE, windowFrame);
-		this.add(Box.createRigidArea(new Dimension(30, 30)));
-		this.add(saveButton);				
+
+	public ObjectPanelButton createSetBackgroundButton() {
+		ObjectPanelButton button = new ObjectPanelButton(ComponentType.BACKGROUND, null);
+		this.objectButtons.add(button);
+		button.setPreferredSize(new Dimension(150, 50));
+		return button;
 	}
-	
-	private void createPlayButton() {
-		ObjectPanelButton playButton = new ObjectPanelButton(ComponentType.PLAY, Color.GREEN, windowFrame);
-		this.add(Box.createRigidArea(new Dimension(30, 30)));
-		this.add(playButton);				
+
+	private ObjectPanelButton createButton() {
+		ObjectPanelButton button = new ObjectPanelButton(ComponentType.ELEMENT, Color.YELLOW);
+		this.objectButtons.add(button);
+		button.setPreferredSize(new Dimension(150, 50));
+		return button;
+	}
+
+	private ObjectPanelButton createCollisionButton() {
+		ObjectPanelButton collisionButton = new ObjectPanelButton(ComponentType.COLLISION, Color.YELLOW);
+		this.objectButtons.add(collisionButton);
+		collisionButton.setPreferredSize(new Dimension(150, 50));
+		return collisionButton;
+	}
+
+	private ObjectPanelButton createLoadButton() {
+		ObjectPanelButton loadButton = new ObjectPanelButton(ComponentType.LOAD, Color.CYAN);
+		loadButton.setPreferredSize(new Dimension(150, 50));
+		this.objectButtons.add(loadButton);
+		return loadButton;
+	}
+
+	private ObjectPanelButton createSaveButton() {
+		ObjectPanelButton saveButton = new ObjectPanelButton(ComponentType.SAVE, Color.BLUE);
+		saveButton.setPreferredSize(new Dimension(150, 50));
+		this.objectButtons.add(saveButton);
+		return saveButton;
+	}
+
+	private ObjectPanelButton createPlayButton() {
+		ObjectPanelButton playButton = new ObjectPanelButton(ComponentType.PLAY, Color.GREEN);
+		playButton.setPreferredSize(new Dimension(150, 50));
+		this.objectButtons.add(playButton);
+		return playButton;
+	}
+
+	private ObjectPanelButton createPauseButton() {
+		ObjectPanelButton button = new ObjectPanelButton(ComponentType.PAUSE, Color.GREEN);
+		button.setPreferredSize(new Dimension(150, 50));
+		this.objectButtons.add(button);
+		return button;
 	}
 
 	public void draw(Graphics g) {
 	}
 
-	public void addComponent(IComposite composite) throws Exception {
-		throw new Exception();
+	public String getBackgroundPath() {
+		return backgroundPath;
 	}
 
-	public void removeComponent(IComposite composite) throws Exception {
-		throw new Exception();
-	}
-
-	@Override
-	public void addComponent(AbstractComponent asbtractComponent) throws Exception {
-		throw new Exception();		
-	}
-
-	@Override
-	public void removeComponent(AbstractComponent asbtractComponent) throws Exception {
-		throw new Exception();		
+	public void setBackground(String background) {
+		this.backgroundPath = background;
 	}
 
 	@Override
@@ -186,4 +214,10 @@ public class FormPanel extends JPanel implements IComposite, IPanel {
 	public void load(ObjectInputStream ip) {
 	}
 
+	@Override
+	public void addActionListener(ActionListener listener) {
+		for (ObjectPanelButton button : objectButtons) {
+			button.addActionListener(listener);
+		}
+	}
 }

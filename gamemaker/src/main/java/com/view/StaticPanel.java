@@ -3,6 +3,7 @@ package com.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -11,6 +12,9 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.components.Clock;
 import com.controller.GamePlayController;
@@ -21,15 +25,15 @@ import com.infrastructure.IPanel;
 import com.infrastructure.ObjectProperties;
 import com.infrastructure.StaticPanelButton; 
 
-public class StaticPanel extends JPanel implements IComposite, IPanel{
-
+public class StaticPanel extends JPanel implements IComposite{
+	protected static Logger logger = LogManager.getLogger(StaticPanel.class);
 	private WindowFrame windowFrame;
-	public ObjectProperties selected = new ObjectProperties();
+	private ObjectProperties selected = new ObjectProperties();
 	private ArrayList<AbstractComponent> compositeList;
 	private GamePlayController gamePlayController;
 	
 	public StaticPanel(WindowFrame window)
-	{
+	{ 
 		super();
 		compositeList=new ArrayList<>();
 		this.windowFrame=window;
@@ -38,9 +42,7 @@ public class StaticPanel extends JPanel implements IComposite, IPanel{
 		setMaximumSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
 		setMinimumSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
 		setPreferredSize(new Dimension(Constants.FORM_PANEL_WIDTH, Constants.FORM_PANEL_HEIGHT));
-		//setBackground(Color.BLACK);
-		
-		
+		logger.debug("StaticPanel constructed");
 	}
 	
 	public void createButtons(GamePlayController gamePlayController) {
@@ -98,17 +100,6 @@ public class StaticPanel extends JPanel implements IComposite, IPanel{
 		this.selected = selected;
 	}
 
-	@Override
-	public void addComponent(IComposite composite) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void removeComponent(IComposite composite) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void draw(Graphics g) {
@@ -116,17 +107,6 @@ public class StaticPanel extends JPanel implements IComposite, IPanel{
 		repaint();
 	}
 
-	@Override
-	public void addComponent(AbstractComponent asbtractComponent) throws Exception {
-		 compositeList.add(asbtractComponent);
-		
-	}
-
-	@Override
-	public void removeComponent(AbstractComponent asbtractComponent) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	@Override
 	public void paintComponent(Graphics g)
@@ -147,6 +127,12 @@ public class StaticPanel extends JPanel implements IComposite, IPanel{
 	@Override
 	public void load(ObjectInputStream ip) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	public void addComponent(AbstractComponent component) {
+		// TODO Auto-generated method stub
+		compositeList.add(component);
 		
 	}
 }

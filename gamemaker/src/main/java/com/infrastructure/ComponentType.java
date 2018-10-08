@@ -10,5 +10,9 @@ public enum ComponentType {
 	BACKGROUND,
 	LOAD,
 	SAVE,
-	PLAY;
+	PLAY,
+	ELEMENT,
+	STATIC,
+	COLLISION,
+	PAUSE;
 }
