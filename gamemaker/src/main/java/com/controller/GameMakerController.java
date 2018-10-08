@@ -59,6 +59,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 	private ArrayList<AbstractComponent> timeComponents;
 	private ArrayList<AbstractComponent> fireComponents;
 	private ArrayList<AbstractComponent> collectibles;
+	private ArrayList<AbstractComponent> playerObjects;
 	private ArrayList<AbstractComponent> bullets;
 	private ArrayList<Collider> colliders;
 	private ArrayList<String> componentNames;
@@ -83,6 +84,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 		rotatorList = new ArrayList<>();
 		fireComponents = new ArrayList<>();
 		bullets = new ArrayList<>();
+		playerObjects = new ArrayList<>();
 		componentNames = new ArrayList<>();
 		this.gameTimer = gameTimer;
 		this.collision = new Collision();
@@ -100,7 +102,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 			component.setX(x);
 			component.setY(y);
 			componentIdMap.put(component.getComponentName(), component);
-			allComponents.add(component);
+			allComponents.add(component); 
 			if (formData.getKeyActionMap() != null) {
 				for (Map.Entry<Integer, String> entry : formData.getKeyActionMap().entrySet()) {
 					Integer key = entry.getKey();
@@ -113,6 +115,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 					}
 				}
 				component.setPlayerObject(true);
+				playerObjects.add(component);
 			} else if (formData.getTimeActionArray() != null) {
 
 				if (formData.getTimeActionArray().contains(Constants.FREE)) {
@@ -265,6 +268,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 				out.writeObject(componentNames);
 				out.writeObject(collectibles);
 				out.writeObject(fireComponents);
+				out.writeObject(playerObjects);
 
 				out.close();
 				fileOut.close();
@@ -294,6 +298,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 				componentNames = (ArrayList<String>) in.readObject();
 				collectibles = (ArrayList<AbstractComponent>) in.readObject();
 				fireComponents = (ArrayList<AbstractComponent>) in.readObject();
+				playerObjects = (ArrayList<AbstractComponent>) in.readObject();
 
 				in.close();
 				fileIn.close();
@@ -533,5 +538,15 @@ public class GameMakerController implements ActionListener, MouseListener {
 	public void setTotalCollectibles(int totalCollectibles) {
 		this.totalCollectibles = totalCollectibles;
 	}
+
+	public ArrayList<AbstractComponent> getPlayerObjects() {
+		return playerObjects;
+	}
+
+	public void setPlayerObjects(ArrayList<AbstractComponent> playerObjects) {
+		this.playerObjects = playerObjects;
+	}
+	
+	
 
 }

@@ -45,7 +45,7 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 	private WindowFrame windowFrame;
 	private Deque<Command> commandQueue;
 	private int collectiblesCollected = 0;
-	private boolean collectibleExists = false;
+	private int players =0;
 	private GameTimer gameTimer;
 	private GameMakerController gameMakerController;
 	private Collision collisionChecker;
@@ -132,30 +132,31 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 			new MoveCommand(component).execute();
 		}
 
-		/*if (gameMakerController.getTotalCollectibles() != 0) {
+		//chack game over condition for collectibles
+		if (gameMakerController.getCollectibles().size() != 0) {
 			collectiblesCollected = 0;
 			for (AbstractComponent collectible : gameMakerController.getCollectibles()) {
 				if (!collectible.getVisibility()) {
 					collectiblesCollected++;
 				}
 			}
-			if (collectiblesCollected == gameMakerController.getTotalCollectibles()) {
+			if (collectiblesCollected == gameMakerController.getCollectibles().size()) {
 				gameOver();
 			}
-		}*/
-			collectiblesCollected = 0;
-			for (AbstractComponent object : gameMakerController.getAllComponents()) {
-				if (object.isCollectible() && !object.getVisibility()) {
-					collectiblesCollected++;
-					collectibleExists = true;
-				}
-				if(object.isPlayerObject() && !object.getVisibility()) {
-					gameOver();
+		}
+		
+		//check game over condition for player.
+		if(gameMakerController.getPlayerObjects().size() != 0) {
+			for (AbstractComponent player : gameMakerController.getPlayerObjects()) {
+				if (!player.getVisibility()) {
+					players ++;
 				}
 			}
-			if (collectiblesCollected == gameMakerController.getTotalCollectibles() && collectibleExists) {
-					gameOver();
+			if(players == gameMakerController.getPlayerObjects().size()) {
+				gameOver();
 			}
+		}
+			
 		windowFrame.draw(null);
 	}
 
