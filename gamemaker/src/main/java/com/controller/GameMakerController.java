@@ -76,10 +76,21 @@ public class GameMakerController implements ActionListener, MouseListener {
 	private int idCounter;
 	private boolean gameStarted;
 
-	public GameMakerController() {}
+	public GameMakerController() {
+		init();
+	}
 	
 	public GameMakerController(WindowFrame windowFrame, GameTimer gameTimer) {
 		this.windowFrame = windowFrame;
+		this.gameTimer = gameTimer;
+		init();
+		initBounds("TOPWALL", 0, 1, Constants.GAME_PANEL_WIDTH, 2);
+		initBounds("LEFTWALL", 1, 0, 2, Constants.GAME_PANEL_HEIGHT);
+		initBounds("BOTTOMWALL", 0, Constants.GAME_PANEL_HEIGHT, Constants.GAME_PANEL_WIDTH, 2);
+		initBounds("RIGHTWALL", Constants.GAME_PANEL_WIDTH, 0, 2, Constants.GAME_PANEL_HEIGHT);
+	}
+	
+	public void init() {
 		allComponents = new ArrayList<>();
 		timeComponents = new ArrayList<>();
 		colliders = new ArrayList<>();
@@ -91,13 +102,8 @@ public class GameMakerController implements ActionListener, MouseListener {
 		bullets = new ArrayList<>();
 		playerObjects = new ArrayList<>();
 		componentNames = new ArrayList<>();
-		this.gameTimer = gameTimer;
-		this.collision = new Collision();
 		this.gameStarted = false;
-		initBounds("TOPWALL", 0, 1, Constants.GAME_PANEL_WIDTH, 2);
-		initBounds("LEFTWALL", 1, 0, 2, Constants.GAME_PANEL_HEIGHT);
-		initBounds("BOTTOMWALL", 0, Constants.GAME_PANEL_HEIGHT, Constants.GAME_PANEL_WIDTH, 2);
-		initBounds("RIGHTWALL", Constants.GAME_PANEL_WIDTH, 0, 2, Constants.GAME_PANEL_HEIGHT);
+		this.collision = new Collision();
 	}
 
 	public void addComponent(int x, int y) {
