@@ -74,6 +74,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 	private int score;
 	private int totalCollectibles = 0;
 	private int idCounter;
+	private boolean gameStarted;
 
 	public GameMakerController() {}
 	
@@ -92,6 +93,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 		componentNames = new ArrayList<>();
 		this.gameTimer = gameTimer;
 		this.collision = new Collision();
+		this.gameStarted = false;
 		initBounds("TOPWALL", 0, 1, Constants.GAME_PANEL_WIDTH, 2);
 		initBounds("LEFTWALL", 1, 0, 2, Constants.GAME_PANEL_HEIGHT);
 		initBounds("BOTTOMWALL", 0, Constants.GAME_PANEL_HEIGHT, Constants.GAME_PANEL_WIDTH, 2);
@@ -106,7 +108,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 			component.setX(x);
 			component.setY(y);
 			componentIdMap.put(component.getComponentName(), component);
-			allComponents.add(component); 
+			allComponents.add(component);
 			if (formData.getKeyActionMap() != null) {
 				for (Map.Entry<Integer, String> entry : formData.getKeyActionMap().entrySet()) {
 					Integer key = entry.getKey();
@@ -319,7 +321,6 @@ public class GameMakerController implements ActionListener, MouseListener {
 		List<AbstractComponent> components = new ArrayList<>();
 
 		for (Entry<String, AbstractComponent> component : componentIdMap.entrySet()) {
-
 			if (component.getKey().startsWith(name + "_")) {
 				components.add(component.getValue());
 			}
@@ -347,6 +348,8 @@ public class GameMakerController implements ActionListener, MouseListener {
 			gameTimer.registerObserver(gamePlayController);
 			windowFrame.getGamePanel().addKeyListener(gamePlayController);
 			windowFrame.getGamePanel().requestFocus();
+			this.gameStarted = true;
+
 		}
 
 		else if (componentType.equals(ComponentType.SAVE)) {
@@ -371,35 +374,6 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 		} else if (componentType.equals(ComponentType.COLLISION)) 
 		{
-			/*Set<Collider> colliderDisplay = new HashSet<>();
-			//System.out.println(colliders.get(0).equals(colliders.get(1)));
-			if(!colliders.isEmpty())
-			{
-				colliderDisplay.add(colliders.get(0));
-				for(int i=1;i<colliders.size();i++)
-				{
-					System.out.println("for");
-					Collider c=colliders.get(i);
-					Iterator itr=colliderDisplay.iterator();
-					Boolean flag=true;
-					Collider obj=null;
-					while(itr.hasNext())
-					{
-						obj=(Collider)itr.next();
-						if(c.equals(obj))
-						{
-							flag=false;
-							break;
-						}
-						System.out.println(flag);
-						
-						
-					}
-					if(flag==true)
-						colliderDisplay.add(obj);
-					if(!colliderDisplay.contains(colliders.get(i)))
-					colliderDisplay.add(colliders.get(i));
-				}}*/
 
 			CollisionFormPanel popUp = new CollisionFormPanel(componentNames.toArray());
 
@@ -415,16 +389,15 @@ public class GameMakerController implements ActionListener, MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 
-		int x = arg0.getX();
-		int y = arg0.getY();
-		//			selectedComponent.setX(x);
-		//			selectedComponent.setY(y);
+		if (!this.gameStarted) {
+			int x = arg0.getX();
+			int y = arg0.getY();
+			
+			addComponent(x, y);
 
-
-		addComponent(x,y);
-
-		windowFrame.getGamePanel().addComponent(component);
-		windowFrame.draw(null);
+			windowFrame.getGamePanel().addComponent(component);
+			windowFrame.draw(null);
+		}
 	}
 
 	@Override

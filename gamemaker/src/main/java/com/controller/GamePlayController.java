@@ -49,8 +49,6 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 	private GameTimer gameTimer;
 	private GameMakerController gameMakerController;
 	private Collision collisionChecker;
-	private Random random;
-	private Direction[] directions = { Direction.LEFT, Direction.RIGHT, Direction.UP, Direction.DOWN };
 
 	public GamePlayController(WindowFrame windowFrame, GameTimer gameTimer, GameMakerController gameMakerController) {
 		this.gameTimer = gameTimer;
@@ -58,7 +56,6 @@ public class GamePlayController implements Observer, KeyListener, ActionListener
 		this.windowFrame = windowFrame;
 		this.gameMakerController = gameMakerController;
 		collisionChecker = new Collision();
-		random = new Random();
 	}
 
 	/*
