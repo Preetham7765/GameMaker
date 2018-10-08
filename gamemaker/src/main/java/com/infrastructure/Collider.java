@@ -1,7 +1,6 @@
 package com.infrastructure;
 
 import java.io.Serializable;
-import java.util.Random;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,7 +22,6 @@ public class Collider implements Serializable {
 	private CollisionType primaryCollisionType;
 	private CollisionType secondaryCollisionType;
 	private Collision collision;
-	private Random random;
 
 	public Collider(AbstractComponent primaryComponent, AbstractComponent secondaryComponent,
 			CollisionType primaryCollisionType, CollisionType secondaryCollisionType, Collision collision) {
@@ -32,7 +30,6 @@ public class Collider implements Serializable {
 		this.primaryCollisionType = primaryCollisionType;
 		this.secondaryCollisionType = secondaryCollisionType;
 		this.collision = collision;
-		random = new Random();
 	}
 
 	public void execute() {
@@ -53,6 +50,9 @@ public class Collider implements Serializable {
 				Direction direction = collision.checkCollisionBetweenAbstractComponents(secondaryComponent,
 						primaryComponent);
 				changeDirectionsOnCollision(secondaryComponent, direction);
+			} else if (secondaryCollisionType == CollisionType.CHANGE_DIRECTION) {
+
+				changeDirectionRandom(secondaryComponent);
 			}
 			command.execute();
 		}

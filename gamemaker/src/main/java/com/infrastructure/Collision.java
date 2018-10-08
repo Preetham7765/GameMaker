@@ -24,12 +24,14 @@ public class Collision implements Serializable {
 	
 	public boolean checkIntersectionBetweenElements(AbstractComponent component1, AbstractComponent component2) {
 
-		RectangularShape shape1 = getDims(component1);
-		RectangularShape shape2 = getDims(component2);
-		 
-		Area areaA = new Area(shape1);
-		areaA.intersect(new Area(shape2));
-		return !areaA.isEmpty();
+//		RectangularShape shape1 = getDims(component1);
+//		RectangularShape shape2 = getDims(component2);
+//		 
+//		Area areaA = new Area(shape1);
+//		areaA.intersect(new Area(shape2));
+//		return !areaA.isEmpty();
+		
+		return component1.getBounds().intersects(component2.getBounds());
 		
 	}
 	
