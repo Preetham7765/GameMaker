@@ -11,6 +11,7 @@ public class AbstractComponent implements IComposite, Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String componentName;
+	private String baseName;
 	private ObjectProperties objectProperties;
 	private Drawable drawable;
 	private String image;
@@ -20,6 +21,14 @@ public class AbstractComponent implements IComposite, Serializable {
 	private boolean isCollectible;
 	private boolean canFire;
 	private boolean isPlayerObject;
+
+	public String getBaseName() {
+		return baseName;
+	}
+
+	public void setBaseName(String baseName) {
+		this.baseName = baseName;
+	}
 
 	public AbstractComponent() {
 	}

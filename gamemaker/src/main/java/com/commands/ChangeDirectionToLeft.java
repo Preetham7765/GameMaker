@@ -1,28 +1,23 @@
 package com.commands;
 
-import java.util.Random;
-
 import com.infrastructure.AbstractComponent;
-import com.infrastructure.Direction;
 
-public class ChangeDirectionToLeft implements Command{
+public class ChangeDirectionToLeft implements Command {
 
-	
 	private AbstractComponent abstractComponent;
-	
+
 	public ChangeDirectionToLeft(AbstractComponent abstractComponent) {
 		this.abstractComponent = abstractComponent;
 	}
-	
+
 	@Override
 	public void execute() {
 		int velX = abstractComponent.getVelX();
 		int velY = abstractComponent.getVelY();
-		
-		if(velX != 0) {
+
+		if (velX != 0) {
 			abstractComponent.setVelX(-1 * Math.abs(velX));
-		}
-		else {
+		} else {
 			abstractComponent.setVelX(-1 * Math.abs(velY));
 		}
 		abstractComponent.setVelY(0);
@@ -31,9 +26,7 @@ public class ChangeDirectionToLeft implements Command{
 	@Override
 	public void undo() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-	
 
 }

@@ -11,7 +11,7 @@ import com.infrastructure.ObjectProperties;
 public class Clock extends AbstractComponent implements Serializable {
 
 	private static final long serialVersionUID = 8L;
-	
+
 	public long milisecondsElapsed;
 
 	public Clock(ObjectProperties objectProperties) {
@@ -34,20 +34,18 @@ public class Clock extends AbstractComponent implements Serializable {
 	public long getMilisecondsElapsed() {
 		return milisecondsElapsed;
 	}
-	
+
 	public void setMilisecondsElapsed(long milisecondsElapsed) {
 		this.milisecondsElapsed = milisecondsElapsed;
 	}
-	
+
 	public void reset() {
 		milisecondsElapsed = 0;
 	}
-	
+
 	public void setTime(long ms) {
 		this.milisecondsElapsed = ms;
 	}
-	
-	
 
 	public int getMinutes() {
 		return (int) (milisecondsElapsed / 60000);
@@ -59,13 +57,11 @@ public class Clock extends AbstractComponent implements Serializable {
 
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-		String min=Integer.toString(getMinutes());
-		String sec=Integer.toString(getSeconds());
-//		g.drawString(iterator, x, y);
+		String min = Integer.toString(getMinutes());
+		String sec = Integer.toString(getSeconds());
 		g.setColor(Color.RED);
 		g.setFont(new Font("Helvetica", Font.BOLD, 30));
-		g.drawString(min+":"+sec, 200 , 80);
-		
+		g.drawString(min + ":" + sec, 200, 80);
+
 	}
 }
