@@ -72,6 +72,8 @@ public class GameMakerController implements ActionListener, MouseListener {
 	private int totalCollectibles = 0;
 	private int idCounter;
 
+	public GameMakerController() {}
+	
 	public GameMakerController(WindowFrame windowFrame, GameTimer gameTimer) {
 		this.windowFrame = windowFrame;
 		allComponents = new ArrayList<>();
