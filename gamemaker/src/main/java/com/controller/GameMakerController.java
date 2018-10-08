@@ -108,6 +108,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 	public void addComponent(int x, int y) {
 		Command command;
+		createAbstractComponent();
 		component = getComponent();
 
 		if (component != null) {
