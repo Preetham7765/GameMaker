@@ -100,7 +100,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 	public void addComponent(int x, int y) {
 		Command command;
-		component = createAbstractComponent();
+		component = getComponent();
 
 		if (component != null) {
 			component.setX(x);
@@ -136,7 +136,6 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 		if (formData.isCollectible()) {
 			component.setCollectible(true);
-			allComponents.add(component);
 			collectibles.add(component);
 		}
 
@@ -192,7 +191,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 	}
 
 	// Creates Component by taking form data user defined for game element from view
-	public AbstractComponent createAbstractComponent() {
+	public void createAbstractComponent() {
 		ObjectProperties objectProperties = new ObjectProperties();
 		AbstractComponent component = new AbstractComponent(objectProperties);
 		// component.setX(formData.getX());
@@ -225,7 +224,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 			fireComponents.add(component);
 		}
 
-		return component;
+		setComponent(component);
 	}
 
 	public void createBullet(AbstractComponent parentComponent) {
@@ -365,7 +364,7 @@ public class GameMakerController implements ActionListener, MouseListener {
 
 		else if (componentType.equals(ComponentType.ELEMENT)) {
 			ObjectPropertiesPanel popUp = new ObjectPropertiesPanel();
-			formData = popUp.getProperties();
+			setFormData(popUp.getProperties());
 			this.idCounter = 1;
 			componentNames.add(formData.getElementName());
 			// addComponent();
@@ -586,6 +585,12 @@ public class GameMakerController implements ActionListener, MouseListener {
 		this.playerObjects = playerObjects;
 	}
 	
-	
+	public FormView getFormData() {
+		return formData;
+	}
+
+	public void setFormData(FormView formData) {
+		this.formData = formData;
+	}
 
 }
