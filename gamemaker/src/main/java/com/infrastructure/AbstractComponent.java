@@ -20,6 +20,7 @@ public class AbstractComponent implements IComposite, Serializable {
 	private Direction direction;
 	private boolean isCollectible;
 	private boolean canFire;
+	private boolean isPlayerObject;
 
 	public String getBaseName() {
 		return baseName;
@@ -191,6 +192,14 @@ public class AbstractComponent implements IComposite, Serializable {
 
 	public void setCanFire(boolean canFire) {
 		this.canFire = canFire;
+	}
+
+	public boolean isPlayerObject() {
+		return isPlayerObject;
+	}
+
+	public void setPlayerObject(boolean isPlayerObject) {
+		this.isPlayerObject = isPlayerObject;
 	}
 
 	@Override

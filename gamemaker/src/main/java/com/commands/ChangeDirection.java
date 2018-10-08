@@ -47,7 +47,6 @@ public class ChangeDirection implements Command{
 				break;
 			}
 			default: {
-				System.out.println("Bad index");
 				return;
 			}
 
