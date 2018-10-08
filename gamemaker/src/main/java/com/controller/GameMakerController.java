@@ -388,7 +388,6 @@ public class GameMakerController implements ActionListener, MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 
-
 		if (!this.gameStarted) {
 			int x = arg0.getX();
 			int y = arg0.getY();
