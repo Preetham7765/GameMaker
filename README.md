@@ -4,4 +4,4 @@
 
 - Users can create games sprites of different shapes, add images and specify behaviour.
 
--Games like pacman, space invader and frogger can be created.
+- Games like pacman, space invader and frogger can be created.
